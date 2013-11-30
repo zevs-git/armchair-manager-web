@@ -13,15 +13,14 @@
                 <?php
                 if (!Yii::app()->user->isGuest) {
                     $this->widget('bootstrap.widgets.TbNavbar', array(
-                        'brand' => '<img src="\images\logo\Magic_Rest_logo_30.png">',
                         'type' => 'inverse', // null or 'inverse'
+                        'brand' => '<img src="\images\logo\Magic_Rest_logo_30.png">',
                         'brandUrl' => '#',
                         'collapse' => true, // requires bootstrap-responsive.css
-                        'htmlOptions' => array('class' => 'pull-right nav','style'=>'font-size: 18px;'),
                         'items' => array(
                             array(
                                 'class' => 'bootstrap.widgets.TbMenu',
-                                'htmlOptions' => array('class' => 'pull-right'),
+                                'htmlOptions' => array('class' => 'pull-right nav'),
                                 'items' => array(
                                     array('label' => 'Мониторинг', 'url' => array('/DeviceStatus/admin', 'visible' => !Yii::app()->user->isGuest)),
                                     array('label' => 'Настройка', 'url' => '#',
@@ -32,15 +31,19 @@
                                             array('label' => 'Объекты', 'url' => '/index.php/object/admin'),
                                             array('label' => 'Устройства', 'url' => '/index.php/device/admin'),
                                         )),
-                                    array('label' => 'Аналитика', 'url'=>array('/site/page', 'view'=>'graphs')),
-                                    //array('label' => 'Карта', 'url' => array('#')),
-                                    //array('label' => 'Помощь', 'url' => array('#')),
-                                    array('label' => 'Выйти (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
+                                    array('label' => 'Аналитика', 'url' => array('/site/page', 'view' => 'graphs')),
+                                    array('label' => 'Выйти (' . Yii::app()->user->name . ')',
+                                        'url' => array('/site/logout'),
+                                        'visible' => !Yii::app()->user->isGuest
+                                    ),
                                 ),
                             ),
                             //'<form class="navbar-search pull-left" action=""><input type="text" class="search-query span2" placeholder="Search"></form>',
                         ),
-                    ));
+                            )
+
+                            //'<form class="navbar-search pull-left" action=""><input type="text" class="search-query span2" placeholder="Search"></form>',
+                    );
 
                     /* $this->widget('zii.widgets.CMenu', array(
                       'htmlOptions' => array('class' => 'pull-right nav'),
@@ -66,19 +69,19 @@
                       array('label'=>'Tables', 'url'=>array('/site/page', 'view'=>'tables')),
                       array('label'=>'Interface', 'url'=>array('/site/page', 'view'=>'interface')),
                       array('label'=>'Typography', 'url'=>array('/site/page', 'view'=>'typography')),
-                      array('label'=>'Gii generated', 'url'=>array('customer/index')), 
-                             array('label'=>'My Account <span class="caret"></span>', 'url'=>'#','itemOptions'=>array('class'=>'dropdown','tabindex'=>"-1"),'linkOptions'=>array('class'=>'dropdown-toggle','data-toggle'=>"dropdown"), 
-                              'items'=>array(
-                              array('label'=>'My Messages <span class="badge badge-warning pull-right">26</span>', 'url'=>'#'),
-                              array('label'=>'My Tasks <span class="badge badge-important pull-right">112</span>', 'url'=>'#'),
-                              array('label'=>'My Invoices <span class="badge badge-info pull-right">12</span>', 'url'=>'#'),
-                              array('label'=>'Separated link', 'url'=>'#'),
-                              array('label'=>'One more separated link', 'url'=>'#'),
-                              )), 
-                            array('label' => 'Login', 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),*/
-                            /*array('label' => 'Logout (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
-                        ),
-                    ));*/
+                      array('label'=>'Gii generated', 'url'=>array('customer/index')),
+                      array('label'=>'My Account <span class="caret"></span>', 'url'=>'#','itemOptions'=>array('class'=>'dropdown','tabindex'=>"-1"),'linkOptions'=>array('class'=>'dropdown-toggle','data-toggle'=>"dropdown"),
+                      'items'=>array(
+                      array('label'=>'My Messages <span class="badge badge-warning pull-right">26</span>', 'url'=>'#'),
+                      array('label'=>'My Tasks <span class="badge badge-important pull-right">112</span>', 'url'=>'#'),
+                      array('label'=>'My Invoices <span class="badge badge-info pull-right">12</span>', 'url'=>'#'),
+                      array('label'=>'Separated link', 'url'=>'#'),
+                      array('label'=>'One more separated link', 'url'=>'#'),
+                      )),
+                      array('label' => 'Login', 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
+                      array('label' => 'Logout (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
+                      ),
+                      )); */
                 }
                 ?>
             </div>
