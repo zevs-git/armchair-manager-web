@@ -47,9 +47,13 @@ h1,h2,h3,h4, .portlet > .portlet-decoration, .sidebar-nav > ul > li > a, .navbar
 	font-family: 'Carrois Gothic', sans-serif;
 }
 
-.portlet > .portlet-decoration, .sidebar-nav > ul > li > a, .navbar li > a, th{
-	font-size:18px!important;
+.portlet > .portlet-decoration, .sidebar-nav > ul > li > a, .navbar li > a {
+	font-size:18px;
 }
+th {
+    font-size: 14px;
+}
+
 /* Start Portlets*/
 .portlet{
 -webkit-box-shadow:#F9F9F9 0 1px 0 inset;
@@ -524,4 +528,8 @@ footer {
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   filter: progid:dximagetransform.microsoft.gradient(startColorstr='#ff5bc0de', endColorstr='#ff2f96b4', GradientType=0);
   filter: progid:dximagetransform.microsoft.gradient(enabled=false);
+}
+
+li {
+    line-height: 30px;
 }
