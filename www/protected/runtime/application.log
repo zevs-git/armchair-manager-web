@@ -2901,3 +2901,29 @@ in Z:\home\78.46.66.247\www\index.php (13)
 2013/11/30 14:57:57 [warning] [application] Не удалось присвоить небезопасный атрибут "cash" класса "DeviceStatus".
 in Z:\home\78.46.66.247\www\protected\controllers\DeviceStatusController.php (137)
 in Z:\home\78.46.66.247\www\index.php (13)
+2013/11/30 15:18:56 [error] [exception.CException] exception 'CException' with message 'В классе DeviceStatusController и его поведениях не найден метод или замыкание с именем "bfheginWidget".' in Z:\home\78.46.66.247\www\framework\base\CComponent.php:266
+Stack trace:
+#0 Z:\home\78.46.66.247\www\protected\views\deviceStatus\admin.php(24): CComponent->__call('bfheginWidget', Array)
+#1 Z:\home\78.46.66.247\www\protected\views\deviceStatus\admin.php(24): DeviceStatusController->bfheginWidget('zii.widgets.CPo...', Array)
+#2 Z:\home\78.46.66.247\www\framework\web\CBaseController.php(126): require('Z:\home\78.46.6...')
+#3 Z:\home\78.46.66.247\www\framework\web\CBaseController.php(95): CBaseController->renderInternal('Z:\home\78.46.6...', Array, true)
+#4 Z:\home\78.46.66.247\www\framework\web\CController.php(869): CBaseController->renderFile('Z:\home\78.46.6...', Array, true)
+#5 Z:\home\78.46.66.247\www\framework\web\CController.php(782): CController->renderPartial('admin', Array, true)
+#6 Z:\home\78.46.66.247\www\protected\controllers\DeviceStatusController.php(156): CController->render('admin', Array)
+#7 Z:\home\78.46.66.247\www\framework\web\actions\CInlineAction.php(49): DeviceStatusController->actionAdmin()
+#8 Z:\home\78.46.66.247\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#9 Z:\home\78.46.66.247\www\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#10 Z:\home\78.46.66.247\www\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#11 Z:\home\78.46.66.247\www\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#12 Z:\home\78.46.66.247\www\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#13 Z:\home\78.46.66.247\www\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#14 Z:\home\78.46.66.247\www\framework\web\CController.php(291): CFilterChain->run()
+#15 Z:\home\78.46.66.247\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#16 Z:\home\78.46.66.247\www\framework\web\CWebApplication.php(282): CController->run('admin')
+#17 Z:\home\78.46.66.247\www\framework\web\CWebApplication.php(141): CWebApplication->runController('DeviceStatus/ad...')
+#18 Z:\home\78.46.66.247\www\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#19 Z:\home\78.46.66.247\www\index.php(13): CApplication->run()
+#20 {main}
+REQUEST_URI=/index.php/DeviceStatus/admin?visible=1
+HTTP_REFERER=http://78.46.66.247/index.php/DeviceStatus/admin?visible=1
+---
