@@ -48,7 +48,7 @@ h1,h2,h3,h4, .portlet > .portlet-decoration, .sidebar-nav > ul > li > a, .navbar
 }
 
 .portlet > .portlet-decoration, .sidebar-nav > ul > li > a, .navbar li > a, th{
-	font-size:14px!important;
+	font-size:18px!important;
 }
 /* Start Portlets*/
 .portlet{

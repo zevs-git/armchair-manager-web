@@ -13,10 +13,11 @@
                 <?php
                 if (!Yii::app()->user->isGuest) {
                     $this->widget('bootstrap.widgets.TbNavbar', array(
+                        'brand' => '<img src="\images\logo\Magic_Rest_logo_30.png">',
                         'type' => 'inverse', // null or 'inverse'
                         'brandUrl' => '#',
                         'collapse' => true, // requires bootstrap-responsive.css
-                        'htmlOptions' => array('class' => 'pull-right nav'),
+                        'htmlOptions' => array('class' => 'pull-right nav','style'=>'font-size: 18px;'),
                         'items' => array(
                             array(
                                 'class' => 'bootstrap.widgets.TbMenu',
