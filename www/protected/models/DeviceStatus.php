@@ -96,6 +96,10 @@ class DeviceStatus extends CActiveRecord
             }
             return $val;            
         }
+        
+        public function getcashbox_state_icon() {
+            return "";
+        }
 
 	/**
 	 * @return array customized attribute labels (name=>label)
