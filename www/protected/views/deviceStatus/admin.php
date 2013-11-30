@@ -30,6 +30,9 @@ setInterval(function() {
     'dataProvider' => $model->search(),
 	'itemsCssClass' => 'table table-striped ',
     'filter' => $model,
+	/*'sort'=>array(
+    'defaultOrder'=>'dt DESC',
+	),*/
     'htmlOptions' => array('style' => 'text-align: center;'),
     'columns' => array(
          array('name' => 'device_id',
@@ -43,11 +46,11 @@ setInterval(function() {
         array('name'=>'cash',
               'header'=>'Купюры',
               'type'=>'raw',
-              'value'=>'$data->cash->last_cash . "<br/>" . (($data->cash->count_cash)?$data->cash->count_cash:0) . "/" . "400 " . ($data->cash->count_cash/400)*100 . "%" '),
+              'value'=>'$data->cash->last_cash . " " . (($data->cash->count_cash)?$data->cash->count_cash:0) . "/" . "400 " . ($data->cash->count_cash/400)*100 . "%" '),
         array('name'=>'cash',
               'header'=>'Монеты',
               'type'=>'raw',
-              'value'=>'$data->cash->last_coin . "<br/>" . (($data->cash->count_coin)?$data->cash->count_coin:0) . "/" . "400 " . ($data->cash->count_coin/400)*100 . "%" '),
+              'value'=>'$data->cash->last_coin . " " . (($data->cash->count_coin)?$data->cash->count_coin:0) . "/" . "400 " . ($data->cash->count_coin/400)*100 . "%" '),
         array('name'=>'cashbox_state',
               'header'=>'Состояние',
               'type'=>'raw',

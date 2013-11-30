@@ -32,7 +32,7 @@ $this->menu=array(
 		'mas_state',
 		'gsm_state_id',
 		'gsm_level',
-		'sim_in',
+		//'sim_in',
 		'pwr_in_id',
 		'pwr_ext_val',
 		'update_date',
