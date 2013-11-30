@@ -13,10 +13,10 @@ $('.search-form form').submit(function(){
 	});
 	return false;
 });
- $('#grid-container').load('/index.php/DeviceStatus/grid');
+ //$('#grid-container').load('/index.php/DeviceStatus/grid');
 setInterval(function() { 
-    $('#grid-container').load('/index.php/DeviceStatus/grid');
-    },15000);
+    $.fn.yiiGridView.update('device-status-grid'); 
+    },10000);
 ");
 ?>
 <?php $this->beginWidget('zii.widgets.CPortlet', array(
@@ -28,7 +28,7 @@ setInterval(function() {
 <?php $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'device-status-grid',
     'dataProvider' => $model->search(),
-	//'itemsCssClass' => 'table table-striped ',
+	'itemsCssClass' => 'table table-striped ',
     'filter' => $model,
     'htmlOptions' => array('style' => 'text-align: center;'),
     'columns' => array(
@@ -52,14 +52,6 @@ setInterval(function() {
               'header'=>'Состояние',
               'type'=>'raw',
               'value'=>'$data->state'),
-        array('name'=>'pwr_ext',
-              'header'=>'Напряжение',
-              'type'=>'raw',
-              'value'=>'$data->pwr_ext_val'),
-        array('name'=>'pwr_in_id',
-              'header'=>'Зарад',
-              'type'=>'raw',
-              'value'=>'$data->pwr_in_id_val'),
         array('class'=>'myButtonColumn',
             'updateButtonVisible'=>'FALSE',
             'deleteButtonVisible'=>'FALSE',
