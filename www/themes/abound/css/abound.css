@@ -29,7 +29,7 @@ body {
 /* Desktops and laptops ----------- */
 @media only screen 
 and (min-width : 1224px) {
-	.container-fluid{padding-top: 50px;}
+	.container-fluid{padding-top: 60px;}
 	.navbar .brand {margin-left:-90px;}
 	.style-switcher{margin-left:-70px;}
 }
@@ -37,7 +37,7 @@ and (min-width : 1224px) {
 /* Large screens ----------- */
 @media only screen 
 and (min-width : 1824px) {
-	.container-fluid{padding-top: 70px;}
+	.container-fluid{padding-top: 55px;}
 	.navbar .brand {margin-left:-90px;}
 	.style-switcher{margin-left:-70px;}
 }
@@ -530,6 +530,6 @@ footer {
   filter: progid:dximagetransform.microsoft.gradient(enabled=false);
 }
 
-li {
+.nav li {
     line-height: 30px;
 }
