@@ -7,8 +7,16 @@ if (!empty($asDialog)):
             'title'=>'Статус устройтсва ['. $model->name_val . ']',
             'autoOpen'=>true,
             'modal'=>false,
-            'width'=>550,
-            'height'=>470,
+            'width'=>600,
+            'height'=>500,
+            'show'=>array(
+                'effect'=>'fade',
+                'duration'=>500,
+            ),
+        'hide'=>array(
+                'effect'=>'fade',
+                'duration'=>500,
+            ),  
         ),
  ));
  

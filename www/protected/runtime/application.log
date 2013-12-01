@@ -4526,3 +4526,74 @@ Stack trace:
 REQUEST_URI=/index.php/DeviceStatus/admin?visible=1
 HTTP_REFERER=http://chair/index.php/staff/admin
 ---
+2013/12/01 20:21:24 [warning] [application] Не удалось присвоить небезопасный атрибут "cash" класса "DeviceStatus".
+in Z:\home\chair\www\protected\controllers\DeviceStatusController.php (148)
+in Z:\home\chair\www\index.php (13)
+2013/12/01 22:21:29 [warning] [application] Не удалось присвоить небезопасный атрибут "cash" класса "DeviceStatus".
+in Z:\home\chair\www\protected\controllers\DeviceStatusController.php (148)
+in Z:\home\chair\www\index.php (13)
+2013/12/01 20:21:34 [warning] [application] Не удалось присвоить небезопасный атрибут "cash" класса "DeviceStatus".
+in Z:\home\chair\www\protected\controllers\DeviceStatusController.php (148)
+in Z:\home\chair\www\index.php (13)
+2013/12/01 22:21:35 [warning] [application] Не удалось присвоить небезопасный атрибут "cash" класса "DeviceStatus".
+in Z:\home\chair\www\protected\controllers\DeviceStatusController.php (148)
+in Z:\home\chair\www\index.php (13)
+2013/12/01 20:21:39 [warning] [application] Не удалось присвоить небезопасный атрибут "cash" класса "DeviceStatus".
+in Z:\home\chair\www\protected\controllers\DeviceStatusController.php (148)
+in Z:\home\chair\www\index.php (13)
+2013/12/01 22:21:43 [warning] [application] Не удалось присвоить небезопасный атрибут "cash" класса "DeviceStatus".
+in Z:\home\chair\www\protected\controllers\DeviceStatusController.php (148)
+in Z:\home\chair\www\index.php (13)
+2013/12/01 20:21:44 [warning] [application] Не удалось присвоить небезопасный атрибут "cash" класса "DeviceStatus".
+in Z:\home\chair\www\protected\controllers\DeviceStatusController.php (148)
+in Z:\home\chair\www\index.php (13)
+2013/12/01 22:21:47 [warning] [application] Не удалось присвоить небезопасный атрибут "cash" класса "DeviceStatus".
+in Z:\home\chair\www\protected\controllers\DeviceStatusController.php (148)
+in Z:\home\chair\www\index.php (13)
+2013/12/01 22:21:54 [warning] [application] Не удалось присвоить небезопасный атрибут "cash" класса "DeviceStatus".
+in Z:\home\chair\www\protected\controllers\DeviceStatusController.php (148)
+in Z:\home\chair\www\index.php (13)
+2013/12/01 20:21:55 [warning] [application] Не удалось присвоить небезопасный атрибут "cash" класса "DeviceStatus".
+in Z:\home\chair\www\protected\controllers\DeviceStatusController.php (148)
+in Z:\home\chair\www\index.php (13)
+2013/12/01 20:21:56 [warning] [application] Не удалось присвоить небезопасный атрибут "cash" класса "DeviceStatus".
+in Z:\home\chair\www\protected\controllers\DeviceStatusController.php (148)
+in Z:\home\chair\www\index.php (13)
+2013/12/01 22:22:00 [warning] [application] Не удалось присвоить небезопасный атрибут "cash" класса "DeviceStatus".
+in Z:\home\chair\www\protected\controllers\DeviceStatusController.php (148)
+in Z:\home\chair\www\index.php (13)
+2013/12/01 22:22:04 [warning] [application] Не удалось присвоить небезопасный атрибут "cash" класса "DeviceStatus".
+in Z:\home\chair\www\protected\controllers\DeviceStatusController.php (148)
+in Z:\home\chair\www\index.php (13)
+2013/12/01 22:22:14 [warning] [application] Не удалось присвоить небезопасный атрибут "cash" класса "DeviceStatus".
+in Z:\home\chair\www\protected\controllers\DeviceStatusController.php (148)
+in Z:\home\chair\www\index.php (13)
+2013/12/01 22:22:24 [warning] [application] Не удалось присвоить небезопасный атрибут "cash" класса "DeviceStatus".
+in Z:\home\chair\www\protected\controllers\DeviceStatusController.php (148)
+in Z:\home\chair\www\index.php (13)
+2013/12/02 01:44:31 [error] [exception.CException] exception 'CException' with message 'В представлении контроллера DeviceStatusController обнаружен лишний вызов endWidget().' in Z:\home\chair\www\framework\web\CBaseController.php:210
+Stack trace:
+#0 Z:\home\chair\www\protected\views\deviceStatus\view.php(148): CBaseController->endWidget()
+#1 Z:\home\chair\www\framework\web\CBaseController.php(126): require('Z:\home\chair\w...')
+#2 Z:\home\chair\www\framework\web\CBaseController.php(95): CBaseController->renderInternal('Z:\home\chair\w...', Array, true)
+#3 Z:\home\chair\www\framework\web\CController.php(869): CBaseController->renderFile('Z:\home\chair\w...', Array, true)
+#4 Z:\home\chair\www\protected\controllers\DeviceStatusController.php(54): CController->renderPartial('view', Array, false, true)
+#5 [internal function]: DeviceStatusController->actionView('2')
+#6 Z:\home\chair\www\framework\web\actions\CAction.php(108): ReflectionMethod->invokeArgs(Object(DeviceStatusController), Array)
+#7 Z:\home\chair\www\framework\web\actions\CInlineAction.php(47): CAction->runWithParamsInternal(Object(DeviceStatusController), Object(ReflectionMethod), Array)
+#8 Z:\home\chair\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#9 Z:\home\chair\www\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#10 Z:\home\chair\www\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#11 Z:\home\chair\www\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#12 Z:\home\chair\www\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#13 Z:\home\chair\www\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#14 Z:\home\chair\www\framework\web\CController.php(291): CFilterChain->run()
+#15 Z:\home\chair\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#16 Z:\home\chair\www\framework\web\CWebApplication.php(282): CController->run('view')
+#17 Z:\home\chair\www\framework\web\CWebApplication.php(141): CWebApplication->runController('DeviceStatus/vi...')
+#18 Z:\home\chair\www\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#19 Z:\home\chair\www\index.php(13): CApplication->run()
+#20 {main}
+REQUEST_URI=/index.php/DeviceStatus/2?asDialog=1
+HTTP_REFERER=http://chair/index.php/DeviceStatus/admin?visible=1
+---
