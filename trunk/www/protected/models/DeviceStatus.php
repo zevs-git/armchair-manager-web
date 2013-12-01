@@ -18,6 +18,7 @@
  * @property integer $pwr_in_id
  * @property integer $pwr_ext
  * @property string $update_date
+ * @property integer $is_conneted
  */
 class DeviceStatus extends CActiveRecord
 {
@@ -60,12 +61,14 @@ class DeviceStatus extends CActiveRecord
 	}
         
         public function getstate() {
-            return "[Дверь:" . (($this->door_state)?"Откр.":"Закр.") . "];" .
-                   "[Купюрник:" . (($this->cashbox_state)?"Вкл.":"Откл.") . "];" .
-                   "[Тревога:" . (($this->alarm_state)?"Вкл.":"Откл.") . "];" .
-                   "[GSM:" . (($this->gsm_state_id)?"Вкл.":"Откл.") . "];" .
-                   "[Масаж:" . (($this->mas_state)?"Вкл.":"Откл.") . "];" .
-                    "";
+            return $this->gprs_state_icon . " " .
+                    $this->power_state_icon . " " .
+                    $this->gsm_level_icon . " " .
+                    $this->cashbox_state_icon . " " .
+                    $this->akb_state_icon . " " .
+                    $this->massage_state_icon . " " .
+                    $this->alarm_state_icon . " " .
+                    $this->door_state_icon . " " ;
         }
         
         public function getpwr_ext_val() {
@@ -97,13 +100,112 @@ class DeviceStatus extends CActiveRecord
             return $val;            
         }
         
+        public function getdoor_state_icon() {
+            if (!$this->is_conneted) {
+                return "<img src='/images/state_icons/door_null.png' title='Статус двери неопределен' >";
+            }
+            if ($this->door_state) {
+                return "<img src='/images/state_icons/door_true.png' title='Дверь открыта' >";
+            } else {
+                return "<img src='/images/state_icons/door_false.png' title='Дверь закрыта' >";
+            }
+        }
+        
         public function getcashbox_state_icon() {
-            return "";
+            if (!$this->is_conneted) {
+                return "<img src='/images/state_icons/cashbox_false.png' title='Статус связи с купюрником неопределен' >";
+            }
+            if ($this->cashbox_state) {
+                return "<img src='/images/state_icons/cashbox_true.png' title='Есть связь с купюрником' >";
+            } else {
+                return "<img src='/images/state_icons/cashbox_false.png' title='Нет связи с купюрником' >";
+            }
+        }
+        
+        public function getalarm_state_icon() {
+            if (!$this->is_conneted) {
+                return "<img src='/images/state_icons/alarm_false.png' title='Статус тревоги неопределен' >";
+            }
+            if ($this->alarm_state) {
+                return "<img src='/images/state_icons/alarm_true.png' title='Тревога включена' >";
+            } else {
+                return "<img src='/images/state_icons/alarm_false.png' title='Тревога отключена' >";
+            }
+        }
+        
+        public function getgsm_level_icon() {
+            
+        if (!$this->is_conneted) {
+            return "<img src='/images/state_icons/gsm_level_0.png' title='Уровень сигнала GPS неопределен' >";
+        } elseif ($this->gsm_level >= 1 && $this->gsm_level < 10) {
+            return "<img src='/images/state_icons/gsm_level_1.png' title='Уровень сигнала GPS - $this->gsm_level' >";
+        } elseif ($this->gsm_level < 18) {
+            return "<img src='/images/state_icons/gsm_level_2.png' title='Уровень сигнала GPS - $this->gsm_level' >";
+        } elseif ($this->gsm_level < 25) {
+            return "<img src='/images/state_icons/gsm_level_3.png' title='Уровень сигнала GPS - $this->gsm_level' >";
+        } elseif ($this->gsm_level >= 25) {
+            return "<img src='/images/state_icons/gsm_level_4.png' title='Уровень сигнала GPS - $this->gsm_level' >";
+        } else {
+            return "<img src='/images/state_icons/gsm_level_0.png' title='Уровень сигнала GPS - $this->gsm_level' >";
+        }
+        
+    }
+    
+    public function getgprs_state_icon() {
+            if ($this->is_conneted) {
+                return "<img src='/images/state_icons/gprs_true.png' title='Устройство подключено к серверу' >";
+            } else {
+                return "<img src='/images/state_icons/gprs_false.png' title='Устройство не подключено к серверу' >";
+            }
+        }
+    public function getis_conneted() {
+        date_default_timezone_set('Europe/Moscow');
+        $diff =  strtotime(date('Y-m-d h:i:s')) - strtotime($this->update_date);
+        if ($diff > 0 && $diff < (5 * 60)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public function getmassage_state_icon() {
+            if (!$this->is_conneted) {
+                return "<img src='/images/state_icons/massage_false.png' title='Статус массажа неопределен' >";
+            } elseif ($this->mas_state) {
+                return "<img src='/images/state_icons/massage_true.png' title='Массаж включен' >";
+            } else {
+                return "<img src='/images/state_icons/massage_false.png' title='Массаж выключен' >";
+            }
+        }
+        
+     public function getpower_state_icon() {
+            if (!$this->is_conneted) {
+                return "<img src='/images/state_icons/power_null.png' title='Бортовое напряжение неопределено' >";
+            } elseif ($this->pwr_ext) {
+                return "<img src='/images/state_icons/power_true.png' title='Бортовое напряжение $this->pwr_ext_val' >";
+            } else {
+                return "<img src='/images/state_icons/power_false.png' title='Бортовое напряжение $this->pwr_ext_val' >";
+            }
+        }
+        public function getakb_state_icon() {
+            if (!$this->is_conneted) {
+                return "<img src='/images/state_icons/akb_null.png' title='Заряд резервного аккумулятора неопределен' >";
+            } elseif ($this->pwr_in_id == 0) {
+                return "<img src='/images/state_icons/power_0.png' title='Заряд резервного аккумулятора $this->pwr_in_id_val' >";
+            } elseif ($this->pwr_in_id == 0) {
+                return "<img src='/images/state_icons/power_1.png' title='Заряд резервного аккумулятора $this->pwr_in_id_val' >";
+            } elseif ($this->pwr_in_id == 1) {
+                return "<img src='/images/state_icons/power_2.png' title='Заряд резервного аккумулятора $this->pwr_in_id_val' >";
+            } elseif ($this->pwr_in_id == 2) {
+                return "<img src='/images/state_icons/power_3.png' title='Заряд резервного аккумулятора $this->pwr_in_id_val' >";
+            } elseif ($this->pwr_in_id == 3) {
+                return "<img src='/images/state_icons/power_4.png' title='Заряд резервного аккумулятора $this->pwr_in_id_val' >";
+            }
         }
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
+    /**
+     * @return array customized attribute labels (name=>label)
+     */
 	public function attributeLabels()
 	{
 		return array(
