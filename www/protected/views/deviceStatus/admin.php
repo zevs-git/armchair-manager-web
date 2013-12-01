@@ -38,6 +38,8 @@ $this->beginWidget('zii.widgets.CPortlet', array(
 
 ?>
 <div id="grid-container">
+    <img id="loader" style="display: none; width: 100px; height: 100px; position: absolute; left: 50%; margin-left: -50px; top:50%;"
+                src='/images/loading.gif' />
 
     <?php
     $this->widget('zii.widgets.grid.CGridView', array(
@@ -84,6 +86,8 @@ $this->beginWidget('zii.widgets.CPortlet', array(
                                     // ajax post will use 'url' specified above 
                                     'url' => "js:$(this).attr('href')",
                                     'update' => '#id_view',
+                                    'beforeSend'=>'function() { $("#loader").show();}',
+                                    'complete'=>'function() { $("#loader").hide();}',
                                 ),
                             ),
                         ),
