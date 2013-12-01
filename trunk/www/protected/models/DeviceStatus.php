@@ -90,9 +90,9 @@ class DeviceStatus extends CActiveRecord
         public function getname_val() {
             $val = "Кресло";
             if ($this->device_id == 1) {
-                $val = '861785002417983';
+                $val = '<b>861785002417983</b>';
             } elseif ($this->device_id == 2) {
-                $val = '861785002394348';
+                $val = '<b>861785002394348</b>';
             }
             else {
                 $val = "Кресло " . $this->device_id;
@@ -158,13 +158,18 @@ class DeviceStatus extends CActiveRecord
                 return "<img src='/images/state_icons/gprs_false.png' title='Устройство не подключено к серверу' >";
             }
         }
+    public $is_conneted_r = null;
     public function getis_conneted() {
         date_default_timezone_set('Europe/Moscow');
-
+        if ($this->is_conneted_r != null) {
+            return $this->is_conneted_r;
+        }
         $diff =  strtotime(date('Y-m-d H:i:s')) - strtotime($this->update_date);
         if ($diff > 0 && $diff < (5 * 60)) {
+            $this->is_conneted_r = true;
             return true;
         } else {
+            $this->is_conneted_r = false;
             return false;
         }
     }
@@ -193,12 +198,10 @@ class DeviceStatus extends CActiveRecord
                 return "<img src='/images/state_icons/akb_null.png' title='Заряд резервного аккумулятора неопределен' >";
             } elseif ($this->pwr_in_id == 0) {
                 return "<img src='/images/state_icons/power_0.png' title='Заряд резервного аккумулятора $this->pwr_in_id_val' >";
-            } elseif ($this->pwr_in_id == 0) {
-                return "<img src='/images/state_icons/power_1.png' title='Заряд резервного аккумулятора $this->pwr_in_id_val' >";
             } elseif ($this->pwr_in_id == 1) {
-                return "<img src='/images/state_icons/power_2.png' title='Заряд резервного аккумулятора $this->pwr_in_id_val' >";
+                return "<img src='/images/state_icons/power_1.png' title='Заряд резервного аккумулятора $this->pwr_in_id_val' >";
             } elseif ($this->pwr_in_id == 2) {
-                return "<img src='/images/state_icons/power_3.png' title='Заряд резервного аккумулятора $this->pwr_in_id_val' >";
+                return "<img src='/images/state_icons/power_2.png' title='Заряд резервного аккумулятора $this->pwr_in_id_val' >";
             } elseif ($this->pwr_in_id == 3) {
                 return "<img src='/images/state_icons/power_4.png' title='Заряд резервного аккумулятора $this->pwr_in_id_val' >";
             }
