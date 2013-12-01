@@ -160,7 +160,8 @@ class DeviceStatus extends CActiveRecord
         }
     public function getis_conneted() {
         date_default_timezone_set('Europe/Moscow');
-        $diff =  strtotime(date('Y-m-d h:i:s')) - strtotime($this->update_date);
+
+        $diff =  strtotime(date('Y-m-d H:i:s')) - strtotime($this->update_date);
         if ($diff > 0 && $diff < (5 * 60)) {
             return true;
         } else {
