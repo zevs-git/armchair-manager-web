@@ -1,4 +1,21 @@
 <?php
+//------------ add the CJuiDialog widget -----------------
+if (!empty($asDialog)):
+    $this->beginWidget('zii.widgets.jui.CJuiDialog', array( // the dialog
+        'id'=>'dlg-address-view-'. $model->device_id,
+        'options'=>array(
+            'title'=>'Статус устройтсва ['. $model->name_val . ']',
+            'autoOpen'=>true,
+            'modal'=>false,
+            'width'=>550,
+            'height'=>470,
+        ),
+ ));
+ 
+else:
+//-------- default code starts here ------------------
+?>
+<?php
 /* @var $this DeviceStatusController */
 /* @var $model DeviceStatus */
 
@@ -17,12 +34,12 @@ $this->menu=array(
 ?>
 
 <h1>Стутс устройства [<?php echo $model->name_val; ?>]</h1>
-
+<?php endif; ?>
 <?php $this->widget('bootstrap.widgets.TbDetailView', array(
         'type'=>'striped bordered condensed',
 	'data'=>$model,
 	'attributes'=>array(
-            array('name'=>'name_val', 'label'=>'Устройство'),
+            array('name'=>'name_val', 'type'=>'raw','label'=>'Устройство'),
             array('name'=>'gprs_state_icon', 
                 'label'=>'Подключение к серверу',
                 'type'=>'raw'),
@@ -70,3 +87,8 @@ $this->menu=array(
 		'update_date',*/
 	),
 )); ?>
+
+<?php 
+  //----------------------- close the CJuiDialog widget ------------
+  if (!empty($asDialog)) $this->endWidget();
+?>

@@ -13,10 +13,19 @@ $('.search-form form').submit(function(){
 	});
 	return false;
 });
- //$('#grid-container').load('/index.php/DeviceStatus/grid');
+$('[rel=tooltip]').tooltip();
+$('img').tooltip();
 setInterval(function() { 
-    $.fn.yiiGridView.update('device-status-grid'); 
+    $('[rel=tooltip]').tooltip('destroy');
+    $('img').tooltip('destroy');
+    $.fn.yiiGridView.update('device-status-grid',{
+    complete: function() {
+        $('[rel=tooltip]').tooltip();
+        $('img').tooltip();
+    }}); 
     },10000);
+
+ //$('#grid-container').load('/index.php/DeviceStatus/grid');
 ");
 
 ?>
@@ -26,8 +35,8 @@ $model->dbCriteria->order='dt DESC';
 $this->beginWidget('zii.widgets.CPortlet', array(
     'title' => "Монториг системы",
 ));
-?>
 
+?>
 <div id="grid-container">
 
     <?php
@@ -35,49 +44,103 @@ $this->beginWidget('zii.widgets.CPortlet', array(
         'id' => 'device-status-grid',
         'dataProvider' => $model->search(),
         'filter' => $model,
-        'itemsCssClass' => 'table table-striped ',
+        'itemsCssClass' => 'table table-striped table-bordered',
         'htmlOptions' => array('style' => 'text-align: center;'),
         'columns' => array(
             array('name' => 'device_id',
+            'type' => 'raw',
             'value' => '$data->name_val'),
             array('name' => 'dt',
             'htmlOptions' => array('style' => 'width: 130px;'),
             'value' => 'date_format(date_create($data->dt), "Y-m-d H:i:s")'),
             array('name' => 'cash',
+            'htmlOptions' => array('style' => 'width: 70px; text-align: center;'),
             'header' => 'Сумма',
-            'htmlOptions' => array('style' => 'width: 70px;'),
             'type' => 'raw',
             'value' => '(($data->cash->summ > 0)?\'<b style="color: green">\' . $data->cash->summ . " руб.</b>":"-")'),
             array('name' => 'cash',
             'header' => 'Купюры',
-            'htmlOptions' => array('style' => 'align: center;'),
+            'htmlOptions' => array('style' => 'align: center; width: 120px;'),
             'type' => 'raw',
-            'value' => '($data->cash->count_cash)?"<b style=\'color: green\'>" . $data->cash->last_cash . "</b>&nbsp;&nbsp;" .$data->cash->count_cash . "/" . "400 - " . ($data->cash->count_cash/400)*100 . "%</div>":"-" '),
+            'value' => '($data->cash->count_cash)?"<b style=\'color: green\' rel=\'tooltip\' title=\'Последняя купюра\'>" . $data->cash->last_cash . "</b>&nbsp;&nbsp;<div style=\'float:right;\' rel=\'tooltip\' title=\'Наполнение купюрника\'>" .$data->cash->count_cash . "/" . "400 - " . ($data->cash->count_cash/400)*100 . "%</div>":"-" '),
             array('name' => 'cash',
             'header' => 'Монеты',
+            'htmlOptions' => array('style' => 'align: center; width: 120px;'),
             'type' => 'raw',
-            'value' => '($data->cash->count_coin)?"<b style=\'color: green\'>" . $data->cash->last_coin . "</b>&nbsp;&nbsp;".$data->cash->count_coin . "/" . "400 - " . ($data->cash->count_coin/400)*100 . "%":"-" '),
+            'value' => '($data->cash->count_coin)?"<b style=\'color: green\' rel=\'tooltip\' title=\'Последняя купюра\'>" . $data->cash->last_coin . "</b>&nbsp;&nbsp;<div style=\'float:right;\' rel=\'tooltip\' title=\'Наполнение купюрника\'>" .$data->cash->count_coin . "/" . "400 - " . ($data->cash->count_coin/400)*100 . "%</div>":"-" '),
             array('name' => 'cashbox_state',
-            'header' => 'Состояние',
-            'type' => 'raw',
-            'value' => '$data->state'),
-            array('class' => 'myButtonColumn',
-            'updateButtonVisible' => 'FALSE',
-            'deleteButtonVisible' => 'FALSE',
-            )
+                'header' => 'Состояние',
+                'type' => 'raw',
+                'value' => '$data->state'),
+                array('class' => 'myButtonColumn',
+                    'updateButtonVisible' => 'FALSE',
+                    'deleteButtonVisible' => 'FALSE',
+                    'buttons'=>array('view' =>
+                        array(
+                            'url' => 'Yii::app()->createUrl("DeviceStatus/view", array("id"=>$data->device_id,"asDialog"=>1))',
+                            'options' => array(
+                                'ajax' => array(
+                                    'type' => 'POST',
+                                    // ajax post will use 'url' specified above 
+                                    'url' => "js:$(this).attr('href')",
+                                    'update' => '#id_view',
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            /*array(
+                'class'=>'CButtonColumn',
+                //--------------------- begin added --------------------------
+                'buttons'=>array('view'=>
+                array(
+                    'url'=>'Yii::app()->createUrl("DeviceStatus/view", array("id"=>$data->device_id,"asDialog"=>1))',
+                    'options'=>array(  
+                    'ajax'=>array(
+                            'type'=>'POST',
+                                // ajax post will use 'url' specified above 
+                            'url'=>"js:$(this).attr('href')", 
+                            'update'=>'#id_view',
+                           ),
+                     ),
+                     ),
+                   ),
+                //--------------------- end added --------------------------
+                  ),
+
+                //----------- add the div below as container for the dialog -----------------------*/
         ),
     ));
     ?>
 </div>
 
-<?php $this->endWidget();?>
+                <div id="id_view"></div>
 
+<?php $this->endWidget();?>
+<?php 
+$countAll = $model->count();
+$countTrue = $model->count("unix_timestamp(now()) - unix_timestamp(dt) <= 60*5");
+$countFalse = $countAll - $countTrue;
+
+$Balance = 0;
+
+
+
+$sum = Yii::app()->db->createCommand()
+    ->select('sum(summ) as res')
+    ->from('device_cash_report')
+    ->queryRow();
+
+if (isset($sum['res'])) {
+    $Balance = $sum['res']; 
+}
+?>
 <div class="row-fluid">
     <div class="span3 ">
         <div class="stat-block">
             <ul>
                 <!-- <li class="stat-graph inlinebar" id="weekly-visit">8,4,6,5,9,10</li> -->
-                <li class="stat-count"><span>50</span><span>Устройств в базе</span></li>
+                <li class="stat-count"><span><?php echo $countAll;?></span><span>Устройств в базе</span></li>
                 <li class="stat-percent"><span class="text-success stat-percent"></span></li>
             </ul>
         </div>
@@ -85,23 +148,23 @@ $this->beginWidget('zii.widgets.CPortlet', array(
     <div class="span3 ">
         <div class="stat-block">
             <ul>
-                <li class="stat-count"><span>46</span><span>Подключено</span></li>
-                <li class="stat-percent"><span class="text-success stat-percent">92%</span></li>
+                <li class="stat-count"><span><?php echo $countTrue;?></span><span>Подключено</span></li>
+                <li class="stat-percent"><span class="text-success stat-percent"><?php echo $countTrue/$countAll * 100; ?>%</span></li>
             </ul>
         </div>
     </div>
     <div class="span3 ">
         <div class="stat-block">
             <ul>
-                <li class="stat-count"><span>4</span><span>Неисправно</span></li>
-                <li class="stat-percent"><span class="text-error stat-percent">8%</span></li>
+                <li class="stat-count"><span><?php echo $countFalse;?></span><span>Не на связи</span></li>
+                <li class="stat-percent"><span class="text-error stat-percent"><?php echo $countFalse/$countAll * 100; ?>%</span></li>
             </ul>
         </div>
     </div>
     <div class="span3 ">
         <div class="stat-block">
             <ul>
-                <li class="stat-count"><span>78 000 RUB</span><span>В купюрониках</span></li>
+                <li class="stat-count"><span><?php echo $Balance;?> RUB</span><span>В купюрониках</span></li>
                 <li class="stat-percent"><span><span class="text-success stat-percent">20%</span></li>
             </ul>
         </div>
