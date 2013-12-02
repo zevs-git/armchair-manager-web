@@ -130,14 +130,26 @@ $Balance = 0;
 
 
 
-$sum = Yii::app()->db->createCommand()
+$res = Yii::app()->db->createCommand()
     ->select('sum(summ) as res')
     ->from('device_cash_report')
     ->queryRow();
 
-if (isset($sum['res'])) {
-    $Balance = $sum['res']; 
+if (isset($res['res'])) {
+    $Balance = $res['res']; 
 }
+
+$res = Yii::app()->db->createCommand()
+    ->select('sum(count_cash + count_coin) as res')
+    ->from('device_cash_report')
+    ->queryRow();
+
+
+if (isset($res['res'])) {
+    $cash_count = $res['res']; 
+}
+
+
 ?>
 <div class="row-fluid">
     <div class="span3 ">
@@ -169,7 +181,7 @@ if (isset($sum['res'])) {
         <div class="stat-block">
             <ul>
                 <li class="stat-count"><span><?php echo $Balance;?> RUB</span><span>В купюрониках</span></li>
-                <li class="stat-percent"><span><span class="text-success stat-percent">20%</span></li>
+                <li class="stat-percent"><span><span class="text-success stat-percent"><?php echo number_format($cash_count/($countAll*400),2, '.', '');?>%</span></li>
             </ul>
         </div>
     </div>
