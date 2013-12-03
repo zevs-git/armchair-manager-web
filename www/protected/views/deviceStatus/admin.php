@@ -16,8 +16,8 @@ $('.search-form form').submit(function(){
 $('[rel=tooltip]').tooltip();
 $('img').tooltip();
 setInterval(function() { 
-    $('[rel=tooltip]').tooltip('destroy');
-    $('img').tooltip('destroy');
+    //$('[rel=tooltip]').tooltip('destroy');
+    //$('img').tooltip('destroy');
     $.fn.yiiGridView.update('device-status-grid',{
     complete: function() {
         $('[rel=tooltip]').tooltip();
@@ -86,8 +86,9 @@ $this->beginWidget('zii.widgets.CPortlet', array(
                                     // ajax post will use 'url' specified above 
                                     'url' => "js:$(this).attr('href')",
                                     'update' => '#id_view',
-                                    'beforeSend'=>'function() { $("#loader").show();}',
-                                    'complete'=>'function() { $("#loader").hide();}',
+                                    'beforeSend'=>'function() { $("#loader").show(); }',
+                                    'complete'=>'function() { $("#loader").hide(); $("#modal").dialog("open");}',
+                                    //'success'=>'function() { $("#modal").show();}',
                                 ),
                             ),
                         ),
@@ -118,7 +119,30 @@ $this->beginWidget('zii.widgets.CPortlet', array(
     ?>
 </div>
 
-                <div id="id_view"></div>
+<?php
+        $this->beginWidget('zii.widgets.jui.CJuiDialog', array( // the dialog
+            'id'=>'modal',
+            'options'=>array(
+                'title'=>'Статус устройтсва',
+                'autoOpen'=>FALSE,
+                'modal'=>false,
+                'width'=>600,
+                'height'=>500,
+                'show'=>array(
+                    'effect'=>'fade',
+                    'duration'=>250,
+                ),
+            'hide'=>array(
+                    'effect'=>'fade',
+                    'duration'=>500,
+                ),  
+            ),
+     ));
+    
+?>
+        <div id="id_view"></div>
+        
+<?php   $this->endWidget();?>
 
 <?php $this->endWidget();?>
 <?php 

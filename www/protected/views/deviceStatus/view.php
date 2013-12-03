@@ -1,24 +1,24 @@
 <?php
 //------------ add the CJuiDialog widget -----------------
 if (!empty($asDialog)):
-    $this->beginWidget('zii.widgets.jui.CJuiDialog', array( // the dialog
-        'id'=>'dlg-address-view-'. $model->device_id,
-        'options'=>array(
-            'title'=>'Статус устройтсва ['. $model->name_val . ']',
-            'autoOpen'=>true,
-            'modal'=>false,
-            'width'=>600,
-            'height'=>500,
-            'show'=>array(
-                'effect'=>'fade',
-                'duration'=>500,
-            ),
-        'hide'=>array(
-                'effect'=>'fade',
-                'duration'=>500,
-            ),  
-        ),
- ));
+//    $this->beginWidget('zii.widgets.jui.CJuiDialog', array( // the dialog
+//        'id'=>'dlg-address-view-'. $model->device_id,
+//        'options'=>array(
+//            'title'=>'Статус устройтсва ['. $model->name_val . ']',
+//            'autoOpen'=>true,
+//            'modal'=>false,
+//            'width'=>600,
+//            'height'=>500,
+//            'show'=>array(
+//                'effect'=>'fade',
+//                'duration'=>500,
+//            ),
+//        'hide'=>array(
+//                'effect'=>'fade',
+//                'duration'=>500,
+//            ),  
+//        ),
+// ));
  
 else:
 //-------- default code starts here ------------------
@@ -98,5 +98,5 @@ $this->menu=array(
 
 <?php 
   //----------------------- close the CJuiDialog widget ------------
-  if (!empty($asDialog)) $this->endWidget();
+  //if (!empty($asDialog)) $this->endWidget();
 ?>
