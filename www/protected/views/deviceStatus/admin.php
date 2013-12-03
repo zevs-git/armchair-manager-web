@@ -31,7 +31,7 @@ setInterval(function() {
 ?>
 <?php
 
-$model->dbCriteria->order='dt DESC';
+//$model->dbCriteria->order='dt DESC';
 $this->beginWidget('zii.widgets.CPortlet', array(
     'title' => "Монториг системы",
 ));
