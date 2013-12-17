@@ -5,13 +5,13 @@
 
 	<?php echo $form->textFieldRow($model,'id',array('class'=>'span5')); ?>
 
-	<?php echo $form->textFieldRow($model,'IMEI',array('class'=>'span5','maxlength'=>20)); ?>
+	<?php echo $form->textFieldRow($model,'tmpl_id',array('class'=>'span5')); ?>
 
-	<?php echo $form->textFieldRow($model,'type_id',array('class'=>'span5','maxlength'=>11)); ?>
+	<?php echo $form->textFieldRow($model,'var_id',array('class'=>'span5')); ?>
 
-	<?php echo $form->textFieldRow($model,'soft_version',array('class'=>'span5')); ?>
+	<?php echo $form->textFieldRow($model,'acc_lvl',array('class'=>'span5')); ?>
 
-	<?php echo $form->textFieldRow($model,'object_id',array('class'=>'span5','maxlength'=>11)); ?>
+	<?php echo $form->textFieldRow($model,'default',array('class'=>'span5','maxlength'=>100)); ?>
 
 	<div class="form-actions">
 		<?php $this->widget('bootstrap.widgets.TbButton', array(

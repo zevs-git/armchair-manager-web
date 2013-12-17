@@ -1,7 +1,7 @@
 <?php if (Yii::app()->request->isAjaxRequest): ?>
 <div class="modal-header">
 	<a class="close" data-dismiss="modal">&times;</a>
-	<h4><?php echo $model->isNewRecord ? 'Создать устройство' : 'Редактирвоать устройство #'.$model->id ?></h4>
+	<h4><?php echo $model->isNewRecord ? 'Создание нового шаблона настроек' : 'Редактирование шаблона'.$model->id ?></h4>
 </div>
 
 <div class="modal-body">
@@ -9,28 +9,14 @@
 
 
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
-	'id'=>'device-form',
+	'id'=>'settings-template-form',
 	'enableAjaxValidation'=>false,
 )); ?>
 
 	<?php echo $form->errorSummary($model); ?>
 
-	<?php echo $form->textFieldRow($model,'IMEI',array('class'=>'span5','maxlength'=>20)); ?>
-        
-        <?php echo $form->labelEx($model, 'type_id'); ?>
-        <?php echo $form->error($model, 'type_id'); ?>
-        
-	<?php $list = array('0'=>'Тип устройтва 1'); ?>
-        <?php echo $form->dropDownList($model, 'type_id', $list, array('class' => 'span5')); ?>
+	<?php echo $form->textFieldRow($model,'descr',array('class'=>'span5','maxlength'=>50)); ?>
 
-	<?php echo $form->textFieldRow($model,'soft_version',array('class'=>'span5')); ?>
-
-        <?php echo $form->labelEx($model, 'object_id'); ?>
-        <?php echo $form->error($model, 'object_id'); ?>
-        
-	<?php $list = CHtml::listData(Object::model()->findAll(), 'id', 'city'); ?>
-        <?php echo $form->dropDownList($model, 'object_id', $list, array('class' => 'span5', 'empty' => 'Выберите объект')); ?>
-        
 	<?php if (!Yii::app()->request->isAjaxRequest): ?>
 	<div class="form-actions">
 		<?php $this->widget('bootstrap.widgets.TbButton', array(
@@ -57,8 +43,8 @@
 				'type'=>'post',
 				'data'=>'js:$(this).parent().parent().find("form").serialize()',
 				'success'=>'function(r){
-					if(r=="success"){
-						window.location.reload();
+					if(/^\d+$/.test(r)){
+						window.location = "/index.php/settingsTmplDetail/admin/"+r;
 					}
 					else{
 						$("#TBDialogCrud").html(r).modal("show");

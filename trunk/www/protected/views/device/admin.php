@@ -1,15 +1,17 @@
 <?php
-/* @var $this DeviceController */
-/* @var $model Device */
-
 $this->breadcrumbs=array(
-	'Устройства'=>array('index'),
-	'Управление',
+	'Devices'=>array('index'),
+	'Manage',
 );
 
 $this->menu=array(
-	array('label'=>'Список', 'url'=>array('index')),
-	array('label'=>'Добавить', 'url'=>array('create')),
+	array('label'=>'Список устройств','url'=>array('index')),
+	array('label'=>'Создать устройтво', 'url'=>array('create'), 'linkOptions'=>array(
+		'ajax' => array(
+			'url'=>$this->createUrl('create'),
+			'success'=>'function(r){$("#TBDialogCrud").html(r).modal("show");}', 
+		),
+	)),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -18,7 +20,7 @@ $('.search-button').click(function(){
 	return false;
 });
 $('.search-form form').submit(function(){
-	$('#device-grid').yiiGridView('update', {
+	$.fn.yiiGridView.update('device-grid', {
 		data: $(this).serialize()
 	});
 	return false;
@@ -26,41 +28,55 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Управлените устрйствами</h1>
+<?php $this->beginWidget('bootstrap.widgets.TbModal', array('id'=>'TBDialogCrud')); ?>
+<?php $this->endWidget(); ?>
 
-<p>
-Вы можете дополнительно использовать операторы сравнения (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
-or <b>=</b>) в начале каждого из ваших значений поиска.
-</p>
+<h2>Управление устройствами</h2>
 
-<?php echo CHtml::link('Расширенный поиск','#',array('class'=>'search-button')); ?>
+<?php echo CHtml::link('Расширенный поиск','#',array('class'=>'search-button btn')); ?>
 <div class="search-form" style="display:none">
 <?php $this->renderPartial('_search',array(
 	'model'=>$model,
 )); ?>
 </div><!-- search-form -->
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
+<?php $this->widget('bootstrap.widgets.TbGridView',array(
 	'id'=>'device-grid',
+	'ajaxUpdate'=>false,
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
-        'itemsCssClass' => 'table table-striped',
 	'columns'=>array(
 		'id',
 		'IMEI',
-		'type_id',
-		'group_id',
+		'type',
 		'soft_version',
-		'SIM',
+		array('name'=>'object',
+                    'value'=>'$data->object->obj'),
 		/*
-		'object_id',
-		'create_user_id',
-		'create_date',
-		'update_user_id',
-		'update_date',
+		'settings_id',
 		*/
 		array(
-			'class'=>'CButtonColumn',
+			'class'=>'bootstrap.widgets.TbButtonColumn',
+			'buttons' => array(
+				'update' => array(
+					'click'=>'function(){
+						var url = $(this).attr("href");
+						$.get(url, function(r){
+							$("#TBDialogCrud").html(r).modal("show");
+						});
+						return false;
+					}',
+				),
+				'view' => array(
+					'click'=>'function(){
+						var url = $(this).attr("href");
+						$.get(url, function(r){
+							$("#TBDialogCrud").html(r).modal("show");
+						});
+						return false;
+					}',
+				),
+			),
 		),
 	),
 )); ?>

@@ -1,20 +1,16 @@
 <?php
-/* @var $this DeviceController */
-/* @var $dataProvider CActiveDataProvider */
-
 $this->breadcrumbs=array(
-	'Устройства',
+	'Devices',
 );
 
 $this->menu=array(
-	array('label'=>'Добавить', 'url'=>array('create')),
-	array('label'=>'Управление', 'url'=>array('admin')),
+	array('label'=>'Управление устройствами','url'=>array('admin')),
 );
 ?>
 
-<h1>Устройства</h1>
+<h2>Устройства</h2>
 
-<?php $this->widget('zii.widgets.CListView', array(
+<?php $this->widget('bootstrap.widgets.TbListView',array(
 	'dataProvider'=>$dataProvider,
 	'itemView'=>'_view',
 )); ?>

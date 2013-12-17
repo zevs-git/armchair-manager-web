@@ -1,21 +1,18 @@
 <?php
-/* @var $this DeviceController */
-/* @var $model Device */
-
 $this->breadcrumbs=array(
-	'Устройста'=>array('index'),
+	'Devices'=>array('index'),
 	$model->id=>array('view','id'=>$model->id),
-	'Редактировать',
+	'Update',
 );
 
 $this->menu=array(
-	array('label'=>'Список', 'url'=>array('index')),
-	array('label'=>'Добавить', 'url'=>array('create')),
-	array('label'=>'Просмотреть', 'url'=>array('view', 'id'=>$model->id)),
-	array('label'=>'Управление', 'url'=>array('admin')),
+	array('label'=>'List Device','url'=>array('index')),
+	array('label'=>'Create Device','url'=>array('create')),
+	array('label'=>'View Device','url'=>array('view','id'=>$model->id)),
+	array('label'=>'Manage Device','url'=>array('admin')),
 );
 ?>
 
-<h1>Редактировать устройство [<?php echo $model->id; ?>]</h1>
+<h1>Update Device <?php echo $model->id; ?></h1>
 
-<?php $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php echo $this->renderPartial('_form',array('model'=>$model)); ?>
