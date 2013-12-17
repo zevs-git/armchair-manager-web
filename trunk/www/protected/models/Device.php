@@ -7,9 +7,9 @@
  * @property integer $id
  * @property string $IMEI
  * @property string $type_id
- * @property integer $group_id
  * @property double $soft_version
  * @property string $object_id
+ * @property integer $settings_tmpl_id
  * @property integer $settings_id
  *
  * The followings are the available model relations:
@@ -33,13 +33,13 @@ class Device extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('group_id, settings_id', 'numerical', 'integerOnly'=>true),
+			array('settings_id', 'numerical', 'integerOnly'=>true),
 			array('soft_version', 'numerical'),
 			array('IMEI', 'length', 'max'=>20),
 			array('type_id, object_id', 'length', 'max'=>11),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, IMEI, type_id, group_id, soft_version, object_id, settings_id', 'safe', 'on'=>'search'),
+			array('id, IMEI, type_id, soft_version, object_id, settings_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -66,11 +66,11 @@ class Device extends CActiveRecord
 			'IMEI' => 'Сериейный номер (IMEI)',
 			'type_id' => 'Тип устройства',
                         'type' => 'Тип устройства',
-			'group_id' => 'Группа устройств',
 			'soft_version' => 'Версия ПО',
 			'object_id' => 'Объект',
                         'object' => 'Объект',
 			'settings_id' => 'ИД настроек',
+                        'settings_tmpl_id'=>'Шаблон настроек',
 		);
 	}
         
@@ -103,7 +103,6 @@ class Device extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('IMEI',$this->IMEI,true);
 		$criteria->compare('type_id',$this->type_id,true);
-		$criteria->compare('group_id',$this->group_id);
 		$criteria->compare('soft_version',$this->soft_version);
 		$criteria->compare('object_id',$this->object_id,true);
 		$criteria->compare('settings_id',$this->settings_id);

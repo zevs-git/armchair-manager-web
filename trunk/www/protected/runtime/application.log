@@ -10093,3 +10093,500 @@ in Z:\home\chair\www\index.php (13)
 2013/12/17 04:11:10 [warning] [application] Не удалось присвоить небезопасный атрибут "object" класса "Device".
 in Z:\home\chair\www\protected\controllers\DeviceController.php (159)
 in Z:\home\chair\www\index.php (13)
+2013/12/17 04:51:59 [error] [exception.CException] exception 'CException' with message 'Не определено свойство "Device.tmpl_id".' in Z:\home\chair\www\framework\base\CComponent.php:130
+Stack trace:
+#0 Z:\home\chair\www\framework\db\ar\CActiveRecord.php(145): CComponent->__get('tmpl_id')
+#1 Z:\home\chair\www\framework\web\helpers\CHtml.php(2529): CActiveRecord->__get('tmpl_id')
+#2 Z:\home\chair\www\framework\web\helpers\CHtml.php(1802): CHtml::resolveValue(Object(Device), 'tmpl_id')
+#3 Z:\home\chair\www\framework\web\widgets\CActiveForm.php(847): CHtml::activeDropDownList(Object(Device), 'tmpl_id', Array, Array)
+#4 Z:\home\chair\www\protected\views\device\_form.php(36): CActiveForm->dropDownList(Object(Device), 'tmpl_id', Array, Array)
+#5 Z:\home\chair\www\framework\web\CBaseController.php(126): require('Z:\home\chair\w...')
+#6 Z:\home\chair\www\framework\web\CBaseController.php(95): CBaseController->renderInternal('Z:\home\chair\w...', Array, true)
+#7 Z:\home\chair\www\framework\web\CController.php(869): CBaseController->renderFile('Z:\home\chair\w...', Array, true)
+#8 Z:\home\chair\www\protected\controllers\DeviceController.php(83): CController->renderPartial('_form', Array, false, true)
+#9 Z:\home\chair\www\framework\web\actions\CInlineAction.php(49): DeviceController->actionCreate()
+#10 Z:\home\chair\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#11 Z:\home\chair\www\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#12 Z:\home\chair\www\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#13 Z:\home\chair\www\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#14 Z:\home\chair\www\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#15 Z:\home\chair\www\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#16 Z:\home\chair\www\framework\web\CController.php(291): CFilterChain->run()
+#17 Z:\home\chair\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#18 Z:\home\chair\www\framework\web\CWebApplication.php(282): CController->run('create')
+#19 Z:\home\chair\www\framework\web\CWebApplication.php(141): CWebApplication->runController('device/create')
+#20 Z:\home\chair\www\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#21 Z:\home\chair\www\index.php(13): CApplication->run()
+#22 {main}
+REQUEST_URI=/index.php/device/create?_=1387248718400
+HTTP_REFERER=http://chair/index.php/device/admin
+---
+2013/12/17 04:52:56 [error] [php] Object of class Device could not be converted to string (Z:\home\chair\www\framework\web\helpers\CHtml.php:2155)
+Stack trace:
+#0 Z:\home\chair\www\protected\views\device\_form.php(36): dropDownList()
+#1 Z:\home\chair\www\framework\web\CBaseController.php(126): require()
+#2 Z:\home\chair\www\framework\web\CBaseController.php(95): DeviceController->renderInternal()
+#3 Z:\home\chair\www\framework\web\CController.php(869): DeviceController->renderFile()
+#4 Z:\home\chair\www\protected\controllers\DeviceController.php(83): DeviceController->renderPartial()
+#5 Z:\home\chair\www\framework\web\actions\CInlineAction.php(49): DeviceController->actionCreate()
+#6 Z:\home\chair\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#7 Z:\home\chair\www\framework\web\filters\CFilterChain.php(133): DeviceController->runAction()
+#8 Z:\home\chair\www\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#9 Z:\home\chair\www\framework\web\CController.php(1145): CAccessControlFilter->filter()
+#10 Z:\home\chair\www\framework\web\filters\CInlineFilter.php(58): DeviceController->filterAccessControl()
+#11 Z:\home\chair\www\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter()
+#12 Z:\home\chair\www\framework\web\CController.php(291): CFilterChain->run()
+#13 Z:\home\chair\www\framework\web\CController.php(265): DeviceController->runActionWithFilters()
+#14 Z:\home\chair\www\framework\web\CWebApplication.php(282): DeviceController->run()
+#15 Z:\home\chair\www\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#16 Z:\home\chair\www\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#17 Z:\home\chair\www\index.php(13): CWebApplication->run()
+REQUEST_URI=/index.php/device/create?_=1387248775721
+in Z:\home\chair\www\protected\views\device\_form.php (36)
+in Z:\home\chair\www\protected\controllers\DeviceController.php (83)
+in Z:\home\chair\www\index.php (13)
+2013/12/17 04:52:57 [error] [php] Object of class Device could not be converted to string (Z:\home\chair\www\framework\web\helpers\CHtml.php:2155)
+Stack trace:
+#0 Z:\home\chair\www\protected\views\device\_form.php(36): dropDownList()
+#1 Z:\home\chair\www\framework\web\CBaseController.php(126): require()
+#2 Z:\home\chair\www\framework\web\CBaseController.php(95): DeviceController->renderInternal()
+#3 Z:\home\chair\www\framework\web\CController.php(869): DeviceController->renderFile()
+#4 Z:\home\chair\www\protected\controllers\DeviceController.php(83): DeviceController->renderPartial()
+#5 Z:\home\chair\www\framework\web\actions\CInlineAction.php(49): DeviceController->actionCreate()
+#6 Z:\home\chair\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#7 Z:\home\chair\www\framework\web\filters\CFilterChain.php(133): DeviceController->runAction()
+#8 Z:\home\chair\www\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#9 Z:\home\chair\www\framework\web\CController.php(1145): CAccessControlFilter->filter()
+#10 Z:\home\chair\www\framework\web\filters\CInlineFilter.php(58): DeviceController->filterAccessControl()
+#11 Z:\home\chair\www\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter()
+#12 Z:\home\chair\www\framework\web\CController.php(291): CFilterChain->run()
+#13 Z:\home\chair\www\framework\web\CController.php(265): DeviceController->runActionWithFilters()
+#14 Z:\home\chair\www\framework\web\CWebApplication.php(282): DeviceController->run()
+#15 Z:\home\chair\www\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#16 Z:\home\chair\www\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#17 Z:\home\chair\www\index.php(13): CWebApplication->run()
+REQUEST_URI=/index.php/device/create?_=1387248777221
+in Z:\home\chair\www\protected\views\device\_form.php (36)
+in Z:\home\chair\www\protected\controllers\DeviceController.php (83)
+in Z:\home\chair\www\index.php (13)
+2013/12/17 04:53:07 [error] [php] Object of class Device could not be converted to string (Z:\home\chair\www\framework\web\helpers\CHtml.php:2155)
+Stack trace:
+#0 Z:\home\chair\www\protected\views\device\_form.php(36): dropDownList()
+#1 Z:\home\chair\www\framework\web\CBaseController.php(126): require()
+#2 Z:\home\chair\www\framework\web\CBaseController.php(95): DeviceController->renderInternal()
+#3 Z:\home\chair\www\framework\web\CController.php(869): DeviceController->renderFile()
+#4 Z:\home\chair\www\protected\controllers\DeviceController.php(83): DeviceController->renderPartial()
+#5 Z:\home\chair\www\framework\web\actions\CInlineAction.php(49): DeviceController->actionCreate()
+#6 Z:\home\chair\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#7 Z:\home\chair\www\framework\web\filters\CFilterChain.php(133): DeviceController->runAction()
+#8 Z:\home\chair\www\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#9 Z:\home\chair\www\framework\web\CController.php(1145): CAccessControlFilter->filter()
+#10 Z:\home\chair\www\framework\web\filters\CInlineFilter.php(58): DeviceController->filterAccessControl()
+#11 Z:\home\chair\www\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter()
+#12 Z:\home\chair\www\framework\web\CController.php(291): CFilterChain->run()
+#13 Z:\home\chair\www\framework\web\CController.php(265): DeviceController->runActionWithFilters()
+#14 Z:\home\chair\www\framework\web\CWebApplication.php(282): DeviceController->run()
+#15 Z:\home\chair\www\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#16 Z:\home\chair\www\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#17 Z:\home\chair\www\index.php(13): CWebApplication->run()
+REQUEST_URI=/index.php/device/create?_=1387248786315
+in Z:\home\chair\www\protected\views\device\_form.php (36)
+in Z:\home\chair\www\protected\controllers\DeviceController.php (83)
+in Z:\home\chair\www\index.php (13)
+2013/12/17 04:53:56 [error] [php] Object of class Device could not be converted to string (Z:\home\chair\www\framework\web\helpers\CHtml.php:2155)
+Stack trace:
+#0 Z:\home\chair\www\protected\views\device\_form.php(36): dropDownList()
+#1 Z:\home\chair\www\framework\web\CBaseController.php(126): require()
+#2 Z:\home\chair\www\framework\web\CBaseController.php(95): DeviceController->renderInternal()
+#3 Z:\home\chair\www\framework\web\CController.php(869): DeviceController->renderFile()
+#4 Z:\home\chair\www\protected\controllers\DeviceController.php(83): DeviceController->renderPartial()
+#5 Z:\home\chair\www\framework\web\actions\CInlineAction.php(49): DeviceController->actionCreate()
+#6 Z:\home\chair\www\framework\web\CController.php(308): CInlineAction->runWithParams()
+#7 Z:\home\chair\www\framework\web\filters\CFilterChain.php(133): DeviceController->runAction()
+#8 Z:\home\chair\www\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#9 Z:\home\chair\www\framework\web\CController.php(1145): CAccessControlFilter->filter()
+#10 Z:\home\chair\www\framework\web\filters\CInlineFilter.php(58): DeviceController->filterAccessControl()
+#11 Z:\home\chair\www\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter()
+#12 Z:\home\chair\www\framework\web\CController.php(291): CFilterChain->run()
+#13 Z:\home\chair\www\framework\web\CController.php(265): DeviceController->runActionWithFilters()
+#14 Z:\home\chair\www\framework\web\CWebApplication.php(282): DeviceController->run()
+#15 Z:\home\chair\www\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#16 Z:\home\chair\www\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#17 Z:\home\chair\www\index.php(13): CWebApplication->run()
+REQUEST_URI=/index.php/device/create?_=1387248836011
+in Z:\home\chair\www\protected\views\device\_form.php (36)
+in Z:\home\chair\www\protected\controllers\DeviceController.php (83)
+in Z:\home\chair\www\index.php (13)
+2013/12/17 04:56:29 [error] [exception.CException] exception 'CException' with message 'Не определено свойство "Device.group_id".' in Z:\home\chair\www\framework\base\CComponent.php:130
+Stack trace:
+#0 Z:\home\chair\www\framework\db\ar\CActiveRecord.php(145): CComponent->__get('group_id')
+#1 Z:\home\chair\www\protected\models\Device.php(106): CActiveRecord->__get('group_id')
+#2 Z:\home\chair\www\protected\views\device\admin.php(46): Device->search()
+#3 Z:\home\chair\www\framework\web\CBaseController.php(126): require('Z:\home\chair\w...')
+#4 Z:\home\chair\www\framework\web\CBaseController.php(95): CBaseController->renderInternal('Z:\home\chair\w...', Array, true)
+#5 Z:\home\chair\www\framework\web\CController.php(869): CBaseController->renderFile('Z:\home\chair\w...', Array, true)
+#6 Z:\home\chair\www\framework\web\CController.php(782): CController->renderPartial('admin', Array, true)
+#7 Z:\home\chair\www\protected\controllers\DeviceController.php(163): CController->render('admin', Array)
+#8 Z:\home\chair\www\framework\web\actions\CInlineAction.php(49): DeviceController->actionAdmin()
+#9 Z:\home\chair\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#10 Z:\home\chair\www\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#11 Z:\home\chair\www\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#12 Z:\home\chair\www\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#13 Z:\home\chair\www\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#14 Z:\home\chair\www\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#15 Z:\home\chair\www\framework\web\CController.php(291): CFilterChain->run()
+#16 Z:\home\chair\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 Z:\home\chair\www\framework\web\CWebApplication.php(282): CController->run('admin')
+#18 Z:\home\chair\www\framework\web\CWebApplication.php(141): CWebApplication->runController('device/admin')
+#19 Z:\home\chair\www\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#20 Z:\home\chair\www\index.php(13): CApplication->run()
+#21 {main}
+REQUEST_URI=/index.php/device/admin
+HTTP_REFERER=http://chair/index.php/staff/admin
+---
+2013/12/17 04:57:17 [error] [exception.CException] exception 'CException' with message 'Не определено свойство "Device.group_id".' in Z:\home\chair\www\framework\base\CComponent.php:130
+Stack trace:
+#0 Z:\home\chair\www\framework\db\ar\CActiveRecord.php(145): CComponent->__get('group_id')
+#1 Z:\home\chair\www\protected\models\Device.php(106): CActiveRecord->__get('group_id')
+#2 Z:\home\chair\www\protected\views\device\admin.php(46): Device->search()
+#3 Z:\home\chair\www\framework\web\CBaseController.php(126): require('Z:\home\chair\w...')
+#4 Z:\home\chair\www\framework\web\CBaseController.php(95): CBaseController->renderInternal('Z:\home\chair\w...', Array, true)
+#5 Z:\home\chair\www\framework\web\CController.php(869): CBaseController->renderFile('Z:\home\chair\w...', Array, true)
+#6 Z:\home\chair\www\framework\web\CController.php(782): CController->renderPartial('admin', Array, true)
+#7 Z:\home\chair\www\protected\controllers\DeviceController.php(163): CController->render('admin', Array)
+#8 Z:\home\chair\www\framework\web\actions\CInlineAction.php(49): DeviceController->actionAdmin()
+#9 Z:\home\chair\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#10 Z:\home\chair\www\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#11 Z:\home\chair\www\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#12 Z:\home\chair\www\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#13 Z:\home\chair\www\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#14 Z:\home\chair\www\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#15 Z:\home\chair\www\framework\web\CController.php(291): CFilterChain->run()
+#16 Z:\home\chair\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 Z:\home\chair\www\framework\web\CWebApplication.php(282): CController->run('admin')
+#18 Z:\home\chair\www\framework\web\CWebApplication.php(141): CWebApplication->runController('device/admin')
+#19 Z:\home\chair\www\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#20 Z:\home\chair\www\index.php(13): CApplication->run()
+#21 {main}
+REQUEST_URI=/index.php/device/admin
+HTTP_REFERER=http://chair/index.php/staff/admin
+---
+2013/12/17 04:57:36 [error] [exception.CException] exception 'CException' with message 'Не определено свойство "Device.group_id".' in Z:\home\chair\www\framework\base\CComponent.php:130
+Stack trace:
+#0 Z:\home\chair\www\framework\db\ar\CActiveRecord.php(145): CComponent->__get('group_id')
+#1 Z:\home\chair\www\protected\models\Device.php(106): CActiveRecord->__get('group_id')
+#2 Z:\home\chair\www\protected\views\device\admin.php(46): Device->search()
+#3 Z:\home\chair\www\framework\web\CBaseController.php(126): require('Z:\home\chair\w...')
+#4 Z:\home\chair\www\framework\web\CBaseController.php(95): CBaseController->renderInternal('Z:\home\chair\w...', Array, true)
+#5 Z:\home\chair\www\framework\web\CController.php(869): CBaseController->renderFile('Z:\home\chair\w...', Array, true)
+#6 Z:\home\chair\www\framework\web\CController.php(782): CController->renderPartial('admin', Array, true)
+#7 Z:\home\chair\www\protected\controllers\DeviceController.php(163): CController->render('admin', Array)
+#8 Z:\home\chair\www\framework\web\actions\CInlineAction.php(49): DeviceController->actionAdmin()
+#9 Z:\home\chair\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#10 Z:\home\chair\www\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#11 Z:\home\chair\www\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#12 Z:\home\chair\www\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#13 Z:\home\chair\www\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#14 Z:\home\chair\www\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#15 Z:\home\chair\www\framework\web\CController.php(291): CFilterChain->run()
+#16 Z:\home\chair\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 Z:\home\chair\www\framework\web\CWebApplication.php(282): CController->run('admin')
+#18 Z:\home\chair\www\framework\web\CWebApplication.php(141): CWebApplication->runController('device/admin')
+#19 Z:\home\chair\www\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#20 Z:\home\chair\www\index.php(13): CApplication->run()
+#21 {main}
+REQUEST_URI=/index.php/device/admin
+HTTP_REFERER=http://chair/index.php/staff/create
+---
+2013/12/17 04:57:47 [error] [exception.CException] exception 'CException' with message 'Не определено свойство "Device.group_id".' in Z:\home\chair\www\framework\base\CComponent.php:130
+Stack trace:
+#0 Z:\home\chair\www\framework\db\ar\CActiveRecord.php(145): CComponent->__get('group_id')
+#1 Z:\home\chair\www\protected\models\Device.php(106): CActiveRecord->__get('group_id')
+#2 Z:\home\chair\www\protected\views\device\admin.php(46): Device->search()
+#3 Z:\home\chair\www\framework\web\CBaseController.php(126): require('Z:\home\chair\w...')
+#4 Z:\home\chair\www\framework\web\CBaseController.php(95): CBaseController->renderInternal('Z:\home\chair\w...', Array, true)
+#5 Z:\home\chair\www\framework\web\CController.php(869): CBaseController->renderFile('Z:\home\chair\w...', Array, true)
+#6 Z:\home\chair\www\framework\web\CController.php(782): CController->renderPartial('admin', Array, true)
+#7 Z:\home\chair\www\protected\controllers\DeviceController.php(163): CController->render('admin', Array)
+#8 Z:\home\chair\www\framework\web\actions\CInlineAction.php(49): DeviceController->actionAdmin()
+#9 Z:\home\chair\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#10 Z:\home\chair\www\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#11 Z:\home\chair\www\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#12 Z:\home\chair\www\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#13 Z:\home\chair\www\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#14 Z:\home\chair\www\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#15 Z:\home\chair\www\framework\web\CController.php(291): CFilterChain->run()
+#16 Z:\home\chair\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 Z:\home\chair\www\framework\web\CWebApplication.php(282): CController->run('admin')
+#18 Z:\home\chair\www\framework\web\CWebApplication.php(141): CWebApplication->runController('device/admin')
+#19 Z:\home\chair\www\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#20 Z:\home\chair\www\index.php(13): CApplication->run()
+#21 {main}
+REQUEST_URI=/index.php/device/admin
+---
+2013/12/17 04:58:05 [error] [exception.CException] exception 'CException' with message 'Не определено свойство "Device.group_id".' in Z:\home\chair\www\framework\base\CComponent.php:130
+Stack trace:
+#0 Z:\home\chair\www\framework\db\ar\CActiveRecord.php(145): CComponent->__get('group_id')
+#1 Z:\home\chair\www\protected\models\Device.php(106): CActiveRecord->__get('group_id')
+#2 Z:\home\chair\www\protected\views\device\admin.php(46): Device->search()
+#3 Z:\home\chair\www\framework\web\CBaseController.php(126): require('Z:\home\chair\w...')
+#4 Z:\home\chair\www\framework\web\CBaseController.php(95): CBaseController->renderInternal('Z:\home\chair\w...', Array, true)
+#5 Z:\home\chair\www\framework\web\CController.php(869): CBaseController->renderFile('Z:\home\chair\w...', Array, true)
+#6 Z:\home\chair\www\framework\web\CController.php(782): CController->renderPartial('admin', Array, true)
+#7 Z:\home\chair\www\protected\controllers\DeviceController.php(163): CController->render('admin', Array)
+#8 Z:\home\chair\www\framework\web\actions\CInlineAction.php(49): DeviceController->actionAdmin()
+#9 Z:\home\chair\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#10 Z:\home\chair\www\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#11 Z:\home\chair\www\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#12 Z:\home\chair\www\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#13 Z:\home\chair\www\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#14 Z:\home\chair\www\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#15 Z:\home\chair\www\framework\web\CController.php(291): CFilterChain->run()
+#16 Z:\home\chair\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 Z:\home\chair\www\framework\web\CWebApplication.php(282): CController->run('admin')
+#18 Z:\home\chair\www\framework\web\CWebApplication.php(141): CWebApplication->runController('device/admin')
+#19 Z:\home\chair\www\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#20 Z:\home\chair\www\index.php(13): CApplication->run()
+#21 {main}
+REQUEST_URI=/index.php/device/admin
+---
+2013/12/17 04:58:10 [error] [exception.CException] exception 'CException' with message 'Не определено свойство "Device.group_id".' in Z:\home\chair\www\framework\base\CComponent.php:130
+Stack trace:
+#0 Z:\home\chair\www\framework\db\ar\CActiveRecord.php(145): CComponent->__get('group_id')
+#1 Z:\home\chair\www\protected\models\Device.php(106): CActiveRecord->__get('group_id')
+#2 Z:\home\chair\www\protected\views\device\admin.php(46): Device->search()
+#3 Z:\home\chair\www\framework\web\CBaseController.php(126): require('Z:\home\chair\w...')
+#4 Z:\home\chair\www\framework\web\CBaseController.php(95): CBaseController->renderInternal('Z:\home\chair\w...', Array, true)
+#5 Z:\home\chair\www\framework\web\CController.php(869): CBaseController->renderFile('Z:\home\chair\w...', Array, true)
+#6 Z:\home\chair\www\framework\web\CController.php(782): CController->renderPartial('admin', Array, true)
+#7 Z:\home\chair\www\protected\controllers\DeviceController.php(163): CController->render('admin', Array)
+#8 Z:\home\chair\www\framework\web\actions\CInlineAction.php(49): DeviceController->actionAdmin()
+#9 Z:\home\chair\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#10 Z:\home\chair\www\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#11 Z:\home\chair\www\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#12 Z:\home\chair\www\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#13 Z:\home\chair\www\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#14 Z:\home\chair\www\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#15 Z:\home\chair\www\framework\web\CController.php(291): CFilterChain->run()
+#16 Z:\home\chair\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 Z:\home\chair\www\framework\web\CWebApplication.php(282): CController->run('admin')
+#18 Z:\home\chair\www\framework\web\CWebApplication.php(141): CWebApplication->runController('device/admin')
+#19 Z:\home\chair\www\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#20 Z:\home\chair\www\index.php(13): CApplication->run()
+#21 {main}
+REQUEST_URI=/index.php/device/admin
+HTTP_REFERER=http://chair/index.php/staff/admin
+---
+2013/12/17 04:58:29 [error] [exception.CException] exception 'CException' with message 'Не определено свойство "Device.group_id".' in Z:\home\chair\www\framework\base\CComponent.php:130
+Stack trace:
+#0 Z:\home\chair\www\framework\db\ar\CActiveRecord.php(145): CComponent->__get('group_id')
+#1 Z:\home\chair\www\protected\models\Device.php(105): CActiveRecord->__get('group_id')
+#2 Z:\home\chair\www\protected\views\device\admin.php(46): Device->search()
+#3 Z:\home\chair\www\framework\web\CBaseController.php(126): require('Z:\home\chair\w...')
+#4 Z:\home\chair\www\framework\web\CBaseController.php(95): CBaseController->renderInternal('Z:\home\chair\w...', Array, true)
+#5 Z:\home\chair\www\framework\web\CController.php(869): CBaseController->renderFile('Z:\home\chair\w...', Array, true)
+#6 Z:\home\chair\www\framework\web\CController.php(782): CController->renderPartial('admin', Array, true)
+#7 Z:\home\chair\www\protected\controllers\DeviceController.php(163): CController->render('admin', Array)
+#8 Z:\home\chair\www\framework\web\actions\CInlineAction.php(49): DeviceController->actionAdmin()
+#9 Z:\home\chair\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#10 Z:\home\chair\www\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#11 Z:\home\chair\www\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#12 Z:\home\chair\www\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#13 Z:\home\chair\www\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#14 Z:\home\chair\www\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#15 Z:\home\chair\www\framework\web\CController.php(291): CFilterChain->run()
+#16 Z:\home\chair\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 Z:\home\chair\www\framework\web\CWebApplication.php(282): CController->run('admin')
+#18 Z:\home\chair\www\framework\web\CWebApplication.php(141): CWebApplication->runController('device/admin')
+#19 Z:\home\chair\www\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#20 Z:\home\chair\www\index.php(13): CApplication->run()
+#21 {main}
+REQUEST_URI=/index.php/device/admin
+HTTP_REFERER=http://chair/index.php/staff/admin
+---
+2013/12/17 04:58:41 [error] [exception.CException] exception 'CException' with message 'Не определено свойство "Device.group_id".' in Z:\home\chair\www\framework\base\CComponent.php:130
+Stack trace:
+#0 Z:\home\chair\www\framework\db\ar\CActiveRecord.php(145): CComponent->__get('group_id')
+#1 Z:\home\chair\www\protected\models\Device.php(104): CActiveRecord->__get('group_id')
+#2 Z:\home\chair\www\protected\views\device\admin.php(46): Device->search()
+#3 Z:\home\chair\www\framework\web\CBaseController.php(126): require('Z:\home\chair\w...')
+#4 Z:\home\chair\www\framework\web\CBaseController.php(95): CBaseController->renderInternal('Z:\home\chair\w...', Array, true)
+#5 Z:\home\chair\www\framework\web\CController.php(869): CBaseController->renderFile('Z:\home\chair\w...', Array, true)
+#6 Z:\home\chair\www\framework\web\CController.php(782): CController->renderPartial('admin', Array, true)
+#7 Z:\home\chair\www\protected\controllers\DeviceController.php(163): CController->render('admin', Array)
+#8 Z:\home\chair\www\framework\web\actions\CInlineAction.php(49): DeviceController->actionAdmin()
+#9 Z:\home\chair\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#10 Z:\home\chair\www\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#11 Z:\home\chair\www\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#12 Z:\home\chair\www\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#13 Z:\home\chair\www\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#14 Z:\home\chair\www\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#15 Z:\home\chair\www\framework\web\CController.php(291): CFilterChain->run()
+#16 Z:\home\chair\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#17 Z:\home\chair\www\framework\web\CWebApplication.php(282): CController->run('admin')
+#18 Z:\home\chair\www\framework\web\CWebApplication.php(141): CWebApplication->runController('device/admin')
+#19 Z:\home\chair\www\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#20 Z:\home\chair\www\index.php(13): CApplication->run()
+#21 {main}
+REQUEST_URI=/index.php/device/admin
+HTTP_REFERER=http://chair/index.php/staff/admin
+---
+2013/12/17 04:59:57 [warning] [application] Не удалось присвоить небезопасный атрибут "settings_tmpl_id" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (71)
+in Z:\home\chair\www\index.php (13)
+2013/12/17 04:59:57 [error] [exception.CException] exception 'CException' with message 'Не определено свойство "Device.group_id".' in Z:\home\chair\www\framework\base\CComponent.php:130
+Stack trace:
+#0 Z:\home\chair\www\framework\db\ar\CActiveRecord.php(145): CComponent->__get('group_id')
+#1 Z:\home\chair\www\framework\validators\CNumberValidator.php(78): CActiveRecord->__get('group_id')
+#2 Z:\home\chair\www\framework\validators\CValidator.php(213): CNumberValidator->validateAttribute(Object(Device), 'group_id')
+#3 Z:\home\chair\www\framework\base\CModel.php(159): CValidator->validate(Object(Device), NULL)
+#4 Z:\home\chair\www\framework\db\ar\CActiveRecord.php(805): CModel->validate(NULL)
+#5 Z:\home\chair\www\protected\controllers\DeviceController.php(72): CActiveRecord->save()
+#6 Z:\home\chair\www\framework\web\actions\CInlineAction.php(49): DeviceController->actionCreate()
+#7 Z:\home\chair\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#8 Z:\home\chair\www\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#9 Z:\home\chair\www\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#10 Z:\home\chair\www\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#11 Z:\home\chair\www\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#12 Z:\home\chair\www\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#13 Z:\home\chair\www\framework\web\CController.php(291): CFilterChain->run()
+#14 Z:\home\chair\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#15 Z:\home\chair\www\framework\web\CWebApplication.php(282): CController->run('create')
+#16 Z:\home\chair\www\framework\web\CWebApplication.php(141): CWebApplication->runController('device/create')
+#17 Z:\home\chair\www\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#18 Z:\home\chair\www\index.php(13): CApplication->run()
+#19 {main}
+REQUEST_URI=/index.php/device/create
+HTTP_REFERER=http://chair/index.php/device/admin
+---
+2013/12/17 05:00:00 [warning] [application] Не удалось присвоить небезопасный атрибут "settings_tmpl_id" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (71)
+in Z:\home\chair\www\index.php (13)
+2013/12/17 05:00:00 [error] [exception.CException] exception 'CException' with message 'Не определено свойство "Device.group_id".' in Z:\home\chair\www\framework\base\CComponent.php:130
+Stack trace:
+#0 Z:\home\chair\www\framework\db\ar\CActiveRecord.php(145): CComponent->__get('group_id')
+#1 Z:\home\chair\www\framework\validators\CNumberValidator.php(78): CActiveRecord->__get('group_id')
+#2 Z:\home\chair\www\framework\validators\CValidator.php(213): CNumberValidator->validateAttribute(Object(Device), 'group_id')
+#3 Z:\home\chair\www\framework\base\CModel.php(159): CValidator->validate(Object(Device), NULL)
+#4 Z:\home\chair\www\framework\db\ar\CActiveRecord.php(805): CModel->validate(NULL)
+#5 Z:\home\chair\www\protected\controllers\DeviceController.php(72): CActiveRecord->save()
+#6 Z:\home\chair\www\framework\web\actions\CInlineAction.php(49): DeviceController->actionCreate()
+#7 Z:\home\chair\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#8 Z:\home\chair\www\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#9 Z:\home\chair\www\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#10 Z:\home\chair\www\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#11 Z:\home\chair\www\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#12 Z:\home\chair\www\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#13 Z:\home\chair\www\framework\web\CController.php(291): CFilterChain->run()
+#14 Z:\home\chair\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#15 Z:\home\chair\www\framework\web\CWebApplication.php(282): CController->run('create')
+#16 Z:\home\chair\www\framework\web\CWebApplication.php(141): CWebApplication->runController('device/create')
+#17 Z:\home\chair\www\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#18 Z:\home\chair\www\index.php(13): CApplication->run()
+#19 {main}
+REQUEST_URI=/index.php/device/create
+HTTP_REFERER=http://chair/index.php/device/admin
+---
+2013/12/17 05:00:02 [warning] [application] Не удалось присвоить небезопасный атрибут "settings_tmpl_id" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (71)
+in Z:\home\chair\www\index.php (13)
+2013/12/17 05:00:02 [error] [exception.CException] exception 'CException' with message 'Не определено свойство "Device.group_id".' in Z:\home\chair\www\framework\base\CComponent.php:130
+Stack trace:
+#0 Z:\home\chair\www\framework\db\ar\CActiveRecord.php(145): CComponent->__get('group_id')
+#1 Z:\home\chair\www\framework\validators\CNumberValidator.php(78): CActiveRecord->__get('group_id')
+#2 Z:\home\chair\www\framework\validators\CValidator.php(213): CNumberValidator->validateAttribute(Object(Device), 'group_id')
+#3 Z:\home\chair\www\framework\base\CModel.php(159): CValidator->validate(Object(Device), NULL)
+#4 Z:\home\chair\www\framework\db\ar\CActiveRecord.php(805): CModel->validate(NULL)
+#5 Z:\home\chair\www\protected\controllers\DeviceController.php(72): CActiveRecord->save()
+#6 Z:\home\chair\www\framework\web\actions\CInlineAction.php(49): DeviceController->actionCreate()
+#7 Z:\home\chair\www\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#8 Z:\home\chair\www\framework\web\filters\CFilterChain.php(133): CController->runAction(Object(CInlineAction))
+#9 Z:\home\chair\www\framework\web\filters\CFilter.php(40): CFilterChain->run()
+#10 Z:\home\chair\www\framework\web\CController.php(1145): CFilter->filter(Object(CFilterChain))
+#11 Z:\home\chair\www\framework\web\filters\CInlineFilter.php(58): CController->filterAccessControl(Object(CFilterChain))
+#12 Z:\home\chair\www\framework\web\filters\CFilterChain.php(130): CInlineFilter->filter(Object(CFilterChain))
+#13 Z:\home\chair\www\framework\web\CController.php(291): CFilterChain->run()
+#14 Z:\home\chair\www\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#15 Z:\home\chair\www\framework\web\CWebApplication.php(282): CController->run('create')
+#16 Z:\home\chair\www\framework\web\CWebApplication.php(141): CWebApplication->runController('device/create')
+#17 Z:\home\chair\www\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#18 Z:\home\chair\www\index.php(13): CApplication->run()
+#19 {main}
+REQUEST_URI=/index.php/device/create
+HTTP_REFERER=http://chair/index.php/device/admin
+---
+2013/12/17 05:01:39 [warning] [application] Не удалось присвоить небезопасный атрибут "settings_tmpl_id" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (71)
+in Z:\home\chair\www\index.php (13)
+2013/12/17 05:09:50 [warning] [application] Не удалось присвоить небезопасный атрибут "settings_tmpl_id" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (71)
+in Z:\home\chair\www\index.php (13)
+2013/12/17 05:09:57 [warning] [application] Не удалось присвоить небезопасный атрибут "settings_tmpl_id" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (71)
+in Z:\home\chair\www\index.php (13)
+2013/12/17 05:10:04 [warning] [application] Не удалось присвоить небезопасный атрибут "settings_tmpl_id" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (71)
+in Z:\home\chair\www\index.php (13)
+2013/12/17 05:10:26 [warning] [application] Не удалось присвоить небезопасный атрибут "settings_tmpl_id" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (71)
+in Z:\home\chair\www\index.php (13)
+2013/12/17 05:10:45 [warning] [application] Не удалось присвоить небезопасный атрибут "settings_tmpl_id" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (71)
+in Z:\home\chair\www\index.php (13)
+2013/12/17 05:11:22 [warning] [application] Не удалось присвоить небезопасный атрибут "settings_tmpl_id" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (71)
+in Z:\home\chair\www\index.php (13)
+2013/12/17 05:11:51 [warning] [application] Не удалось присвоить небезопасный атрибут "settings_tmpl_id" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (71)
+in Z:\home\chair\www\index.php (13)
+2013/12/17 05:12:48 [warning] [application] Не удалось присвоить небезопасный атрибут "settings_tmpl_id" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (71)
+in Z:\home\chair\www\index.php (13)
+2013/12/17 05:12:51 [warning] [application] Не удалось присвоить небезопасный атрибут "settings_tmpl_id" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (71)
+in Z:\home\chair\www\index.php (13)
+2013/12/17 05:13:12 [warning] [application] Не удалось присвоить небезопасный атрибут "settings_tmpl_id" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (71)
+in Z:\home\chair\www\index.php (13)
+2013/12/17 05:13:27 [warning] [application] Не удалось присвоить небезопасный атрибут "settings_tmpl_id" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (71)
+in Z:\home\chair\www\index.php (13)
+2013/12/17 05:14:32 [warning] [application] Не удалось присвоить небезопасный атрибут "settings_tmpl_id" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (71)
+in Z:\home\chair\www\index.php (13)
+2013/12/17 05:14:57 [warning] [application] Не удалось присвоить небезопасный атрибут "settings_tmpl_id" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (71)
+in Z:\home\chair\www\index.php (13)
+2013/12/17 05:15:57 [warning] [application] Не удалось присвоить небезопасный атрибут "settings_tmpl_id" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (71)
+in Z:\home\chair\www\index.php (13)
+2013/12/17 05:16:18 [warning] [application] Не удалось присвоить небезопасный атрибут "settings_tmpl_id" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (71)
+in Z:\home\chair\www\index.php (13)
+2013/12/17 05:17:22 [warning] [application] Не удалось присвоить небезопасный атрибут "settings_tmpl_id" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (71)
+in Z:\home\chair\www\index.php (13)
+2013/12/17 05:17:43 [warning] [application] Не удалось присвоить небезопасный атрибут "settings_tmpl_id" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (71)
+in Z:\home\chair\www\index.php (13)
+2013/12/17 05:17:54 [warning] [application] Не удалось присвоить небезопасный атрибут "settings_tmpl_id" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (71)
+in Z:\home\chair\www\index.php (13)
+2013/12/17 05:18:02 [warning] [application] Не удалось присвоить небезопасный атрибут "settings_tmpl_id" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (71)
+in Z:\home\chair\www\index.php (13)
+2013/12/17 05:18:32 [warning] [application] Не удалось присвоить небезопасный атрибут "settings_tmpl_id" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (71)
+in Z:\home\chair\www\index.php (13)
+2013/12/17 05:18:37 [warning] [application] Не удалось присвоить небезопасный атрибут "settings_tmpl_id" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (71)
+in Z:\home\chair\www\index.php (13)
+2013/12/17 05:19:02 [warning] [application] Не удалось присвоить небезопасный атрибут "settings_tmpl_id" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (71)
+in Z:\home\chair\www\index.php (13)
+2013/12/17 05:19:25 [warning] [application] Не удалось присвоить небезопасный атрибут "settings_tmpl_id" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (71)
+in Z:\home\chair\www\index.php (13)
+2013/12/17 05:19:25 [warning] [application] Не удалось присвоить небезопасный атрибут "settings_tmpl_id" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (71)
+in Z:\home\chair\www\index.php (13)
