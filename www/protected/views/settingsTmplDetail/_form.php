@@ -27,7 +27,7 @@
     
     <?php echo $form->labelEx($model, 'acc_lvl'); ?>
     <?php echo $form->error($model, 'acc_lvl'); ?>
-    <?php $list = array('0' => 'Администрантор', '1' => 'Суперадминистрантор'); ?>
+    <?php $list = array('0' => 'Администратор', '1' => 'Суперадминистратор'); ?>
     <?php echo $form->dropDownList($model, 'acc_lvl', $list, array('class' => 'span5')); ?>
 
     <?php echo $form->textFieldRow($model, 'default', array('class' => 'span5', 'maxlength' => 100)); ?>

@@ -69,7 +69,7 @@ class DeviceController extends Controller
 		
 		if(isset($_POST['Device'])){
 			$model->attributes=$_POST['Device'];
-			if($model->save()){
+			if($this->saveWithSetttings($model)){
 				if(Yii::app()->request->isAjaxRequest){
 					echo 'success';
 					Yii::app()->end();
@@ -84,8 +84,19 @@ class DeviceController extends Controller
 		else
 			$this->render('create',array('model'=>$model));
 	}
+        /* @var $model Device*/
+        private function saveWithSetttings($model) {
+            $model->save();
+            if ($model->settings_tmpl_id) {
+                $tmpl = SettingsTmplDetail::model()->find("tmpl_id = $model->settings_tmpl_id");
+                
+                print_r($tmpl);
+            }
+            echo $model->settings_tmpl_id;
+            return TRUE;
+        }
 
-	/**
+        /**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated

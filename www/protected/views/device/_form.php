@@ -31,6 +31,12 @@
 	<?php $list = CHtml::listData(Object::model()->findAll(), 'id', 'city'); ?>
         <?php echo $form->dropDownList($model, 'object_id', $list, array('class' => 'span5', 'empty' => 'Выберите объект')); ?>
         
+        <?php if ($model->isNewRecord) {
+            echo $form->labelEx($model, 'settings_tmpl_id');
+            $list = CHtml::listData(SettingsTemplate::model()->findAll(), 'id', 'descr');
+            echo  $form->dropDownList($model, 'settings_tmpl_id', $list, array('class' => 'span5'));            
+        }
+        ?>
 	<?php if (!Yii::app()->request->isAjaxRequest): ?>
 	<div class="form-actions">
 		<?php $this->widget('bootstrap.widgets.TbButton', array(
