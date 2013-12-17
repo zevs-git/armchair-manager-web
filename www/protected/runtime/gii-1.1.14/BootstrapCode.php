@@ -1,5 +1,5 @@
 <?php
 return array (
-  'template' => 'DialogCRUD',
+  'template' => 'TBDialogCRUD',
   'baseControllerClass' => 'Controller',
 );

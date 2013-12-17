@@ -1,26 +1,26 @@
 <?php if(!Yii::app()->request->isAjaxRequest): ?>
 <?php
 $this->breadcrumbs=array(
-	'Devices'=>array('index'),
+	'Settings Templates'=>array('index'),
 	$model->id,
 );
 
 $this->menu=array(
-	array('label'=>'List Device','url'=>array('index')),
-	array('label'=>'Create Device','url'=>array('create')),
-	array('label'=>'Update Device','url'=>array('update','id'=>$model->id)),
-	array('label'=>'Delete Device','url'=>'#','linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Manage Device','url'=>array('admin')),
+	array('label'=>'List SettingsTemplate','url'=>array('index')),
+	array('label'=>'Create SettingsTemplate','url'=>array('create')),
+	array('label'=>'Update SettingsTemplate','url'=>array('update','id'=>$model->id)),
+	array('label'=>'Delete SettingsTemplate','url'=>'#','linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
+	array('label'=>'Manage SettingsTemplate','url'=>array('admin')),
 );
 ?>
 
-<h1>View Device #<?php echo $model->id; ?></h1>
+<h1>View SettingsTemplate #<?php echo $model->id; ?></h1>
 <?php endif; ?>
 
 <?php if(Yii::app()->request->isAjaxRequest): ?>
 <div class="modal-header">
 	<a class="close" data-dismiss="modal">&times;</a>
-	<h4>Устройство #<?php echo $model->id; ?></h4>
+	<h4>View People #<?php echo $model->id; ?></h4>
 </div>
 
 <div class="modal-body">
@@ -30,11 +30,7 @@ $this->menu=array(
 	'data'=>$model,
 	'attributes'=>array(
 		'id',
-		'IMEI',
-		'type_id',
-		'soft_version',
-		'object_id',
-		'settings_id',
+		'descr',
 	),
 )); ?>
 
