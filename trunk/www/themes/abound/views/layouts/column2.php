@@ -2,7 +2,7 @@
 <?php $this->beginContent('//layouts/main'); ?>
 
 <div class="row-fluid">
-    <div class="span3">
+    <div class="span2">
         <div class="sidebar-nav">
 
             <?php
@@ -15,7 +15,7 @@
         </div>
 
     </div><!--/span-->
-    <div class="span9">
+    <div class="span10">
 
         <?php if (isset($this->breadcrumbs)): ?>
             <?php
