@@ -48,7 +48,7 @@ h1,h2,h3,h4, .portlet > .portlet-decoration, .sidebar-nav > ul > li > a, .navbar
 }
 
 .portlet > .portlet-decoration, .sidebar-nav > ul > li > a, .navbar li > a {
-	font-size:18px;
+	font-size:16px;
 }
 th {
     font-size: 14px;
@@ -120,7 +120,11 @@ box-shadow: inset 0 0 3px #EEE;
 -webkit-border-radius: 100%;
 border-radius: 100%;
 }
-
+.summary
+{
+	margin: 0 0 5px 0;
+	text-align: right;
+}
 .summary ul li .summary-number {
 font-size: 20px;
 font-weight: bold;
@@ -200,7 +204,7 @@ font-size: 16px;
 }
 
 .stat-block .stat-percent {
-width: 40px;
+width: 60px;
 float: right !important;
 text-align: center !important;
 }
@@ -530,6 +534,6 @@ footer {
   filter: progid:dximagetransform.microsoft.gradient(enabled=false);
 }
 
-.nav li {
+.nav-collapse .nav li {
     line-height: 30px;
 }

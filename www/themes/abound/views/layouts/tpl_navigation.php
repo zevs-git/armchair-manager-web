@@ -23,7 +23,7 @@
                                 'htmlOptions' => array('class' => 'pull-right nav'),
                                 'items' => array(
                                     array('label' => 'Мониторинг', 'url' => array('/DeviceStatus/admin', 'visible' => !Yii::app()->user->isGuest)),
-                                    array('label' => 'Настройка', 'url' => '#',
+                                    array('label' => 'Администрирование', 'url' => '#',
                                         'itemOptions' => array('class' => 'dropdown', 'tabindex' => "-1"),
                                         'linkOptions' => array('class' => 'dropdown-toggle', 'data-toggle' => "dropdown"),
                                         'items' => array(
@@ -31,8 +31,10 @@
                                             array('label' => 'Объекты', 'url' => '/index.php/object/admin'),
                                             array('label' => 'Устройства', 'url' => '/index.php/device/admin'),
                                         )),
+                                    array('label' => 'Настройки', 'url' => '/index.php/settingsTemplate/admin'),
                                     array('label' => 'Аналитика', 'url' => array('/site/page', 'view' => 'graphs')),
                                     array('label' => 'Выйти (' . Yii::app()->user->name . ')',
+                                        'icon'=>'user',
                                         'url' => array('/site/logout'),
                                         'visible' => !Yii::app()->user->isGuest
                                     ),
