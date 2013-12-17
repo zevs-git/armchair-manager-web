@@ -9,12 +9,11 @@
  * @property string $type_id
  * @property integer $group_id
  * @property double $soft_version
- * @property string $SIM
  * @property string $object_id
- * @property string $create_user_id
- * @property string $create_date
- * @property string $update_user_id
- * @property string $update_date
+ * @property integer $settings_id
+ *
+ * The followings are the available model relations:
+ * @property SettingsDevice[] $settingsDevices
  */
 class Device extends CActiveRecord
 {
@@ -34,15 +33,13 @@ class Device extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-                        array('IMEI, group_id, type_id', 'required'),
-			array('group_id', 'numerical', 'integerOnly'=>true),
+			array('group_id, settings_id', 'numerical', 'integerOnly'=>true),
 			array('soft_version', 'numerical'),
-			array('IMEI, SIM', 'length', 'max'=>20),
-			array('type_id, object_id, create_user_id, update_user_id', 'length', 'max'=>11),
-			array('create_date, update_date', 'safe'),
+			array('IMEI', 'length', 'max'=>20),
+			array('type_id, object_id', 'length', 'max'=>11),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, IMEI, type_id, group_id, soft_version, SIM, object_id, create_user_id, create_date, update_user_id, update_date', 'safe', 'on'=>'search'),
+			array('id, IMEI, type_id, group_id, soft_version, object_id, settings_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,6 +51,8 @@ class Device extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'settingsDevices' => array(self::HAS_MANY, 'SettingsDevice', 'device_id'),
+                        'object' => array(self::BELONGS_TO, 'Object', 'object_id'),
 		);
 	}
 
@@ -66,16 +65,22 @@ class Device extends CActiveRecord
 			'id' => 'Ид',
 			'IMEI' => 'Сериейный номер (IMEI)',
 			'type_id' => 'Тип устройства',
+                        'type' => 'Тип устройства',
 			'group_id' => 'Группа устройств',
 			'soft_version' => 'Версия ПО',
-			'SIM' => 'номер SIM карты',
 			'object_id' => 'Объект',
-			'create_user_id' => 'Владелец',
-			'create_date' => 'Дата создания',
-			'update_user_id' => 'Редактор',
-			'update_date' => 'Дата редактирования',
+                        'object' => 'Объект',
+			'settings_id' => 'ИД настроек',
 		);
 	}
+        
+        public function gettype() {
+            if ($this->type_id == 0) {
+            return "Тип устройтва1";  
+            } else {
+                return NULL;
+            }
+        }
 
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
@@ -100,12 +105,8 @@ class Device extends CActiveRecord
 		$criteria->compare('type_id',$this->type_id,true);
 		$criteria->compare('group_id',$this->group_id);
 		$criteria->compare('soft_version',$this->soft_version);
-		$criteria->compare('SIM',$this->SIM,true);
 		$criteria->compare('object_id',$this->object_id,true);
-		$criteria->compare('create_user_id',$this->create_user_id,true);
-		$criteria->compare('create_date',$this->create_date,true);
-		$criteria->compare('update_user_id',$this->update_user_id,true);
-		$criteria->compare('update_date',$this->update_date,true);
+		$criteria->compare('settings_id',$this->settings_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
