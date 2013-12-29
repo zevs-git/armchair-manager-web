@@ -60,8 +60,9 @@ class SettingsDeviceDetail extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'sett_id' => 'Sett',
-			'var_id' => 'Var',
-			'value' => 'Value',
+			'var_id' => 'Ид',
+                        'var_descr' => 'Название',
+			'value' => 'Значение',
 		);
 	}
 
@@ -92,6 +93,22 @@ class SettingsDeviceDetail extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+        public function search_sett($device_id) {
+            $criteria=new CDbCriteria;
+
+            $criteria->compare('id',$this->id);
+            $criteria->compare('device_id',$device_id);
+            $criteria->compare('var_id',$this->var_id);
+            $criteria->compare('value',$this->value,true);
+
+            return new CActiveDataProvider($this, array(
+                    'criteria'=>$criteria,
+            ));
+        }
+        
+        public function getvar_descr() {
+            return $this->var->descr;           
+        }
 
 	/**
 	 * Returns the static model of the specified AR class.

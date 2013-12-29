@@ -63,8 +63,9 @@
 				'type'=>'post',
 				'data'=>'js:$(this).parent().parent().find("form").serialize()',
 				'success'=>'function(r){
-					if(r=="success"){
-						window.location.reload();
+					if(r.indexOf("success") >= 0){
+						 $.fn.yiiGridView.update("device-grid");
+                                                 $("#TBDialogCrud").modal("hide");
 					}
 					else{
 						$("#TBDialogCrud").html(r).modal("show");

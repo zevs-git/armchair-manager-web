@@ -167,7 +167,7 @@ class SettingsTmplDetailController extends Controller
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['SettingsTmplDetail']))
 			$model->attributes=$_GET['SettingsTmplDetail'];
-
+                
 		$this->render('admin',array(
 			'model'=>$model,
                         'tmpl_id'=>$id

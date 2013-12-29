@@ -31,10 +31,9 @@ $this->menu=array(
 	'attributes'=>array(
 		'id',
 		'IMEI',
-		'type_id',
+		'type',
 		'soft_version',
-		'object_id',
-		'settings_id',
+		'object.obj',
 	),
 )); ?>
 
