@@ -1,17 +1,11 @@
 <?php
 $this->breadcrumbs = array(
-    'Settings Templates' => array('index'),
-    'Manage',
+    'Настройки' => array('admin'),
+    'Шаблоны настроек',
 );
 
 $this->menu = array(
-    array('label' => 'List SettingsTemplate', 'url' => array('index')),
-    array('label' => 'Create SettingsTemplate', 'url' => array('create'), 'linkOptions' => array(
-            'ajax' => array(
-                'url' => $this->createUrl('create'),
-                'success' => 'function(r){$("#TBDialogCrud").html(r).modal("show");}',
-            ),
-        )),
+    array('label' => 'Шаблоны настроек', 'url' => array('admin')),
 );
 ?>
 

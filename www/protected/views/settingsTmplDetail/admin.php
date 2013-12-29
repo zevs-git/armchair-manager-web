@@ -2,24 +2,30 @@
 /* @var $model SettingsTmplDetail */
 
 $this->breadcrumbs = array(
-    'Settings Tmpl Details' => array('index'),
-    'Manage',
+    'Настройки' => yii::app()->createUrl('settingsTemplate/admin'),
+    'Шаблоны настроек' => yii::app()->createUrl('settingsTemplate/admin'),
+    'Управление переменными',
 );
 
 $this->menu = array(
-    array('label' => 'List SettingsTmplDetail', 'url' => array('index')),
-    array('label' => 'Create SettingsTmplDetail', 'url' => array('create'), 'linkOptions' => array(
-            'ajax' => array(
-                'url' => $this->createUrl('create'),
-                'success' => 'function(r){$("#TBDialogCrud").html(r).modal("show");}',
-            ),
-        )),
+    array('label' => 'Шаблоны настроек', 'url' => yii::app()->createUrl('settingsTemplate/admin')),
+    array('label' => 'Управление переменными', 'url' => '#'),
 );
 ?>
 
 <?php $this->beginWidget('bootstrap.widgets.TbModal', array('id' => 'TBDialogCrud')); ?>
 <?php $this->endWidget(); ?>
 
+<?php if($model->count("tmpl_id = $tmpl_id") == 0)  Yii::app()->user->setFlash('success', '<strong>Шаблон настроек создан успшно. Теперь необходмо его наполнить переменными.</strong>'); ?>
+
+<?php $this->widget('bootstrap.widgets.TbAlert', array(
+        'block'=>true,
+        'fade'=>true, 
+        'closeText'=>'&times;', 
+        'alerts'=>array(
+            'success'=>array('block'=>true, 'fade'=>true, 'closeText'=>'&times;'), // success, info, warning, error or danger
+        ),
+    )); ?>
 <h2>Управление переменными шаблона</h2>
 
 <div class="btn-toolbar">

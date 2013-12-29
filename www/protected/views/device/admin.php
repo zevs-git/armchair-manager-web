@@ -32,13 +32,13 @@ $('.search-form form').submit(function(){
 <?php $this->endWidget(); ?>
 
 <h2>Управление устройствами</h2>
-
+<!-- 
 <?php echo CHtml::link('Расширенный поиск','#',array('class'=>'search-button btn')); ?>
 <div class="search-form" style="display:none">
 <?php $this->renderPartial('_search',array(
 	'model'=>$model,
 )); ?>
-</div><!-- search-form -->
+</div>search-form -->
 
 <?php $this->widget('bootstrap.widgets.TbGridView',array(
 	'id'=>'device-grid',
@@ -48,15 +48,12 @@ $('.search-form form').submit(function(){
 	'columns'=>array(
 		'id',
 		'IMEI',
-		'type',
-		'soft_version',
-		array('name'=>'object',
-                    'value'=>'$data->object->obj'),
-		/*
-		'settings_id',
-		*/
+                'soft_version',
+		'deviceType.type_name',
+		'object.obj',
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
+                        'template'=>'{view}{update}{delete}{settings}',
 			'buttons' => array(
 				'update' => array(
 					'click'=>'function(){
@@ -73,6 +70,16 @@ $('.search-form form').submit(function(){
 						$.get(url, function(r){
 							$("#TBDialogCrud").html(r).modal("show");
 						});
+						return false;
+					}',
+				),
+                                'settings' => array(
+                                        'label'=>'Настройки устройтва',
+                                        'url'=>'Yii::app()->createUrl("SettingsDeviceDetail",array("admin"=>$data->id))',
+                                        'icon'=>'icon-cog',
+                                        'click'=>'function(){
+						var url = $(this).attr("href");
+                                                document.location = url;
 						return false;
 					}',
 				),

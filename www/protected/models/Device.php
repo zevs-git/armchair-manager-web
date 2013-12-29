@@ -11,9 +11,7 @@
  * @property string $object_id
  * @property integer $settings_tmpl_id
  * @property integer $settings_id
- *
  * The followings are the available model relations:
- * @property SettingsDevice[] $settingsDevices
  */
 class Device extends CActiveRecord
 {
@@ -51,8 +49,8 @@ class Device extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'settingsDevices' => array(self::HAS_MANY, 'SettingsDevice', 'device_id'),
                         'object' => array(self::BELONGS_TO, 'Object', 'object_id'),
+                        'deviceType' => array(self::BELONGS_TO, 'DeviceType', 'type_id'),
 		);
 	}
 
@@ -66,23 +64,16 @@ class Device extends CActiveRecord
 			'IMEI' => 'Сериейный номер (IMEI)',
 			'type_id' => 'Тип устройства',
                         'type' => 'Тип устройства',
+                        'type_name' => 'Тип устройства',
 			'soft_version' => 'Версия ПО',
 			'object_id' => 'Объект',
-                        'object' => 'Объект',
+                        'object_val' => 'Объект',
 			'settings_id' => 'ИД настроек',
                         'settings_tmpl_id'=>'Шаблон настроек',
 		);
 	}
-        
-        public function gettype() {
-            if ($this->type_id == 0) {
-            return "Тип устройтва1";  
-            } else {
-                return NULL;
-            }
-        }
 
-	/**
+        /**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 *
 	 * Typical usecase:
@@ -102,15 +93,56 @@ class Device extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('IMEI',$this->IMEI,true);
-		$criteria->compare('type_id',$this->type_id,true);
+		$criteria->compare('type_val',$this->type_id,true);
 		$criteria->compare('soft_version',$this->soft_version);
-		$criteria->compare('object_id',$this->object_id,true);
+		$criteria->compare('object',$this->object,true);
 		$criteria->compare('settings_id',$this->settings_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}
+        
+       
+        /* @var $tmpl_var SettingsTmplDetail */
+        public function saveWithSetttings() {
+            if($this->isNewRecord) {
+                $this->settings_id = 1;
+            } else {
+                $this->settings_id++;
+            }
+            $this->save();
+            if (!is_null($this->settings_tmpl_id)) {                
+                $tmpl = SettingsTmplDetail::model()->findAll("tmpl_id = $this->settings_tmpl_id");
+                SettingsDeviceDetail::model()->deleteAll("device_id = $this->id");
+                
+                $fileName = "settings/$this->IMEI.bin";
+                $data = '';
+                foreach ($tmpl as $tmpl_var) {
+                    $setings_var = new SettingsDeviceDetail;
+                    $setings_var->device_id = $this->id;
+                    $setings_var->sett_id = 1;
+                    $setings_var->var_id = $tmpl_var->var_id;
+                    $setings_var->value = $tmpl_var->default;
+                    $setings_var->save();
+                    $data .= pack('C',ord('#'));
+                    $data .= pack('C',$setings_var->var_id);
+                    if ($setings_var->var->size_type_id == 0) {
+                        $data .= pack('N',$setings_var->value);
+                    } else {
+                        $data .= pack('C',  strlen($setings_var->value));
+                        $data .= pack('A*',$setings_var->value);
+                    }
+                }
+                $size  = pack('n', strlen($data));
+                $crc16 = pack('n', CRC16::calculate($data));
+                
+                $data = $size . $crc16 . $data;
+                file_put_contents($fileName, $data, FILE_BINARY );
+            }
+            return TRUE;
+        }
+        
 
 	/**
 	 * Returns the static model of the specified AR class.

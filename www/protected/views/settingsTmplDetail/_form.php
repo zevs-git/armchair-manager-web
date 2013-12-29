@@ -1,7 +1,8 @@
+<?php /* @var $model SettingsTmplDetail */ ?>
 <?php if (Yii::app()->request->isAjaxRequest): ?>
     <div class="modal-header">
         <a id="dlg-close" class="close" data-dismiss="modal">&times;</a>
-        <h4><?php echo $model->isNewRecord ? 'Create SettingsTmplDetail' : 'Update SettingsTmplDetail #' . $model->id ?></h4>
+        <h4><?php echo $model->isNewRecord ? 'Добавление переменной настроек' : 'Редактирование переменной настроек #' . $model->var_id ?></h4>
     </div>
 
     <div class="modal-body">
@@ -62,7 +63,9 @@
                     'data' => 'js:$(this).parent().parent().find("form").serialize()',
                     'success' => 'function(r){
 					if(r=="success"){
-                                                window.location.reload()
+                                                $.fn.yiiGridView.update("settings-tmpl-detail-grid");
+                                                //window.location.reload()
+                                                $("#TBDialogCrud").modal("hide");
 					}
 					else{
 						$("#TBDialogCrud").html(r).modal("show");

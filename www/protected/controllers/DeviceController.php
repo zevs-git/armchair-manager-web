@@ -69,9 +69,10 @@ class DeviceController extends Controller
 		
 		if(isset($_POST['Device'])){
 			$model->attributes=$_POST['Device'];
-			if($this->saveWithSetttings($model)){
+                        $model->settings_tmpl_id = $_POST['Device']['settings_tmpl_id'];
+			if($model->saveWithSetttings()){
 				if(Yii::app()->request->isAjaxRequest){
-					echo 'success';
+					print 'success';
 					Yii::app()->end();
 				}
 				else {
@@ -84,17 +85,7 @@ class DeviceController extends Controller
 		else
 			$this->render('create',array('model'=>$model));
 	}
-        /* @var $model Device*/
-        private function saveWithSetttings($model) {
-            $model->save();
-            if ($model->settings_tmpl_id) {
-                $tmpl = SettingsTmplDetail::model()->find("tmpl_id = $model->settings_tmpl_id");
-                
-                print_r($tmpl);
-            }
-            echo $model->settings_tmpl_id;
-            return TRUE;
-        }
+        
 
         /**
 	 * Updates a particular model.
@@ -127,6 +118,10 @@ class DeviceController extends Controller
 		else
 			$this->render('update',array('model'=>$model));
 	}
+        
+        public function actionSettings($id) {
+            $this->redirect("/index.php/SettingsDeviceDetail/admin/$id");
+        }
 
 	/**
 	 * Deletes a particular model.
