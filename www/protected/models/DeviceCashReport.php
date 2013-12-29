@@ -6,6 +6,8 @@
  * The followings are the available columns in table 'device_cash_report':
  * @property integer $device_id
  * @property double $summ
+ * @property double $summ_coin
+ * @property double $summ_cash
  * @property integer $count_cash
  * @property integer $count_coin
  * @property string $update_date
@@ -59,6 +61,8 @@ class DeviceCashReport extends CActiveRecord
 		return array(
 			'device_id' => 'Device',
 			'summ' => 'Summ',
+                        'summ_cash' => 'Сумма купюр',
+                        'summ_coin' => 'Сумма монет',
 			'count_cash' => 'Count Cash',
 			'count_coin' => 'Count Coin',
 			'update_date' => 'Update Date',
