@@ -32,7 +32,7 @@ $('.search-form form').submit(function(){
 <?php $this->widget('bootstrap.widgets.TbGridView',array(
 	'id'=>'settings-device-detail-grid',
 	'ajaxUpdate'=>false,
-	'dataProvider'=>$model->search_sett($sett_id),
+	'dataProvider'=>$model->search_sett($device->id),
 	'filter'=>$model,
 	'columns'=>array(
 		'var_id',

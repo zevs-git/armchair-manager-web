@@ -130,10 +130,11 @@ $countFalse = $countAll - $countTrue;
 $Balance = 0;
 
 
-
-$res = Yii::app()->db->createCommand()
-        ->select('sum(summ) as res')
-        ->from('device_cash_report')
+$sql = "SELECT SUM(summ_coin)+SUM(summ_cash) AS res
+FROM device_cash_report c, `device_status` s
+WHERE c.`device_id` = s.`device_id`";
+                
+$res = Yii::app()->db->createCommand($sql)
         ->queryRow();
 
 if (isset($res['res'])) {

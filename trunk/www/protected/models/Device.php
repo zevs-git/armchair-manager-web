@@ -106,7 +106,7 @@ class Device extends CActiveRecord
        
         /* @var $tmpl_var SettingsTmplDetail */
         public function saveWithSetttings() {
-            if($this->isNewRecord) {
+            /*if($this->isNewRecord) {
                 $this->settings_id = 1;
             } else {
                 $this->settings_id++;
@@ -139,7 +139,11 @@ class Device extends CActiveRecord
                 
                 $data = $size . $crc16 . $data;
                 file_put_contents($fileName, $data, FILE_BINARY );
-            }
+            }*/
+            $command = new CommandExecuting();
+            $command->device_id = $this->id;
+            $command->dt = new CDbExpression('NOW()');
+            $command->save();
             return TRUE;
         }
         
