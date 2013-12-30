@@ -37,6 +37,9 @@
             echo  $form->dropDownList($model, 'settings_tmpl_id', $list, array('class' => 'span5'));            
         }
         ?>
+    
+        <?php echo $form->textFieldRow($model,'comment',array('class'=>'span5','maxlength'=>200)); ?>
+    
 	<?php if (!Yii::app()->request->isAjaxRequest): ?>
 	<div class="form-actions">
 		<?php $this->widget('bootstrap.widgets.TbButton', array(

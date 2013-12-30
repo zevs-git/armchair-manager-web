@@ -53,6 +53,8 @@ $this->menu=array(
                 'type'=>'raw'),
             'dt',
             array('name'=>'power_state_icon', 
+                'type'=>'raw'),
+            array('name'=>'pwr_ext_val', 
                 'label'=>$model->getAttributeLabel("pwr_ext"),
                 'type'=>'raw'),
             array('name'=>'gsm_level_icon', 

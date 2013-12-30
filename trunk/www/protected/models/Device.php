@@ -70,6 +70,7 @@ class Device extends CActiveRecord
                         'object_val' => 'Объект',
 			'settings_id' => 'ИД настроек',
                         'settings_tmpl_id'=>'Шаблон настроек',
+                        'comment'=>'Комментарий',
 		);
 	}
 

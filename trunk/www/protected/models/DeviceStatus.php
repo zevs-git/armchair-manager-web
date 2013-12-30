@@ -60,13 +60,13 @@ class DeviceStatus extends CActiveRecord {
 
     public function getstate() {
         return $this->gprs_state_icon . " " .
+                $this->gsm_state_icon . " " .
                 $this->power_state_icon . " " .
-                $this->gsm_level_icon . " " .
+                $this->akb_proc_icon . " " .
                 $this->cashbox_state_icon . " " .
-                $this->akb_state_icon . " " .
                 $this->massage_state_icon . " " .
-                $this->alarm_state_icon . " " .
-                $this->door_state_icon . " ";
+                $this->door_state_icon . " " .
+                $this->alarm_state_icon . " " ;
     }
 
     public function getpwr_ext_val() {
@@ -122,7 +122,10 @@ class DeviceStatus extends CActiveRecord {
             'sim_in' => 'SIM-карта',
             'pwr_in_id' => 'Заряд',
             'pwr_ext' => 'Напряжение',
+            'power_state_icon' => 'Питание',
             'update_date' => 'Дата сохранения',
+            'balance' => 'Баланс',
+            'city' => 'Город',
         );
     }
 
@@ -219,25 +222,38 @@ class DeviceStatus extends CActiveRecord {
     public function getgsm_level_icon() {
 
         if (!$this->is_conneted) {
-            return $this->state_img("gsm_level_0.png", "Уровень сигнала GPS неопределен");
+            return $this->state_img("gsm_level_0.png", "Уровень сигнала GSM неопределен");
         } elseif ($this->gsm_level >= 1 && $this->gsm_level < 10) {
-            return $this->state_img("gsm_level_1.png", "Уровень сигнала GPS - $this->gsm_level");
+            return $this->state_img("gsm_level_1.png", "Уровень сигнала GSM - $this->gsm_level");
         } elseif ($this->gsm_level < 18) {
-            return $this->state_img("gsm_level_2.png", "Уровень сигнала GPS - $this->gsm_level");
+            return $this->state_img("gsm_level_2.png", "Уровень сигнала GSM - $this->gsm_level");
         } elseif ($this->gsm_level < 25) {
-            return $this->state_img("gsm_level_3.png", "Уровень сигнала GPS - $this->gsm_level");
+            return $this->state_img("gsm_level_3.png", "Уровень сигнала GSM - $this->gsm_level");
         } elseif ($this->gsm_level >= 25) {
-            return $this->state_img("gsm_level_4.png", "Уровень сигнала GPS - $this->gsm_level");
+            return $this->state_img("gsm_level_4.png", "Уровень сигнала GSM - $this->gsm_level");
         } else {
-            return $this->state_img("gsm_level_0.png", "Уровень сигнала GPS - $this->gsm_level");
+            return $this->state_img("gsm_level_0.png", "Уровень сигнала GSM - $this->gsm_level");
+        }
+    }
+    
+    public function getgsm_state_icon() {
+
+        if (!$this->is_conneted) {
+            return $this->state_img("gsm_false.png", "Уровень сигнала GSM неопределен");
+        } elseif ($this->gsm_level >= 0 && $this->gsm_level < 10) {
+            return $this->state_img("gsm_low.png", "Низкий уровень сигнала GSM");
+        } elseif ($this->gsm_level < 18) {
+            return $this->state_img("gsm_medium.png", "Средний уровень сигнала GSM");
+        } else {
+            return $this->state_img("gsm_high.png", "Высокий уровень сигнала GSM");
         }
     }
 
     public function getgprs_state_icon() {
         if ($this->is_conneted) {
-            return $this->state_img("gprs_true.png", "Устройство подключено к серверу");
+            return $this->state_img("gprs_true.png", "объект подключен");
         } else {
-            return $this->state_img("gprs_false.png", "Устройство не подключено к серверу");
+            return $this->state_img("gprs_false.png", "объект не подключен");
         }
     }
 
@@ -253,11 +269,11 @@ class DeviceStatus extends CActiveRecord {
 
     public function getpower_state_icon() {
         if (!$this->is_conneted) {
-            return $this->state_img("power_null.png", "Бортовое напряжение неопределено");
+            return $this->state_img("power_null.png", "Состояние неопределено");
         } elseif ($this->pwr_ext) {
-            return $this->state_img("power_true.png", "Бортовое напряжение $this->pwr_ext_val");
+            return $this->state_img("power_true.png", "Есть питание");
         } else {
-            return $this->state_img("power_false.png", "Бортовое напряжение $this->pwr_ext_val");
+            return $this->state_img("power_false.png", "Нет питания");
         }
     }
 
@@ -273,6 +289,23 @@ class DeviceStatus extends CActiveRecord {
         } elseif ($this->pwr_in_id == 3) {
             return $this->state_img("power_4.png", "Заряд резервного аккумулятора $this->pwr_in_id_val");
         }
+    }
+    
+    public function getakb_proc_icon() {
+        if (!$this->is_conneted) {
+            return $this->state_img("akb_null.png", "Заряд аккумулятора неопределен");
+        } elseif ($this->pwr_in_id == 0) {
+            return $this->state_img("power_0.png", "Заряд аккумулятора меньше 30%");
+        } elseif ($this->pwr_in_id == 1) {
+            return $this->state_img("power_1.png", "Заряд аккумулятора от 30% до 60%,");
+        } elseif ($this->pwr_in_id == 2) {
+            return $this->state_img("power_2.png", "Заряд аккумулятора от 60% до 90%");
+        } elseif ($this->pwr_in_id == 3) {
+            return $this->state_img("power_4.png", "Заряд аккумулятора больше 90%");
+        }
+    }
+    public function getcity() {
+        return "<b  rel='tooltip' title='" . $this->device->comment . "'>" . $this->device->object->city . "</b>";
     }
 
     /**
