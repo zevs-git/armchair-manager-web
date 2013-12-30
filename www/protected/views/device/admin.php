@@ -51,6 +51,7 @@ $('.search-form form').submit(function(){
                 'soft_version',
 		'deviceType.type_name',
 		'object.obj',
+                'comment',
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
                         'template'=>'{view}{update}{delete}{settings}',
