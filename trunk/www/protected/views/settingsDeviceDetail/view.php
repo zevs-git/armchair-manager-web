@@ -20,7 +20,7 @@ $this->menu=array(
 <?php if(Yii::app()->request->isAjaxRequest): ?>
 <div class="modal-header">
 	<a class="close" data-dismiss="modal">&times;</a>
-	<h4>View People #<?php echo $model->id; ?></h4>
+	<h4>#<?php echo $model->var->descr; ?></h4>
 </div>
 
 <div class="modal-body">
@@ -29,9 +29,8 @@ $this->menu=array(
 <?php $this->widget('bootstrap.widgets.TbDetailView',array(
 	'data'=>$model,
 	'attributes'=>array(
-		'id',
-		'sett_id',
 		'var_id',
+		'var.descr',
 		'value',
 	),
 )); ?>

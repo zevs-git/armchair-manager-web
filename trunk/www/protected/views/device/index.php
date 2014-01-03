@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs=array(
-	'Devices',
+	'Устройтсва',
 );
 
 $this->menu=array(

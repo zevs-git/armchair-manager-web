@@ -1,7 +1,7 @@
 <?php if (Yii::app()->request->isAjaxRequest): ?>
 <div class="modal-header">
 	<a class="close" data-dismiss="modal">&times;</a>
-	<h4><?php echo $model->isNewRecord ? 'Create SettingsDeviceDetail' : '#'.$model->var_descr ?></h4>
+	<h4><?php echo $model->isNewRecord ? 'Create SettingsDeviceDetail' : '#'.$model->var->descr ?></h4>
 </div>
 
 <div class="modal-body">

@@ -60,8 +60,8 @@ class SettingsVars extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'descr' => 'Descr',
-			'size_type_id' => 'Size Type',
+			'descr' => 'Название',
+			'size_type_id' => 'Размер',
 		);
 	}
 

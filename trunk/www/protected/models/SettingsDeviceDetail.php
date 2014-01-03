@@ -35,10 +35,12 @@ class SettingsDeviceDetail extends CActiveRecord
 			array('value', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, sett_id, var_id, value', 'safe', 'on'=>'search'),
+			array('id, sett_id, var_id, value, var_descr', 'safe', 'on'=>'search'),
 		);
 	}
 
+        public $var_descr;
+        
 	/**
 	 * @return array relational rules.
 	 */
@@ -90,24 +92,30 @@ class SettingsDeviceDetail extends CActiveRecord
 		$criteria->compare('value',$this->value,true);
 
 		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
+                    'criteria'=>$criteria,
+                ));
 	}
         public function search_sett($device_id) {
             $criteria=new CDbCriteria;
-
+            $criteria->with = array('var');
             $criteria->compare('id',$this->id);
             $criteria->compare('device_id',$device_id);
             $criteria->compare('var_id',$this->var_id);
             $criteria->compare('value',$this->value,true);
+            $criteria->compare('var.descr',$this->var_descr,true);
 
             return new CActiveDataProvider($this, array(
                     'criteria'=>$criteria,
+                    'sort' => array(
+                    'attributes' => array(
+                        'var_descr' => array(
+                            'asc' => 'var.descr',
+                            'desc' => 'var.descr DESC',
+                        ),
+                        '*',
+                    ),
+                ),
             ));
-        }
-        
-        public function getvar_descr() {
-            return $this->var->descr;           
         }
 
 	/**
