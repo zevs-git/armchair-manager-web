@@ -5,6 +5,9 @@
 </div>
 
 <div class="modal-body">
+<img id="loader" style="display: none; width: 100px; height: 100px; position: absolute; left: 50%; margin-left: -50px; top:50%;"
+         src='/images/loading.gif' />
+
 <?php endif; ?>
 
 
@@ -65,8 +68,11 @@
 				'url'=>$model->isNewRecord ? $this->createUrl('create') : $this->createUrl('update', array('id'=>$model->id)),
 				'type'=>'post',
 				'data'=>'js:$(this).parent().parent().find("form").serialize()',
+                                'beforeSend'=>'function() {
+                                            $("#loader").show();}',
 				'success'=>'function(r){
-					if(r.indexOf("success") >= 0){
+                                        $("#loader").hide();
+					if(r.length < 15 && r.indexOf("success") >= 0){
 						 $.fn.yiiGridView.update("device-grid");
                                                  $("#TBDialogCrud").modal("hide");
 					}

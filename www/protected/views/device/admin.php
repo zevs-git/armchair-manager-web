@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
-	'Devices'=>array('index'),
-	'Manage',
+	'Устройтва'=>array('index'),
+	'Управление',
 );
 
 $this->menu=array(
@@ -42,6 +42,7 @@ $('.search-form form').submit(function(){
 
 <?php $this->widget('bootstrap.widgets.TbGridView',array(
 	'id'=>'device-grid',
+        'itemsCssClass' => 'table table-striped table-bordered',
 	'ajaxUpdate'=>false,
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,

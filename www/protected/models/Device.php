@@ -34,6 +34,7 @@ class Device extends CActiveRecord
 			array('settings_id', 'numerical', 'integerOnly'=>true),
 			array('soft_version', 'numerical'),
 			array('IMEI', 'length', 'max'=>20),
+                        array('IMEI', 'required'),
 			array('type_id, object_id', 'length', 'max'=>11),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -106,13 +107,8 @@ class Device extends CActiveRecord
         
        
         /* @var $tmpl_var SettingsTmplDetail */
-        public function saveWithSetttings() {
-            if($this->isNewRecord) {
-                $this->settings_id = 1;
-            } else {
-                $this->settings_id++;
-            }
-            $this->save();
+        public function saveFromTamplate() {
+            if(!$this->save()) return false;
             if (!is_null($this->settings_tmpl_id)) {                
                 $tmpl = SettingsTmplDetail::model()->findAll("tmpl_id = $this->settings_tmpl_id");
                 SettingsDeviceDetail::model()->deleteAll("device_id = $this->id");
@@ -135,16 +131,67 @@ class Device extends CActiveRecord
                         $data .= pack('A*',$setings_var->value);
                     }
                 }
-                $size  = pack('n', strlen($data));
-                $crc16 = pack('n', CRC16::calculate($data));
                 
-                $data = $size . $crc16 . $data;
+                $crc16 = CRC16::calculate($data);
+                $size  = strlen($data);
+                $size_b  = pack('n', $size);
+                $crc16_b = pack('n', $crc16);
+                
+                $data = $size_b . $crc16_b . $data;
                 file_put_contents($fileName, $data, FILE_BINARY );
             }
+            $state = DeviceStatus::model()->findBYPk($this->id);
+            $state->$u_settings = 1;
+            $state->save();
+            
+            $tmp = unpack("Nid", $size_b . $crc16_b);
+            if (isset($tmp['id'])) {
+                $this->settings_id = $tmp['id'];
+            } else {
+                $this->settings_id = 0;
+            }
+            $this->save();
+            return TRUE;
+        }
+        
+        /* @var $set_var SettingsDeviceDetail */
+        public function saveSettings() {
+                $set = SettingsDeviceDetail::model()->findAll("device_id = $this->id");                
+                $fileName = "settings/$this->IMEI.bin";
+                $data = '';
+                foreach ($set as $set_var) {
+                    $data .= pack('C',ord('#'));
+                    $data .= pack('C',$set_var->var_id);
+                    if ($set_var->var->size_type_id == 0) {
+                        $data .= pack('N',$set_var->value);
+                    } else {
+                        $data .= pack('C',  strlen($set_var->value));
+                        $data .= pack('A*',$set_var->value);
+                    }
+                }
+                $crc16 = CRC16::calculate($data);
+                $size  = strlen($data);
+                $size_b  = pack('n', $size);
+                $crc16_b = pack('n', $crc16);
+                
+                $data = $size_b . $crc16_b . $data;
+                file_put_contents($fileName, $data, FILE_BINARY );
             $command = new CommandExecuting();
             $command->device_id = $this->id;
             $command->dt = new CDbExpression('NOW()');
             $command->save();
+            $tmp = unpack("Nid", $size_b . $crc16_b);
+            if (isset($tmp['id'])) {
+                $this->settings_id = $tmp['id'];
+            } else {
+                $this->settings_id = 0;
+            }
+            $this->save();           
+            
+            $state = DeviceStatus::model()->findBYPk($this->id);
+            $state->u_settings = 1;
+            $state->save();
+            
             return TRUE;
         }
         

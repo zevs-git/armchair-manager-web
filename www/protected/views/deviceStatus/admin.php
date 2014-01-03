@@ -16,10 +16,12 @@ $('.search-form form').submit(function(){
 $('[rel=tooltip]').tooltip();
 $('img').tooltip();
 setInterval(function() { 
+    //$('#loader').show();
     //$('[rel=tooltip]').tooltip('destroy');
     //$('img').tooltip('destroy');
     $.fn.yiiGridView.update('device-status-grid',{
     complete: function() {
+        //$('#loader').hide();
         $('[rel=tooltip]').tooltip();
         $('img').tooltip();
     }}); 
@@ -46,10 +48,10 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'itemsCssClass' => 'table table-striped table-bordered',
     'htmlOptions' => array('style' => 'text-align: center;'),
     'columns' => array(
-        array('name'=>'city',
-            'type' => 'raw'),
-        
-        'device.object.obj',
+        array('name'=>'object.obj',
+            'htmlOptions' => array('style' => 'min-width: 220px;'),
+            'type' => 'raw',
+            'value' => '"<b  rel=\'tooltip\' title=\'" . $data->device->comment . "\'>г." . $data->device->object->city . " \"" . $data->device->object->obj . "\"</b>"'),
         array('name' => 'dt',
             'htmlOptions' => array('style' => 'width: 130px;'),
             'value' => 'date_format(date_create($data->dt), "Y-m-d H:i:s")'),  
@@ -57,21 +59,22 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'header' => 'Купюры',
             'htmlOptions' => array('style' => 'align: center; width: 120px;'),
             'type' => 'raw',
-            'value' => '($data->deviceCashReport->count_cash)?"<b style=\'color: green\' rel=\'tooltip\' title=\'Последняя монета " . $data->deviceCashReport->update_cash ."\'>" . $data->deviceCashReport->last_cash . "</b>&nbsp;&nbsp;<div style=\'float:right;\' rel=\'tooltip\' title=\'Наполнение купюрника\'>" .$data->deviceCashReport->count_cash . "/" . "400</div>":"-" '),
+            'value' => '($data->deviceCashReport->count_cash)?"<b style=\'color: green\' rel=\'tooltip\' title=\'" . $data->deviceCashReport->update_cash ."\'>" . $data->deviceCashReport->last_cash . "</b>&nbsp;&nbsp;<div style=\'float:right;\' rel=\'tooltip\' title=\'Наполнение купюрника\'>" .$data->deviceCashReport->count_cash . "/" . "400</div>":"-" '),
         array('name' => 'deviceCashReport.summ_cash',
             'htmlOptions' => array('style' => 'width: 100px; text-align: center;'),
             'type' => 'raw',
             'value' => '(($data->deviceCashReport->summ_cash > 0)?\'<b style="color: green">\' . $data->deviceCashReport->summ_cash . " руб.</b>":"-")'),
-        array('name' => 'deviceCashReport.summ_coin',
-            'htmlOptions' => array('style' => 'width: 100px; text-align: center;'),
-            'type' => 'raw',
-            'value' => '(($data->deviceCashReport->summ_coin > 0)?\'<b style="color: green">\' . $data->deviceCashReport->summ_coin . " руб.</b>":"-")'),
         array('name' => 'deviceCashReport.coint_coin',
             'header' => 'Монеты',
             'htmlOptions' => array('style' => 'align: center; width: 120px;'),
             'type' => 'raw',
-            'value' => '($data->deviceCashReport->count_coin)?"<b style=\'color: green\' rel=\'tooltip\' title=\'Последняя монета " . $data->deviceCashReport->update_coin ."\'>" . $data->deviceCashReport->last_coin . "</b>&nbsp;&nbsp;<div style=\'float:right;\' rel=\'tooltip\' title=\'Наполнение купюрника\'>" .$data->deviceCashReport->count_coin . "/" . "400</div>":"-" '),
+            'value' => '($data->deviceCashReport->count_coin)?"<b style=\'color: green\' rel=\'tooltip\' title=\' " . $data->deviceCashReport->update_coin ."\'>" . $data->deviceCashReport->last_coin . "</b>&nbsp;&nbsp;<div style=\'float:right;\' rel=\'tooltip\' title=\'Наполнение купюрника\'>" .$data->deviceCashReport->count_coin . "/" . "400</div>":"-" '),
+        array('name' => 'deviceCashReport.summ_coin',
+           'htmlOptions' => array('style' => 'width: 100px; text-align: center;'),
+           'type' => 'raw',
+           'value' => '(($data->deviceCashReport->summ_coin > 0)?\'<b style="color: green">\' . $data->deviceCashReport->summ_coin . " руб.</b>":"-")'),
         array('name' => 'cashbox_state',
+            'htmlOptions' => array('style' => 'min-width: 150px; text-align: center;'),
             'header' => 'Состояние',
             'type' => 'raw',
             'value' => '$data->state'),

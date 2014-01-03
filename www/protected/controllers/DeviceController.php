@@ -70,7 +70,7 @@ class DeviceController extends Controller
 		if(isset($_POST['Device'])){
 			$model->attributes=$_POST['Device'];
                         $model->settings_tmpl_id = $_POST['Device']['settings_tmpl_id'];
-			if($model->saveWithSetttings()){
+			if($model->saveFromTamplate()){
 				if(Yii::app()->request->isAjaxRequest){
 					print 'success';
 					Yii::app()->end();

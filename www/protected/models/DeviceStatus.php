@@ -19,6 +19,7 @@
  * @property integer $pwr_ext
  * @property string $update_date
  * @property integer $is_conneted
+ * @property integer $u_settings
  */
 class DeviceStatus extends CActiveRecord {
 
@@ -42,7 +43,7 @@ class DeviceStatus extends CActiveRecord {
             array('update_date', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('device_id, dt, cashbox_state, cash_in_state, error_number, door_state, alarm_state, mas_state, gsm_state_id, gsm_level, sim_in, pwr_in_id, pwr_ext, update_date', 'safe', 'on' => 'search'),
+            array('device_id, dt, cashbox_state, cash_in_state, update_date, name', 'safe', 'on' => 'search'),
         );
     }
 
@@ -53,7 +54,7 @@ class DeviceStatus extends CActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'deviceCashReport' => array(self::HAS_ONE, 'DeviceCashReport','device_id'),
+            'deviceCashReport' => array(self::HAS_ONE, 'DeviceCashReport', 'device_id'),
             'device' => array(self::BELONGS_TO, 'Device', 'device_id'),
         );
     }
@@ -66,7 +67,8 @@ class DeviceStatus extends CActiveRecord {
                 $this->cashbox_state_icon . " " .
                 $this->massage_state_icon . " " .
                 $this->door_state_icon . " " .
-                $this->alarm_state_icon . " " ;
+                $this->alarm_state_icon . " " .
+                (($this->u_settings)?"[Обновление настроек]":"");
     }
 
     public function getpwr_ext_val() {
@@ -126,6 +128,7 @@ class DeviceStatus extends CActiveRecord {
             'update_date' => 'Дата сохранения',
             'balance' => 'Баланс',
             'city' => 'Город',
+            'object.obj' => 'Объект',
         );
     }
 
@@ -145,8 +148,8 @@ class DeviceStatus extends CActiveRecord {
         // @todo Please modify the following code to remove attributes that should not be searched.
 
         $criteria = new CDbCriteria;
-        $criteria->order = "dt DESC";
-        $criteria->compare('device_id', $this->device_id, true);
+        $criteria->with = array( 'device.object' );
+        $criteria->compare('device_id', $this->device->id, true);
         $criteria->compare('dt', $this->dt, true);
         $criteria->compare('cashbox_state', $this->cashbox_state);
         $criteria->compare('cash_in_state', $this->cash_in_state);
@@ -160,11 +163,26 @@ class DeviceStatus extends CActiveRecord {
         $criteria->compare('pwr_in_id', $this->pwr_in_id);
         $criteria->compare('pwr_ext', $this->pwr_ext);
         $criteria->compare('update_date', $this->update_date, true);
+        $criteria->compare('object.obj', $this->device->object->obj, true);
+        
+        $criteria->condition = 'device.id > 0';
+
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
+            'sort' => array(
+                'defaultOrder'=>'dt DESC',
+                'attributes' => array(
+                    'object.obj' => array(
+                        'asc' => 'object.obj',
+                        'desc' => 'object.obj DESC',
+                    ),
+                    '*',
+                ),
+            ),
         ));
     }
+
     public function getis_conneted() {
         date_default_timezone_set('Europe/Moscow');
         if ($this->is_conneted_r != null) {
@@ -180,12 +198,12 @@ class DeviceStatus extends CActiveRecord {
         }
     }
 
-    /*******************device staus icons********************************/
+    /*     * *****************device staus icons******************************* */
+
     private function state_img($file_name, $title) {
         return "<img width='25px' src='/images/state_icons/$file_name' title='$title'>";
     }
 
-    
     public function getdoor_state_icon() {
         if (!$this->is_conneted) {
             return $this->state_img("door_null.png", "Статус двери неопределен");
@@ -235,7 +253,7 @@ class DeviceStatus extends CActiveRecord {
             return $this->state_img("gsm_level_0.png", "Уровень сигнала GSM - $this->gsm_level");
         }
     }
-    
+
     public function getgsm_state_icon() {
 
         if (!$this->is_conneted) {
@@ -290,7 +308,7 @@ class DeviceStatus extends CActiveRecord {
             return $this->state_img("power_4.png", "Заряд резервного аккумулятора $this->pwr_in_id_val");
         }
     }
-    
+
     public function getakb_proc_icon() {
         if (!$this->is_conneted) {
             return $this->state_img("akb_null.png", "Заряд аккумулятора неопределен");
@@ -303,9 +321,6 @@ class DeviceStatus extends CActiveRecord {
         } elseif ($this->pwr_in_id == 3) {
             return $this->state_img("power_4.png", "Заряд аккумулятора больше 90%");
         }
-    }
-    public function getcity() {
-        return "<b  rel='tooltip' title='" . $this->device->comment . "'>" . $this->device->object->city . "</b>";
     }
 
     /**

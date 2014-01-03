@@ -27,7 +27,7 @@ $('.search-form form').submit(function(){
 <?php $this->beginWidget('bootstrap.widgets.TbModal', array('id'=>'TBDialogCrud')); ?>
 <?php $this->endWidget(); ?>
 <h2>Настройки устройства [<?=$device->IMEI?>]</h2>
-<h3>Идентификатор настроек: #<?=$device->settings_id?></h3>
+<!--<h3>Идентификатор настроек: #<?=$device->settings_id?></h3> -->
 
 <?php $this->widget('bootstrap.widgets.TbGridView',array(
 	'id'=>'settings-device-detail-grid',
@@ -36,7 +36,8 @@ $('.search-form form').submit(function(){
 	'filter'=>$model,
 	'columns'=>array(
 		'var_id',
-                'var_descr',
+                array('name'=>'var_descr',
+                    'value'=>'$data->var->descr'),
 		'value',
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',

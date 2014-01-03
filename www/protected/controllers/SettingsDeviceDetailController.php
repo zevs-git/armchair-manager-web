@@ -174,7 +174,7 @@ class SettingsDeviceDetailController extends Controller
         
         public function actionSave($id) {
             $device=Device::model()->findByPk($id);
-            $device->saveWithSetttings();
+            $device->saveSettings();
             echo "<script> window.location = '" . Yii::app()->createUrl("Device/admin") . "';</script>";
         }
 	public function loadModel($id)
