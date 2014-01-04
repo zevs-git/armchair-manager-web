@@ -50,13 +50,15 @@ class CRC16 {
     
     public static function calc($buffer) {
         $crc = 0xFFFF;
-        $len = strlen($buffer);
         $j = 0;
+        
+        $len = strlen($buffer);
+        
         while ($len--) {
-            $crc ^= $buffer[$j++] << 8;
+            $crc ^= (ord($buffer[$j++]) << 8) & 0xFFFF;
 
             for ($i = 0; $i < 8; $i++) {
-                $crc = $crc & 0x8000 ? ($crc << 1) ^ 0x1021 : $crc << 1;
+                $crc = $crc & 0x8000 ? (($crc << 1) & 0xFFFF ) ^ 0x1021 : ($crc << 1) & 0xFFFF;
             }
         }
 
