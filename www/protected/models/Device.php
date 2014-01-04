@@ -134,7 +134,7 @@ class Device extends CActiveRecord
                     }
                 }
                 
-                $crc16 = CRC16::Crc16($data);
+                $crc16 = CRC16::calc($data);
                 $size  = strlen($data);
                 $size_b  = pack('n', $size);
                 $crc16_b = pack('n', $crc16);
@@ -171,7 +171,7 @@ class Device extends CActiveRecord
                         $data .= pack('A*',$set_var->value);
                     }
                 }
-                $crc16 = CRC16::Crc16($data);
+                $crc16 = CRC16::calc($data);
                 $size  = strlen($data);
                 $size_b  = pack('n', $size);
                 $crc16_b = pack('n', $crc16);
