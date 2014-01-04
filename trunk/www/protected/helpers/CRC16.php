@@ -48,7 +48,7 @@ class CRC16 {
         return (($crc & 0xFFFF) ^ 0x8000) - 0x8000;
     }   
     
-    public static function Crc16($buffer) {
+    public static function calc($buffer) {
         $crc = 0xFFFF;
         $len = strlen($buffer);
         $j = 0;
