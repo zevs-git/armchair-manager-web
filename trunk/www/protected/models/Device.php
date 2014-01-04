@@ -11,6 +11,7 @@
  * @property string $object_id
  * @property integer $settings_tmpl_id
  * @property integer $settings_id
+ * @property string $comment
  * The followings are the available model relations:
  */
 class Device extends CActiveRecord
@@ -99,6 +100,7 @@ class Device extends CActiveRecord
 		$criteria->compare('soft_version',$this->soft_version);
 		$criteria->compare('object',$this->object,true);
 		$criteria->compare('settings_id',$this->settings_id);
+                $criteria->compare('comment',$this->comment);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -132,7 +134,7 @@ class Device extends CActiveRecord
                     }
                 }
                 
-                $crc16 = CRC16::calculate($data);
+                $crc16 = CRC16::Crc16($data);
                 $size  = strlen($data);
                 $size_b  = pack('n', $size);
                 $crc16_b = pack('n', $crc16);
@@ -169,7 +171,7 @@ class Device extends CActiveRecord
                         $data .= pack('A*',$set_var->value);
                     }
                 }
-                $crc16 = CRC16::calculate($data);
+                $crc16 = CRC16::Crc16($data);
                 $size  = strlen($data);
                 $size_b  = pack('n', $size);
                 $crc16_b = pack('n', $crc16);

@@ -23,7 +23,7 @@
         <?php echo $form->labelEx($model, 'type_id'); ?>
         <?php echo $form->error($model, 'type_id'); ?>
         
-	<?php $list = array('0'=>'Тип устройтва 1'); ?>
+	<?php $list = array('0'=>'Тип устройтва 1','1'=>'Тип устройтва 2'); ?>
         <?php echo $form->dropDownList($model, 'type_id', $list, array('class' => 'span5')); ?>
 
 	<?php echo $form->textFieldRow($model,'soft_version',array('class'=>'span5')); ?>

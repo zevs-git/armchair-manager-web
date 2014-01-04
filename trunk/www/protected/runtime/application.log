@@ -15404,3 +15404,60 @@ Stack trace:
 #18 {main}
 REQUEST_URI=/index.php/SettingsDeviceDetail/save/113
 ---
+2014/01/03 18:23:20 [warning] [application] Не удалось присвоить небезопасный атрибут "comment" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (104)
+in Z:\home\chair\www\index.php (13)
+2014/01/03 18:24:33 [warning] [application] Не удалось присвоить небезопасный атрибут "comment" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (104)
+in Z:\home\chair\www\index.php (13)
+2014/01/03 18:24:43 [warning] [application] Не удалось присвоить небезопасный атрибут "comment" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (104)
+in Z:\home\chair\www\index.php (13)
+2014/01/03 18:25:09 [warning] [application] Не удалось присвоить небезопасный атрибут "comment" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (104)
+in Z:\home\chair\www\index.php (13)
+2014/01/03 18:26:24 [warning] [application] Не удалось присвоить небезопасный атрибут "comment" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (165)
+in Z:\home\chair\www\index.php (13)
+2014/01/03 18:26:29 [warning] [application] Не удалось присвоить небезопасный атрибут "comment" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (165)
+in Z:\home\chair\www\index.php (13)
+2014/01/03 18:26:37 [warning] [application] Не удалось присвоить небезопасный атрибут "comment" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (104)
+in Z:\home\chair\www\index.php (13)
+2014/01/03 18:26:39 [warning] [application] Не удалось присвоить небезопасный атрибут "comment" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (165)
+in Z:\home\chair\www\index.php (13)
+2014/01/03 18:27:49 [warning] [application] Не удалось присвоить небезопасный атрибут "comment" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (165)
+in Z:\home\chair\www\index.php (13)
+2014/01/03 18:28:00 [warning] [application] Не удалось присвоить небезопасный атрибут "comment" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (104)
+in Z:\home\chair\www\index.php (13)
+2014/01/03 18:28:00 [warning] [application] Не удалось присвоить небезопасный атрибут "comment" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (165)
+in Z:\home\chair\www\index.php (13)
+2014/01/03 18:28:15 [warning] [application] Не удалось присвоить небезопасный атрибут "comment" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (104)
+in Z:\home\chair\www\index.php (13)
+2014/01/03 18:28:16 [warning] [application] Не удалось присвоить небезопасный атрибут "comment" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (165)
+in Z:\home\chair\www\index.php (13)
+2014/01/03 18:28:23 [warning] [application] Не удалось присвоить небезопасный атрибут "comment" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (104)
+in Z:\home\chair\www\index.php (13)
+2014/01/03 18:28:23 [warning] [application] Не удалось присвоить небезопасный атрибут "comment" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (165)
+in Z:\home\chair\www\index.php (13)
+2014/01/03 18:29:33 [warning] [application] Не удалось присвоить небезопасный атрибут "comment" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (104)
+in Z:\home\chair\www\index.php (13)
+2014/01/03 18:30:17 [warning] [application] Не удалось присвоить небезопасный атрибут "comment" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (104)
+in Z:\home\chair\www\index.php (13)
+2014/01/03 18:30:25 [warning] [application] Не удалось присвоить небезопасный атрибут "comment" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (104)
+in Z:\home\chair\www\index.php (13)
+2014/01/03 18:30:31 [warning] [application] Не удалось присвоить небезопасный атрибут "comment" класса "Device".
+in Z:\home\chair\www\protected\controllers\DeviceController.php (104)
+in Z:\home\chair\www\index.php (13)

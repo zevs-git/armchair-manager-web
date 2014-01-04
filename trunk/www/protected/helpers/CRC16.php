@@ -46,7 +46,22 @@ class CRC16 {
         }
 
         return (($crc & 0xFFFF) ^ 0x8000) - 0x8000;
-    }    
+    }   
+    
+    public static function Crc16($buffer) {
+        $crc = 0xFFFF;
+        $len = strlen($buffer);
+        $j = 0;
+        while ($len--) {
+            $crc ^= $buffer[$j++] << 8;
+
+            for ($i = 0; $i < 8; $i++) {
+                $crc = $crc & 0x8000 ? ($crc << 1) ^ 0x1021 : $crc << 1;
+            }
+        }
+
+        return $crc;
+    }
 }
 ?>
 
