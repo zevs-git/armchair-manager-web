@@ -1,21 +1,20 @@
 <?php
 /* @var $this ObjectController */
 /* @var $model Object */
-
+?>
+<?php
 $this->breadcrumbs=array(
 	'Объекты'=>array('index'),
-	$model->id=>array('view','id'=>$model->id),
-	'Редактировать',
-);
-
-$this->menu=array(
-	array('label'=>'Список', 'url'=>array('index')),
-	array('label'=>'Добавить', 'url'=>array('create')),
-	array('label'=>'Просмотреть', 'url'=>array('view', 'id'=>$model->id)),
-	array('label'=>'Управление', 'url'=>array('admin')),
+	$model->id,
 );
 ?>
 
-<h1>Редактирование объекта <?php echo $model->id; ?></h1>
+<?php $this->beginWidget('zii.widgets.CPortlet', array(
+    'title' => "Настройка объекта",
+));?>
+<h3>Объект: "<?php echo $model->obj; ?>"</h3>
+<?php $this->renderPartial('form_start',array('model'=>$model))?>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>
+
+<?php $this->endWidget()?>

@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs=array(
-	'Устройтва'=>array('index'),
+	'Устройcтва'=>array('index'),
 	'Управление',
 );
 
@@ -43,7 +43,6 @@ $('.search-form form').submit(function(){
 <?php $this->widget('bootstrap.widgets.TbGridView',array(
 	'id'=>'device-grid',
         'itemsCssClass' => 'table table-striped table-bordered',
-	'ajaxUpdate'=>false,
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(

@@ -6,7 +6,7 @@ class ObjectController extends Controller
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
-	public $layout='//layouts/column2';
+	public $layout='//layouts/admin_navigator';
 
 	/**
 	 * @return array action filters
@@ -39,7 +39,7 @@ class ObjectController extends Controller
 				'actions'=>array('admin','delete'),
 				'users'=>array('admin'),
 			),
-			array('deny',  // deny all users
+			array('allow',  // deny all users
 				'users'=>array('*'),
 			),
 		);
@@ -55,6 +55,105 @@ class ObjectController extends Controller
 			'model'=>$this->loadModel($id),
 		));
 	}
+        
+        public function actionStaff($id)
+	{
+            if(isset($_POST['ObjectStaff']))
+		{
+                        $objectStaff = ObjectStaff::model()->findByPk($id);
+                        if (is_null($objectStaff)) {
+                            $objectStaff = new ObjectStaff();
+                            $objectStaff->object_id = $id;
+                        }
+			$objectStaff->attributes=$_POST['ObjectStaff'];
+			if($objectStaff->save()) {
+				$this->redirect(array('staff','id'=>$objectStaff->object_id,'is_save'=>'true'));
+                        } else {
+                                $this->redirect(array('staff','id'=>$objectStaff->object_id,'is_save'=>'true'));
+                        }
+		}
+		$this->render('staff',array(
+			'model'=>$this->loadModel($id),
+		));
+	}
+        
+        public function actionTariff($id) {
+            if(isset($_POST['ObjectTariff']))
+		{
+                        $objectTariff = ObjectTariff::model()->findByPk($id);
+                        if (is_null($objectTariff)) {
+                            $objectTariff = new ObjectTariff();
+                            $objectTariff->object_id = $id;
+                        }
+			$objectTariff->attributes=$_POST['ObjectTariff'];
+			if($objectTariff->save()) {
+				$this->redirect(array('tariff','id'=>$objectTariff->object_id,'is_save'=>'true'));
+                        } else {
+                            $this->render('tariff',array(
+                        	'model'=>$this->loadModel($id),
+                                'objectTariff'=>$objectTariff,
+                                'is_save'=>false
+                                ));
+                            return;
+                               // $this->redirect(array('tariff','id'=>$objectTariff->object_id,'is_save'=>'false'));
+                        }
+		}
+                
+		$this->render('tariff',array(
+			'model'=>$this->loadModel($id)
+		));
+        }
+        
+        public function actionDevices($id) {
+            $device = new Device('searchByObjectId',$id);
+		$device->unsetAttributes();  // clear any default values
+		if(isset($_GET['Device']))
+			$device->attributes=$_GET['Device'];
+                
+                $this->render('devices',array(
+			'model'=>$this->loadModel($id),
+                        'devices'=>$device
+		));
+        }
+        
+        public function actionDeviceSelect($id) {
+            $model = new Device('search');
+            if(isset($_GET['Device'])) // чтобы работали функции поиска нужно передать параметры в модель
+            $model->attributes=$_GET['Device'];
+            $this->renderPartial('deviceSelect',array(
+			'model'=>$model),
+                false,true);
+        }
+        public function actionAddDevice($object_id,$device_id) {
+            $device = Device::model()->findByPk($device_id);
+            $device->object_id = $object_id;
+            if ($device->save()) {
+                echo 'success';
+            } else {
+                echo 'error';
+            }
+        }
+        public function actionDeleteDevice($object_id,$device_id) {
+            $device = Device::model()->findByPk($device_id);
+            $device->object_id = 0;
+            if ($device->save()) {
+                echo 'success';
+            } else {
+                echo 'error';
+            }
+        }
+        
+        
+        public function actionGetStaffList($field) {
+            $model = new Staff('search');
+            if(isset($_GET['Staff'])) // чтобы работали функции поиска нужно передать параметры в модель
+            $model->attributes=$_GET['Staff'];
+            $this->renderPartial('staffSelect',array(
+			'model'=>$model,
+                        'field'=>$field),
+                false,true);
+        }
+        
 
 	/**
 	 * Creates a new model.
@@ -122,24 +221,24 @@ class ObjectController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Object');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
-	}
-
-	/**
-	 * Manages all models.
-	 */
-	public function actionAdmin()
-	{
 		$model=new Object('search');
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['Object']))
 			$model->attributes=$_GET['Object'];
 
 		$this->render('admin',array(
-			'model'=>$model,
+			'model'=>$model
+		));
+	}
+
+	/**
+	 * Manages all models.
+	 */
+	public function actionList()
+	{
+		$dataProvider=new CActiveDataProvider('Object');
+		$this->render('index',array(
+			'dataProvider'=>$dataProvider,
 		));
 	}
 

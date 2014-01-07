@@ -6,22 +6,21 @@ $this->breadcrumbs=array(
 	'Объекты'=>array('index'),
 	$model->id,
 );
-
-$this->menu=array(
-	array('label'=>'Список', 'url'=>array('index')),
-	array('label'=>'Добавить', 'url'=>array('create')),
-	array('label'=>'Редактировать', 'url'=>array('update', 'id'=>$model->id)),
-	array('label'=>'Удалить', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Управление', 'url'=>array('admin')),
-);
 ?>
 
-<h1>Просмотр объекта #<?php echo $model->id; ?></h1>
+<?php $this->beginWidget('zii.widgets.CPortlet', array(
+    'title' => "Настройка объекта",
+));?>
+<h3>Объект: "<?php echo $model->obj; ?>"</h3>
+<?php $this->renderPartial('form_start',array('model'=>$model))?>
 
-<?php $this->widget('zii.widgets.CDetailView', array(
+<?php echo CHtml::link('[Редактировать]', $this->createUrl("/$this->id/update/$model->id"));?>
+<br>
+<?php $this->widget('bootstrap.widgets.TbDetailView', array(
 	'data'=>$model,
+        'type' => 'condensed bordered striped', //striped bordered and/or condensed
 	'attributes'=>array(
-		'id',
+		//'id',
 		'country',
 		'region',
 		'city',
@@ -34,3 +33,5 @@ $this->menu=array(
 		'comment',
 	),
 )); ?>
+
+<?php $this->endWidget()?>

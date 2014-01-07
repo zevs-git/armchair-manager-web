@@ -13,6 +13,6 @@ $this->menu=array(
 );
 ?>
 
-<h1>Добавить Объект</h1>
+<h2>Добавить Объект</h2>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

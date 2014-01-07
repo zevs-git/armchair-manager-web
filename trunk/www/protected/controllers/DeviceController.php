@@ -148,7 +148,7 @@ class DeviceController extends Controller
 	/**
 	 * Lists all models.
 	 */
-	public function actionIndex()
+	public function actionList()
 	{
 		$dataProvider=new CActiveDataProvider('Device');
 		$this->render('index',array(
@@ -159,6 +159,9 @@ class DeviceController extends Controller
 	/**
 	 * Manages all models.
 	 */
+        public function actionIndex() {
+            $this->actionAdmin();
+        }
 	public function actionAdmin()
 	{
 		$model=new Device('search');

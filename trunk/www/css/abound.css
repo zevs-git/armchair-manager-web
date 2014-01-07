@@ -4,7 +4,7 @@ body {
 	padding-bottom: 40px;
 	
 }
-.container-fluid{padding-top: 45px;}
+.container-fluid{padding-top: 55px;}
 
 /*Nav bar*/
 .navbar .brand {
@@ -536,4 +536,7 @@ footer {
 
 .nav-collapse .nav li {
     line-height: 30px;
+}
+.caret {
+    display: none !important;
 }

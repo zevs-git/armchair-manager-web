@@ -40,6 +40,7 @@ class Device extends CActiveRecord
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, IMEI, type_id, soft_version, object_id, settings_id', 'safe', 'on'=>'search'),
+                        array('id, IMEI, type_id, soft_version, object_id, settings_id', 'safe', 'on'=>'searchByObjectId'),
 		);
 	}
 
@@ -99,6 +100,25 @@ class Device extends CActiveRecord
 		$criteria->compare('type_val',$this->type_id,true);
 		$criteria->compare('soft_version',$this->soft_version);
 		$criteria->compare('object',$this->object,true);
+		$criteria->compare('settings_id',$this->settings_id);
+                $criteria->compare('comment',$this->comment);
+
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+		));
+	}
+        
+        public function searchByObjectId($object_id)
+	{
+		// @todo Please modify the following code to remove attributes that should not be searched.
+
+		$criteria=new CDbCriteria;
+
+		$criteria->compare('id',$this->id);
+		$criteria->compare('IMEI',$this->IMEI,true);
+		$criteria->compare('type_val',$this->type_id,true);
+		$criteria->compare('soft_version',$this->soft_version);
+		$criteria->compare('object_id',$object_id,true);
 		$criteria->compare('settings_id',$this->settings_id);
                 $criteria->compare('comment',$this->comment);
 
