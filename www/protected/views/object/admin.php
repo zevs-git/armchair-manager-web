@@ -8,7 +8,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Список', 'url'=>array('index')),
+	array('label'=>'Объекты', 'url'=>array('index'), 'active'=>true),
 	array('label'=>'Добавить', 'url'=>array('create')),
 );
 
@@ -35,27 +35,38 @@ $('.search-form form').submit(function(){
 )); ?>
 </div><!-- search-form -->
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
+
+<div class="btn-toolbar">
+    <?php
+$this->widget('bootstrap.widgets.TbButton', array(
+        'label' => 'Новый объект',
+        'icon'=>'plus-sign',
+        'type' => 'primary',
+        'buttonType' => 'link',
+        'url' => $this->createUrl('create'),
+    ));
+    ?>
+</div>
+    
+<?php $this->widget('bootstrap.widgets.TbGridView', array(
 	'id'=>'object-grid',
+        'itemsCssClass' => 'table table-striped table-bordered',
 	'dataProvider'=>$model->search(),
-        'itemsCssClass' => 'table table-striped',
 	'filter'=>$model,
 	'columns'=>array(
-		'id',
+		array('name'=>'id','htmlOptions' => array('style' => 'width: 40px;')),
 		'country',
 		'region',
 		'city',
-		'street',
-		'house',
-		/*
-		'type',
+		//'street',
+		//'house',
+		//'type',
 		'obj',
-		'face',
-		'phone',
-		'comment',
-		*/
+		//'face',
+		//'phone',
+		//'comment',
 		array(
-			'class'=>'CButtonColumn',
+			'class'=>'bootstrap.widgets.TbButtonColumn',
 		),
 	),
 )); ?>

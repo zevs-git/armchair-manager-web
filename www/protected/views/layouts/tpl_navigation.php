@@ -28,7 +28,7 @@
                                         'linkOptions' => array('class' => 'dropdown-toggle', 'data-toggle' => "dropdown"),
                                         'items' => array(
                                             array('label' => 'Управление песоналом', 'url' => '/index.php/staff/admin'),
-                                            array('label' => 'Объекты', 'url' => '/index.php/object/admin'),
+                                            array('label' => 'Объекты', 'url' => '/index.php/object/index'),
                                             array('label' => 'Устройства', 'url' => '/index.php/device/admin'),
                                         )),
                                     array('label' => 'Настройки', 'url' => '/index.php/settingsTemplate/admin'),

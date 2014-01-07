@@ -37,6 +37,7 @@ class Object extends CActiveRecord
 			array('country, region, city, street, house, type, obj, face, phone, comment', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
+                        array('country, region, city, obj', 'required'),
 			array('id, country, region, city, street, house, type, obj, face, phone, comment', 'safe', 'on'=>'search'),
 		);
 	}
@@ -65,7 +66,7 @@ class Object extends CActiveRecord
 			'street' => 'Улица',
 			'house' => 'Дом',
 			'type' => 'Тип',
-			'obj' => 'Объект',
+			'obj' => 'Название объекта',
 			'face' => 'Контактное лицо',
 			'phone' => 'Телефон',
 			'comment' => 'Примечание',
