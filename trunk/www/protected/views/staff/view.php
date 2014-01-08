@@ -27,6 +27,6 @@ $this->menu=array(
 		'key',
 		'phone',
 		'comment',
-		'object_id',
+		//'object_id',
 	),
 )); ?>

@@ -68,7 +68,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'header' => 'Монеты',
             'htmlOptions' => array('style' => 'align: center; width: 120px;'),
             'type' => 'raw',
-            'value' => '($data->deviceCashReport->count_coin)?"<b style=\'color: green\' rel=\'tooltip\' title=\' " . $data->deviceCashReport->update_coin ."\'>" . $data->deviceCashReport->last_coin . "</b>&nbsp;&nbsp;<div style=\'float:right;\' rel=\'tooltip\' title=\'Наполнение купюрника\'>" .$data->deviceCashReport->count_coin . "/" . "400</div>":"-" '),
+            'value' => '($data->deviceCashReport->count_coin)?"<b style=\'color: green\' rel=\'tooltip\' title=\' " . $data->deviceCashReport->update_coin ."\'>" . $data->deviceCashReport->last_coin . "</b>&nbsp;&nbsp;<div style=\'float:right;\' rel=\'tooltip\' title=\'Наполнение купюрника\'>" .$data->deviceCashReport->count_coin . "/" . "400</div><div></div>":"-" '),
         array('name' => 'deviceCashReport.summ_coin',
            'htmlOptions' => array('style' => 'width: 100px; text-align: center;'),
            'type' => 'raw',
@@ -129,7 +129,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
 
 <?php $this->endWidget(); ?>
 <?php
-$countAll = $model->count();
+$countAll = Device::model()->count();
 $countTrue = $model->count("unix_timestamp(now()) - unix_timestamp(dt) <= 60*5");
 $countFalse = $countAll - $countTrue;
 
