@@ -40,6 +40,22 @@ $('.search-form form').submit(function(){
 )); ?>
 </div>search-form -->
 
+<div class="btn-toolbar">
+    <?php
+$this->widget('bootstrap.widgets.TbButton', array(
+        'label' => 'Новое устройство',
+        'icon'=>'plus-sign',
+        'type' => 'primary',
+        'buttonType' => 'ajaxLink',
+        'url' =>$this->createUrl('create'),
+        'ajaxOptions' => array(
+			'url'=>$this->createUrl('create'),
+			'success'=>'function(r){$("#TBDialogCrud").html(r).modal("show");}', 
+		),
+    ));
+    ?>
+</div>
+
 <?php $this->widget('bootstrap.widgets.TbGridView',array(
 	'id'=>'device-grid',
         'itemsCssClass' => 'table table-striped table-bordered',
@@ -49,31 +65,15 @@ $('.search-form form').submit(function(){
 		'id',
 		'IMEI',
                 'soft_version',
-		'deviceType.type_name',
-		'object.obj',
+		//'deviceType.type_name',
+                array('name'=>'object_obj', 'type'=>'html', 
+                      'value'=>'$data->object->obj'),
                 'comment',
+                'ICCID',
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
                         'template'=>'{view}{update}{delete}{settings}',
 			'buttons' => array(
-				'update' => array(
-					'click'=>'function(){
-						var url = $(this).attr("href");
-						$.get(url, function(r){
-							$("#TBDialogCrud").html(r).modal("show");
-						});
-						return false;
-					}',
-				),
-				'view' => array(
-					'click'=>'function(){
-						var url = $(this).attr("href");
-						$.get(url, function(r){
-							$("#TBDialogCrud").html(r).modal("show");
-						});
-						return false;
-					}',
-				),
                                 'settings' => array(
                                         'label'=>'Настройки устройтва',
                                         'url'=>'Yii::app()->createUrl("SettingsDeviceDetail",array("admin"=>$data->id))',

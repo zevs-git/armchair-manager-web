@@ -10,50 +10,72 @@
 
 <?php endif; ?>
 
-
+<div class="form">
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
 	'id'=>'device-form',
+        'type' => 'inline',
 	'enableAjaxValidation'=>false,
 )); ?>
 
 	<?php echo $form->errorSummary($model); ?>
 
-	<?php echo $form->textFieldRow($model,'IMEI',array('class'=>'span5','maxlength'=>20)); ?>
-        
-        <?php echo $form->labelEx($model, 'type_id'); ?>
+<div class="row">
+        <?php echo $form->labelEx($model,'IMEI',array('class'=>'span4')); ?>
+	<?php echo $form->textField($model,'IMEI',array('class'=>'span4','maxlength'=>20)); ?>
+</div>           
+    <div class="row">
+        <?php echo $form->labelEx($model, 'type_id',array('class'=>'span4')); ?>
         <?php echo $form->error($model, 'type_id'); ?>
-        
 	<?php $list = array('0'=>'Тип устройтва 1','1'=>'Тип устройтва 2'); ?>
-        <?php echo $form->dropDownList($model, 'type_id', $list, array('class' => 'span5')); ?>
-
-	<?php echo $form->textFieldRow($model,'soft_version',array('class'=>'span5')); ?>
-
-        <?php echo $form->labelEx($model, 'object_id'); ?>
+        <?php echo $form->dropDownList($model, 'type_id', $list, array('class' => 'span4')); ?>
+    </div>
+    <div class="row">
+        <?php echo $form->labelEx($model, 'object_id',array('class'=>'span4')); ?>
         <?php echo $form->error($model, 'object_id'); ?>
         
 	<?php $list = CHtml::listData(Object::model()->findAll(), 'id', 'city'); ?>
-        <?php echo $form->dropDownList($model, 'object_id', $list, array('class' => 'span5', 'empty' => 'Выберите объект')); ?>
-        
-        <?php if ($model->isNewRecord) {
-            echo $form->labelEx($model, 'settings_tmpl_id');
+        <?php echo $form->dropDownList($model, 'object_id', $list, array('class' => 'span4', 'empty' => 'Выберите объект')); ?>
+    </div>
+        <?php if ($model->isNewRecord):?>
+        <div class="row">
+        <?php
+            echo $form->labelEx($model, 'settings_tmpl_id',array('class'=>'span4'));
             $list = CHtml::listData(SettingsTemplate::model()->findAll(), 'id', 'descr');
-            echo  $form->dropDownList($model, 'settings_tmpl_id', $list, array('class' => 'span5'));            
-        }
+            echo  $form->dropDownList($model, 'settings_tmpl_id', $list, array('class' => 'span4'));  
         ?>
-    
-        <?php echo $form->textFieldRow($model,'comment',array('class'=>'span5','maxlength'=>200)); ?>
-    
-	<?php if (!Yii::app()->request->isAjaxRequest): ?>
+        </div>
+        <?php endif; ?>
+        <div class="row">
+        <?php echo $form->labelEx($model, 'comment',array('class'=>'span4'));?>
+        <?php echo $form->textField($model,'comment',array('class'=>'span4','maxlength'=>200)); ?>
+        </div>
+        <div class="row">
+        <?php echo $form->labelEx($model,'ICCID',array('class'=>'span4')); ?>
+	<?php echo $form->textField($model,'ICCID',array('class'=>'span4','maxlength'=>20)); ?>
+        </div>  
+        <div class="row">
+        <?php echo $form->labelEx($model,'phone',array('class'=>'span4')); ?>
+	<?php echo $form->textField($model,'phone',array('class'=>'span4','maxlength'=>20)); ?>
+        </div>  
+        <div class="row">
+        <?php echo $form->labelEx($model,'interval',array('class'=>'span4')); ?>
+	<?php echo $form->textField($model,'interval',array('class'=>'span4','maxlength'=>20)); ?>
+        </div>  
+        <div class="row">
+        <?php echo $form->labelEx($model,'zapros',array('class'=>'span4')); ?>
+	<?php echo $form->textField($model,'zapros',array('class'=>'span4','maxlength'=>20)); ?>
+        </div>
+    	<?php if (!Yii::app()->request->isAjaxRequest): ?>
 	<div class="form-actions">
 		<?php $this->widget('bootstrap.widgets.TbButton', array(
 			'buttonType'=>'submit',
 			'type'=>'primary',
-			'label'=>$model->isNewRecord ? 'Create' : 'Save',
+			'label'=>$model->isNewRecord ? 'Создать' : 'Сохоранить',
 		)); ?>
 	</div>
 	<?php endif; ?>
 <?php $this->endWidget(); ?>
-
+</div>
 <?php if (Yii::app()->request->isAjaxRequest): ?>
 </div>
 

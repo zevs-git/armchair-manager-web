@@ -49,13 +49,6 @@
 		<?php echo $form->error($model,'comment'); ?>
 	</div>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'object_id'); ?>
-		<?php echo $form->error($model,'object_id'); ?>
-                <?php $list = CHtml::listData(Object::model()->findAll(), 'id', 'city'); ?>
-                <?php echo $form->dropDownList($model, 'object_id', $list, array('empty'=>'Выберите объект')); ?>
-	</div>
-
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Сохранить' : 'Save',array('class'=>'btn btn btn-primary')); ?>
 	</div>

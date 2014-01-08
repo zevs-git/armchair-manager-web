@@ -4,15 +4,13 @@ $this->breadcrumbs=array(
 	$model->id=>array('view','id'=>$model->id),
 	'Update',
 );
-
-$this->menu=array(
-	array('label'=>'List Device','url'=>array('index')),
-	array('label'=>'Create Device','url'=>array('create')),
-	array('label'=>'View Device','url'=>array('view','id'=>$model->id)),
-	array('label'=>'Manage Device','url'=>array('admin')),
-);
 ?>
+<?php $this->beginWidget('zii.widgets.CPortlet', array(
+    'title' => "Настрйоки устройства",
+));?>
+<h3>Устройство: [<?php echo $model->IMEI; ?>]</h3>
+<?php $this->renderPartial('form_start',array('model'=>$model))?>
 
-<h1>Update Device <?php echo $model->id; ?></h1>
+<?php $this->renderPartial('_form', array('model'=>$model)); ?>
 
-<?php echo $this->renderPartial('_form',array('model'=>$model)); ?>
+<?php $this->endWidget()?>

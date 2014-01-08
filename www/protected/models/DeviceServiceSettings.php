@@ -1,27 +1,23 @@
 <?php
 
 /**
- * This is the model class for table "device_cash_report".
+ * This is the model class for table "device_servis_settings".
  *
- * The followings are the available columns in table 'device_cash_report':
+ * The followings are the available columns in table 'device_servis_settings':
  * @property integer $device_id
- * @property double $summ
- * @property double $summ_coin
- * @property double $summ_cash
- * @property integer $count_cash
- * @property integer $count_coin
- * @property string $update_date
- * @property integer $last_cash
- * @property integer $last_coin
+ * @property string $IP_monitoring
+ * @property integer $port_monitoring
+ * @property string $IP_config
+ * @property integer $port_config
  */
-class DeviceCashReport extends CActiveRecord
+class DeviceServiceSettings extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'device_cash_report';
+		return 'device_servise_settings';
 	}
 
 	/**
@@ -33,15 +29,13 @@ class DeviceCashReport extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('device_id', 'required'),
-			array('device_id, count_cash, count_coin, last_cash, last_coin', 'numerical', 'integerOnly'=>true),
-			array('summ', 'numerical'),
-			array('update_date', 'safe'),
+			array('device_id, port_monitoring, port_config', 'numerical', 'integerOnly'=>true),
+			array('IP_monitoring, IP_config', 'length', 'max'=>50),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('device_id, summ, count_cash, count_coin, update_date, last_cash, last_coin', 'safe', 'on'=>'search'),
+			array('device_id, IP_monitoring, port_monitoring, IP_config, port_config', 'safe', 'on'=>'search'),
 		);
 	}
-      
 
 	/**
 	 * @return array relational rules.
@@ -61,14 +55,10 @@ class DeviceCashReport extends CActiveRecord
 	{
 		return array(
 			'device_id' => 'Device',
-			'summ' => 'Summ',
-                        'summ_cash' => 'Сумма купюр',
-                        'summ_coin' => 'Сумма монет',
-			'count_cash' => 'Count Cash',
-			'count_coin' => 'Count Coin',
-			'update_date' => 'Update Date',
-			'last_cash' => 'Last Cash',
-			'last_coin' => 'Last Coin',
+			'IP_monitoring' => 'IP/DNS мониторинг',
+			'port_monitoring' => 'Порт мониторинг',
+			'IP_config' => 'IP/DNS конфигуратор',
+			'port_config' => 'Порт конфигуратор',
 		);
 	}
 
@@ -91,12 +81,10 @@ class DeviceCashReport extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('device_id',$this->device_id);
-		$criteria->compare('summ',$this->summ);
-		$criteria->compare('count_cash',$this->count_cash);
-		$criteria->compare('count_coin',$this->count_coin);
-		$criteria->compare('update_date',$this->update_date,true);
-		$criteria->compare('last_cash',$this->last_cash);
-		$criteria->compare('last_coin',$this->last_coin);
+		$criteria->compare('IP_monitoring',$this->IP_monitoring,true);
+		$criteria->compare('port_monitoring',$this->port_monitoring);
+		$criteria->compare('IP_config',$this->IP_config,true);
+		$criteria->compare('port_config',$this->port_config);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -107,7 +95,7 @@ class DeviceCashReport extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return DeviceCashReport the static model class
+	 * @return DeviceServisSettings the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

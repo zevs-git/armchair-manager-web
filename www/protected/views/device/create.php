@@ -10,6 +10,6 @@ $this->menu=array(
 );
 ?>
 
-<h1>Create Device</h1>
+<h2>Новое устройство</h2>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>

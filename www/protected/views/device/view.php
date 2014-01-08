@@ -1,54 +1,36 @@
-<?php if(!Yii::app()->request->isAjaxRequest): ?>
 <?php
-$this->breadcrumbs=array(
-	'Devices'=>array('index'),
-	$model->id,
-);
+/* @var $this ObjectController */
+/* @var $model Object */
 
-$this->menu=array(
-	array('label'=>'List Device','url'=>array('index')),
-	array('label'=>'Create Device','url'=>array('create')),
-	array('label'=>'Update Device','url'=>array('update','id'=>$model->id)),
-	array('label'=>'Delete Device','url'=>'#','linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Manage Device','url'=>array('admin')),
+$this->breadcrumbs=array(
+	'Объекты'=>array('index'),
+	$model->id,
 );
 ?>
 
-<h1>View Device #<?php echo $model->id; ?></h1>
-<?php endif; ?>
+<?php $this->beginWidget('zii.widgets.CPortlet', array(
+    'title' => "Настрйоки устройства",
+));?>
+<h3>Устройство: [<?php echo $model->IMEI; ?>]</h3>
+<?php $this->renderPartial('form_start',array('model'=>$model))?>
 
-<?php if(Yii::app()->request->isAjaxRequest): ?>
-<div class="modal-header">
-	<a class="close" data-dismiss="modal">&times;</a>
-	<h4>Устройство #<?php echo $model->id; ?></h4>
-</div>
-
-<div class="modal-body">
-<?php endif; ?>
-
-<?php $this->widget('bootstrap.widgets.TbDetailView',array(
+<?php echo CHtml::link('[Редактировать]', $this->createUrl("/$this->id/update/$model->id"));?>
+<br>
+<?php $this->widget('bootstrap.widgets.TbDetailView', array(
 	'data'=>$model,
+        'type' => 'condensed bordered striped', //striped bordered and/or condensed
 	'attributes'=>array(
 		'id',
 		'IMEI',
-		'type',
+		'deviceType.type_name',
 		'soft_version',
 		'object.obj',
+                'comment',
+                'ICCID',
+                'phone',
+                'interval',
+                'zapros'
 	),
 )); ?>
 
-<?php if(Yii::app()->request->isAjaxRequest): ?>
-</div>
-
-<div class="modal-footer">
-    <?php $this->widget('bootstrap.widgets.TbButton', array(
-        'label'=>'Закрыть',
-        'url'=>'#',
-        'htmlOptions'=>array(
-			'id'=>'btn-'.mt_rand(),
-			'data-dismiss'=>'modal'
-		),
-    )); ?>
-</div>
-
-<?php endif; ?>
+<?php $this->endWidget()?>
