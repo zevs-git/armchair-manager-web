@@ -189,7 +189,7 @@ class DeviceStatus extends CActiveRecord {
             return $this->is_conneted_r;
         }
         $diff = strtotime(date('Y-m-d H:i:s')) - strtotime($this->update_date);
-        if ($diff > 0 && $diff < (5 * 60)) {
+        if ($diff < (5 * 60)) {
             $this->is_conneted_r = true;
             return true;
         } else {
