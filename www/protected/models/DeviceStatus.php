@@ -103,6 +103,46 @@ class DeviceStatus extends CActiveRecord {
         }
         return $val;
     }
+    
+    public function getcash_string() {
+               
+        return ($this->deviceCashReport->count_cash)?
+                "<table style='width:100%;font-size:12px'><tr>"
+                . "<td width=25% style='padding:0;font-weight:700; text-align: center;color: green' rel='tooltip' title='" . $this->deviceCashReport->update_cash . "'>"
+                . $this->deviceCashReport->last_cash 
+                . "</td>"
+                . "<td style='padding:0;text-align: center;' width=25% rel='tooltip' title='Наполнение купюрника'>"
+                . $this->deviceCashReport->count_cash 
+                . "/400</td>"
+                . "<td width=50% style='padding:0;text-align: center; color: green;font-weight:700' rel='tooltip' title='Сумма купюр'>"
+                . $this->deviceCashReport->summ_cash 
+                . " руб.</td>"
+                . "</tr></table>"
+                :"-";
+    }
+    
+    public function getcoin_string() {
+               
+        return ($this->deviceCashReport->count_coin)?
+                "<table style='width:100%;font-size:12px'><tr>"
+                . "<td width=25% style='padding:0;font-weight:700; text-align: center;color: green' rel='tooltip' title='" . $this->deviceCashReport->update_coin . "'>"
+                . $this->deviceCashReport->last_coin 
+                . "</td>"
+                . "<td width=25% style='padding:0;text-align: center;' rel='tooltip' title='Наполнение монетника'>"
+                . $this->deviceCashReport->count_coin 
+                . "/400</td>"
+                . "<td width=50% style='padding:0;text-align: center; color: green;font-weight:700' rel='tooltip' title='Сумма монет'>"
+                . $this->deviceCashReport->summ_coin 
+                . " руб.</td>"
+                . "</tr></table>"
+                :"-";
+    }
+    
+    public function getsumm() {
+        return "<b style='color:green'>" 
+               . $this->deviceCashReport->summ
+               . " руб.</b>";
+    }
 
     public $is_conneted_r = null;
 
@@ -129,6 +169,7 @@ class DeviceStatus extends CActiveRecord {
             'balance' => 'Баланс',
             'city' => 'Город',
             'object.obj' => 'Объект',
+            'summ'=>'Сумма'
         );
     }
 
@@ -201,7 +242,7 @@ class DeviceStatus extends CActiveRecord {
     /*     * *****************device staus icons******************************* */
 
     private function state_img($file_name, $title) {
-        return "<img width='25px' src='/images/state_icons/$file_name' title='$title'>";
+        return "<img width='20px' src='/images/state_icons/$file_name' title='$title'>";
     }
 
     public function getdoor_state_icon() {
@@ -313,13 +354,13 @@ class DeviceStatus extends CActiveRecord {
         if (!$this->is_conneted) {
             return $this->state_img("akb_null.png", "Заряд аккумулятора неопределен");
         } elseif ($this->pwr_in_id == 0) {
-            return $this->state_img("power_0.png", "Заряд аккумулятора меньше 30%");
+            return $this->state_img("power_0.png", "Аккумулятор требует подзарядки");
         } elseif ($this->pwr_in_id == 1) {
-            return $this->state_img("power_1.png", "Заряд аккумулятора от 30% до 60%,");
+            return $this->state_img("power_1.png", "Низкий заряд аккумулятора");
         } elseif ($this->pwr_in_id == 2) {
-            return $this->state_img("power_2.png", "Заряд аккумулятора от 60% до 90%");
+            return $this->state_img("power_2.png", "Средний заряд аккумулятора");
         } elseif ($this->pwr_in_id == 3) {
-            return $this->state_img("power_4.png", "Заряд аккумулятора больше 90%");
+            return $this->state_img("power_4.png", "Высокий заряд аккумулятора");
         }
     }
 

@@ -16,12 +16,10 @@ $('.search-form form').submit(function(){
 $('[rel=tooltip]').tooltip();
 $('img').tooltip();
 setInterval(function() { 
-    //$('#loader').show();
     //$('[rel=tooltip]').tooltip('destroy');
     //$('img').tooltip('destroy');
     $.fn.yiiGridView.update('device-status-grid',{
     complete: function() {
-        //$('#loader').hide();
         $('[rel=tooltip]').tooltip();
         $('img').tooltip();
     }}); 
@@ -33,6 +31,7 @@ setInterval(function() {
 <?php
 //$model->dbCriteria->order='dt DESC';
 $this->beginWidget('zii.widgets.CPortlet', array(
+    'htmlOptions' => array('style' => 'min-width: 1000px;','class'=>'portlet'),
     'title' => "Монториг системы",
 ));
 ?>
@@ -45,36 +44,29 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'device-status-grid',
     'dataProvider' => $model->search(),
     //'filter' => $model,
-    'itemsCssClass' => 'table table-striped table-bordered',
-    'htmlOptions' => array('style' => 'text-align: center;'),
+    'itemsCssClass' => 'table table-bordered',
+    'htmlOptions' => array('style' => 'text-align: center;min-width: 900px;'),
     'columns' => array(
         array('name'=>'object.obj',
             'htmlOptions' => array('style' => 'min-width: 220px;'),
             'type' => 'raw',
             'value' => '"<b  rel=\'tooltip\' title=\'" . $data->device->comment . "\'>г." . $data->device->object->city . " \"" . $data->device->object->obj . "\"</b>"'),
         array('name' => 'dt',
-            'htmlOptions' => array('style' => 'width: 130px;'),
-            'value' => 'date_format(date_create($data->dt), "Y-m-d H:i:s")'),  
-        array('name' => 'deviceCashReport.coint_cash',
+            'htmlOptions' => array('style' => 'width: 130px;font-size:12px'),
+            'value' => 'date_format(date_create($data->dt), "d.m.Y H:i")'),  
+        array('name' => 'cash_string',
             'header' => 'Купюры',
-            'htmlOptions' => array('style' => 'align: center; width: 120px;'),
-            'type' => 'raw',
-            'value' => '($data->deviceCashReport->count_cash)?"<b style=\'color: green\' rel=\'tooltip\' title=\'" . $data->deviceCashReport->update_cash ."\'>" . $data->deviceCashReport->last_cash . "</b>&nbsp;&nbsp;<div style=\'float:right;\' rel=\'tooltip\' title=\'Наполнение купюрника\'>" .$data->deviceCashReport->count_cash . "/" . "400</div>":"-" '),
-        array('name' => 'deviceCashReport.summ_cash',
-            'htmlOptions' => array('style' => 'width: 100px; text-align: center;'),
-            'type' => 'raw',
-            'value' => '(($data->deviceCashReport->summ_cash > 0)?\'<b style="color: green">\' . $data->deviceCashReport->summ_cash . " руб.</b>":"-")'),
-        array('name' => 'deviceCashReport.coint_coin',
+            'htmlOptions' => array('style' => 'align: center; width: 200px;'),
+            'type' => 'raw'),
+        array('name' => 'coin_string',
             'header' => 'Монеты',
-            'htmlOptions' => array('style' => 'align: center; width: 120px;'),
-            'type' => 'raw',
-            'value' => '($data->deviceCashReport->count_coin)?"<b style=\'color: green\' rel=\'tooltip\' title=\' " . $data->deviceCashReport->update_coin ."\'>" . $data->deviceCashReport->last_coin . "</b>&nbsp;&nbsp;<div style=\'float:right;\' rel=\'tooltip\' title=\'Наполнение купюрника\'>" .$data->deviceCashReport->count_coin . "/" . "400</div><div></div>":"-" '),
-        array('name' => 'deviceCashReport.summ_coin',
-           'htmlOptions' => array('style' => 'width: 100px; text-align: center;'),
-           'type' => 'raw',
-           'value' => '(($data->deviceCashReport->summ_coin > 0)?\'<b style="color: green">\' . $data->deviceCashReport->summ_coin . " руб.</b>":"-")'),
+            'htmlOptions' => array('style' => 'align: center; width: 200px;'),
+            'type' => 'raw'),
+        array('name'=>'summ',
+              'htmlOptions' => array('style' => 'min-width: 70px; text-align: center;font-size:12px'),
+              'type' => 'raw'),
         array('name' => 'cashbox_state',
-            'htmlOptions' => array('style' => 'min-width: 150px; text-align: center;'),
+            'htmlOptions' => array('style' => 'min-width: 200px; text-align: center;'),
             'header' => 'Состояние',
             'type' => 'raw',
             'value' => '$data->state'),
@@ -127,7 +119,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
 
 <?php $this->endWidget(); ?>
 
-<?php $this->endWidget(); ?>
 <?php
 $countAll = Device::model()->count();
 $countTrue = $model->count("unix_timestamp(now()) - unix_timestamp(dt) <= 60*5");
@@ -192,3 +183,4 @@ if (isset($res['res'])) {
         </div>
     </div>
 </div>
+<?php $this->endWidget(); ?>
