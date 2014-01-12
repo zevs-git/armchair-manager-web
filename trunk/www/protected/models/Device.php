@@ -295,18 +295,18 @@ class Device extends CActiveRecord {
         }
         if ($servSettings->port_monitoring) {
             $set = SettingsDeviceDetail::model()->find("device_id = $this->id and var_id = 1");
-            $set->value = $servSettings->IP_monitoring;
+            $set->value = $servSettings->port_monitoring;
             $set->save();
         }
         
         if ($servSettings->IP_config) {
             $set = SettingsDeviceDetail::model()->find("device_id = $this->id and var_id = 192");
-            $set->value = $servSettings->IP_monitoring;
+            $set->value = $servSettings->IP_config;
             $set->save();
         }
         if ($servSettings->port_config) {
             $set = SettingsDeviceDetail::model()->find("device_id = $this->id and var_id = 0");
-            $set->value = $servSettings->IP_monitoring;
+            $set->value = $servSettings->port_config;
             $set->save();
         }
         
