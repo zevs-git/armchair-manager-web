@@ -64,7 +64,7 @@ $this->beginWidget('zii.widgets.CPortlet', array(
                                                 var url = $(this).attr("href");
 						$.get(url, function(r){
                                                         $.fn.yiiGridView.update("device-grid");
-                                                        if (r = "success") {
+                                                        if (r.length < 15 && r.indexOf("success") >= 0) {
                                                            $("#data-info").addClass("alert-success");
                                                            $("#data-info .info").html("Данные сохраненены");
                                                         } else {
@@ -121,7 +121,7 @@ $this->beginWidget('zii.widgets.CPortlet', array(
                 data: "object_id=" + '<?=$model->id?>'+'&device_id='+id,
                 success: function(res) {
                     $.fn.yiiGridView.update('device-grid');
-                    if (res == 'success') {
+                    if (res.length < 15 && res.indexOf("success")) {
                         $("#data-info").addClass('alert-success');
                         $("#data-info .info").html('Данные сохраненены');
                     } else {
