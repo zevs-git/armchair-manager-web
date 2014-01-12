@@ -91,7 +91,7 @@ class DeviceController extends Controller {
 
         if (isset($_POST['Device'])) {
             $model->attributes = $_POST['Device'];
-            if ($model->save()) {
+            if ($model->saveSettings()) {
                 if (Yii::app()->request->isAjaxRequest) {
                     echo 'success';
                     Yii::app()->end();
@@ -187,6 +187,8 @@ class DeviceController extends Controller {
             }
             $deviceServiceSettings->attributes = $_POST['DeviceServiceSettings'];
             if ($deviceServiceSettings->save()) {
+                $device = Device::model()->findByPk($id);
+                $device->saveSettings();
                 $this->redirect(array('DeviceServiceSettings', 'id' => $deviceServiceSettings->device_id, 'is_save' => 'true'));
                 return;
             } else {
@@ -213,6 +215,8 @@ class DeviceController extends Controller {
         if (isset($_REQUEST['DeviceCashboxSettings'])) {
             $cashbox->attributes = $_REQUEST['DeviceCashboxSettings'];
             if ($cashbox->save()) {
+                $device = Device::model()->findByPk($id);
+                $device->saveSettings();
                 $this->redirect(array('Cashbox', 'id' => $cashbox->device_id, 'is_save' => 'true'));
                 return;
             } else {
@@ -240,6 +244,8 @@ class DeviceController extends Controller {
         if (isset($_REQUEST['DeviceCoinboxSettings'])) {
             $cashbox->attributes = $_REQUEST['DeviceCoinboxSettings'];
             if ($cashbox->save()) {
+                $device = Device::model()->findByPk($id);
+                $device->saveSettings();
                 $this->redirect(array('Coinbox', 'id' => $cashbox->device_id, 'is_save' => 'true'));
                 return;
             } else {

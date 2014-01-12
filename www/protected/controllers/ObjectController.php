@@ -67,6 +67,10 @@ class ObjectController extends Controller
                         }
 			$objectStaff->attributes=$_POST['ObjectStaff'];
 			if($objectStaff->save()) {
+                                $devices = Device::model()->findAll("object_id = $id");
+                                foreach ($devices as $device) {
+                                    $device->saveSettings();
+                                }
 				$this->redirect(array('staff','id'=>$objectStaff->object_id,'is_save'=>'true'));
                         } else {
                                 $this->redirect(array('staff','id'=>$objectStaff->object_id,'is_save'=>'true'));
@@ -87,6 +91,10 @@ class ObjectController extends Controller
                         }
 			$objectTariff->attributes=$_POST['ObjectTariff'];
 			if($objectTariff->save()) {
+                                $devices = Device::model()->findAll("object_id = $id");
+                                foreach ($devices as $device) {
+                                    $device->saveSettings();
+                                }
 				$this->redirect(array('tariff','id'=>$objectTariff->object_id,'is_save'=>'true'));
                         } else {
                             $this->render('tariff',array(
@@ -127,7 +135,7 @@ class ObjectController extends Controller
         public function actionAddDevice($object_id,$device_id) {
             $device = Device::model()->findByPk($device_id);
             $device->object_id = $object_id;
-            if ($device->save()) {
+            if ($device->saveSettings()) {
                 echo 'success';
             } else {
                 echo 'error';

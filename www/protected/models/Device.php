@@ -205,6 +205,8 @@ class Device extends CActiveRecord {
     /* @var $set_var SettingsDeviceDetail */
 
     public function saveSettings() {
+        $this->getServiceSettings();
+        $this->getObjectSettings();
         $set = SettingsDeviceDetail::model()->findAll("device_id = $this->id");
         $fileName = "settings/$this->IMEI.bin";
         $data = '';
@@ -218,7 +220,7 @@ class Device extends CActiveRecord {
                 $data .= pack('A*', $set_var->value);
             }
         }
-        $crc16 = CRC16::calc($data);
+        $crc16 = $this->calcCRC($data);
         $size = strlen($data);
         $size_b = pack('n', $size);
         $crc16_b = pack('n', $crc16);
@@ -243,6 +245,138 @@ class Device extends CActiveRecord {
 
         return TRUE;
     }
+    public function getObjectSettings() {
+        $objectStaff = ObjectStaff::model()->findByPk($this->object_id);
+        
+        //Ключи персонала
+        if ($objectStaff) {
+            if ($objectStaff->incasator1) {
+                $set = SettingsDeviceDetail::model()->find("device_id = $this->id and var_id = 22");
+                $set->value = $objectStaff->incasator1_staff->key;
+                $set->save();
+            }
+            if ($objectStaff->incasator2) {
+                $set = SettingsDeviceDetail::model()->find("device_id = $this->id and var_id = 23");
+                $set->value = $objectStaff->incasator1_staff->key;
+                $set->save();
+            }
+            if ($objectStaff->tehnik1) {
+                $set = SettingsDeviceDetail::model()->find("device_id = $this->id and var_id = 26");
+                $set->value = $objectStaff->tehnik2_staff->key;
+                $set->save();
+            }
+            if ($objectStaff->tehnik2) {
+                $set = SettingsDeviceDetail::model()->find("device_id = $this->id and var_id = 27");
+                $set->value = $objectStaff->tehnik2_staff->key;
+                $set->save();
+            }
+        }
+        
+        //Настройки тарифа
+        $objectTariff = ObjectTariff::model()->findByPk($this->object_id);
+        if ($objectTariff) {
+            $var = 12;
+            for ($k = 1; $k <= 10; $k++) {
+                $set = SettingsDeviceDetail::model()->find("device_id = $this->id and var_id = $var");
+                $a = unpack("i",pack('v', $objectTariff->{"lk" . $k . "_r"}) . pack('v', $objectTariff->{"lk" . $k . "_l"}));
+                $set->value = $a[1];
+                $var++;
+                $set->save();
+            }
+        }
+    }
+    
+    public function getServiceSettings() {
+        $servSettings = DeviceServiceSettings::model()->findByPk($this->id);        
+        if ($servSettings->IP_monitoring) {
+            $set = SettingsDeviceDetail::model()->find("device_id = $this->id and var_id = 193");
+            $set->value = $servSettings->IP_monitoring;
+            $set->save();
+        }
+        if ($servSettings->port_monitoring) {
+            $set = SettingsDeviceDetail::model()->find("device_id = $this->id and var_id = 1");
+            $set->value = $servSettings->IP_monitoring;
+            $set->save();
+        }
+        
+        if ($servSettings->IP_config) {
+            $set = SettingsDeviceDetail::model()->find("device_id = $this->id and var_id = 192");
+            $set->value = $servSettings->IP_monitoring;
+            $set->save();
+        }
+        if ($servSettings->port_config) {
+            $set = SettingsDeviceDetail::model()->find("device_id = $this->id and var_id = 0");
+            $set->value = $servSettings->IP_monitoring;
+            $set->save();
+        }
+        
+        $deviceCashboxSettings = DeviceCashboxSettings::model()->findByPk($this->id);
+        
+        $secondBit = 0x00;
+        if ($deviceCashboxSettings->nominal0) {
+            $secondBit ^= 0x01;
+        }
+        if ($deviceCashboxSettings->nominal1) {
+            $secondBit ^= 0x02;
+        }
+        if ($deviceCashboxSettings->nominal2) {
+            $secondBit ^= 0x04;
+        }
+        if ($deviceCashboxSettings->nominal3) {
+            $secondBit ^= 0x08;
+        }
+        if ($deviceCashboxSettings->nominal4) {
+            $secondBit ^= 0x10;
+        }
+        if ($deviceCashboxSettings->nominal5) {
+            $secondBit ^= 0x20;
+        }
+        if ($deviceCashboxSettings->nominal6) {
+            $secondBit ^= 0x40;
+        }
+        if ($deviceCashboxSettings->nominal7) {
+            $secondBit ^= 0x80;
+        }
+        $a = unpack("i",pack('v', $deviceCashboxSettings->coeficient) . pack('C', $secondBit) .  pack('C', $deviceCashboxSettings->model_id));
+        $set = SettingsDeviceDetail::model()->find("device_id = $this->id and var_id = 32");
+        $deviceCashboxSettings->save();
+        $set->value = $a[1];
+        $set->save(); 
+        
+        
+        $deviceCoinboxSettings = DeviceCoinboxSettings::model()->findByPk($this->id);
+        
+        $secondBit = 0x00;
+        if ($deviceCoinboxSettings->nominal0) {
+            $secondBit ^= 0x01;
+        }
+        if ($deviceCoinboxSettings->nominal1) {
+            $secondBit ^= 0x02;
+        }
+        if ($deviceCoinboxSettings->nominal2) {
+            $secondBit ^= 0x04;
+        }
+        if ($deviceCoinboxSettings->nominal3) {
+            $secondBit ^= 0x08;
+        }
+        if ($deviceCoinboxSettings->nominal4) {
+            $secondBit ^= 0x10;
+        }
+        if ($deviceCoinboxSettings->nominal5) {
+            $secondBit ^= 0x20;
+        }
+        if ($deviceCoinboxSettings->nominal6) {
+            $secondBit ^= 0x40;
+        }
+        if ($deviceCoinboxSettings->nominal7) {
+            $secondBit ^= 0x80;
+        }
+        $a = unpack("i",pack('v', $deviceCoinboxSettings->coeficient) . pack('C', $secondBit) .  pack('C', $deviceCoinboxSettings->model_id));
+        $set = SettingsDeviceDetail::model()->find("device_id = $this->id and var_id = 33");
+        $deviceCoinboxSettings->save();
+        $set->value = $a[1];
+        $set->save();   
+    }
 
     /**
      * Returns the static model of the specified AR class.
@@ -252,6 +386,23 @@ class Device extends CActiveRecord {
      */
     public static function model($className = __CLASS__) {
         return parent::model($className);
+    }
+    
+   public function calcCRC($buffer) {
+        $crc = 0xFFFF;
+        $j = 0;
+        
+        $len = strlen($buffer);
+        
+        while ($len--) {
+            $crc ^= (ord($buffer[$j++]) << 8) & 0xFFFF;
+
+            for ($i = 0; $i < 8; $i++) {
+                $crc = $crc & 0x8000 ? (($crc << 1) & 0xFFFF ) ^ 0x1021 : ($crc << 1) & 0xFFFF;
+            }
+        }
+
+        return $crc;
     }
 
 }
