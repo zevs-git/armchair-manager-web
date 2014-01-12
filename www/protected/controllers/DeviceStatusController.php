@@ -33,7 +33,7 @@ class DeviceStatusController extends Controller {
               'users'=>array('@'),
               ), */
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('admin', 'delete', 'index', 'view', 'grid'),
+                'actions' => array('admin', 'delete', 'index', 'view', 'grid', 'Summary'),
                 'users' => array('admin'),
             ),
             array('deny', // deny all users
@@ -174,6 +174,43 @@ class DeviceStatusController extends Controller {
         if (isset($_POST['ajax']) && $_POST['ajax'] === 'device-status-form') {
             echo CActiveForm::validate($model);
             Yii::app()->end();
+        }
+    }
+
+    public function actionSummary() {
+        if (Yii::app()->request->isAjaxRequest) {
+            
+
+            $result = array();
+            $result['device_count'] = Device::model()->count();
+            $result['device_connected'] = DeviceStatus::model()->count("unix_timestamp(now()) - unix_timestamp(dt) <= 60*5");
+            $result['device_connected_p'] = number_format($result['device_connected'] / $result['device_count'] * 100 , 2, '.', '') . "%";
+            $result['device_not_connected'] = $result['device_count'] - $result['device_connected'];
+            $result['device_not_connected_p'] = number_format($result['device_not_connected'] / $result['device_count'] * 100, 2, '.', '') . "%";
+
+            $result['cash_summ'] = 0;
+
+            $sql = "SELECT SUM(summ_coin)+SUM(summ_cash) AS res
+            FROM device_cash_report c, `device_status` s
+            WHERE c.`device_id` = s.`device_id`";
+
+            $res = Yii::app()->db->createCommand($sql)
+                    ->queryRow();
+
+            if (isset($res['res'])) {
+                $result['cash_summ'] = $res['res'];
+            }
+
+            $res = Yii::app()->db->createCommand()
+                    ->select('sum(count_cash + count_coin) as res')
+                    ->from('device_cash_report')
+                    ->queryRow();
+
+            if (isset($res['res'])) {
+                $result['cash_summ_p'] = number_format($res['res'] / ($result['device_connected'] * 400) *100, 2, '.', '') . "%";
+            }
+
+            echo json_encode($result);
         }
     }
 
