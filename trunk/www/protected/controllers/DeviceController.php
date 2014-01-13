@@ -59,6 +59,8 @@ class DeviceController extends Controller {
      */
     public function actionCreate() {
         $model = new Device;
+        
+        $model->object_id = 0; // объект по умолч. - склад
 
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);

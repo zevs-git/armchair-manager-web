@@ -130,6 +130,15 @@ if (is_null($objectStaff)) {
 
             });
         })
+        
+        $('.delete-btn').click(function() {
+            var buttn = this;
+            $(buttn).button('loading');
+            field = event.target.id;
+            $("#ObjectStaff_"+field).val(null);
+            $("#"+field+"_value").html("* Не задан");
+            $(buttn).button('reset');
+        })
     </script>
 
 

@@ -71,7 +71,7 @@ class Device extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'id' => 'Ид',
-            'IMEI' => 'Сериейный номер(IMEI)',
+            'IMEI' => 'Серийный номер(IMEI)',
             'type_id' => 'Тип устройства',
             'type' => 'Тип устройства',
             'type_name' => 'Тип устройства',
@@ -84,7 +84,7 @@ class Device extends CActiveRecord {
             'ICCID' => 'Номер SIM',
             'object_obj' => 'Объект',
             'phone'=>'Номер телефона',
-            'interval'=>'Интевал передачяи данных',
+            'interval'=>'Интервал передачяи данных',
             'zapros'=>'Запрос баланса'
         );
     }
@@ -159,7 +159,7 @@ class Device extends CActiveRecord {
             $tmpl = SettingsTmplDetail::model()->findAll("tmpl_id = $this->settings_tmpl_id");
             SettingsDeviceDetail::model()->deleteAll("device_id = $this->id");
 
-            $fileName = "settings/$this->IMEI.bin";
+            //$fileName = "settings/$this->IMEI.bin";
             $data = '';
             foreach ($tmpl as $tmpl_var) {
                 $setings_var = new SettingsDeviceDetail;
@@ -168,36 +168,94 @@ class Device extends CActiveRecord {
                 $setings_var->var_id = $tmpl_var->var_id;
                 $setings_var->value = $tmpl_var->default;
                 $setings_var->save();
-                $data .= pack('C', ord('#'));
+                /*$data .= pack('C', ord('#'));
                 $data .= pack('C', $setings_var->var_id);
                 if ($setings_var->var->size_type_id == 0) {
                     $data .= pack('N', $setings_var->value);
                 } else {
                     $data .= pack('C', strlen($setings_var->value));
                     $data .= pack('A*', $setings_var->value);
-                }
+                }*/
             }
 
-            $crc16 = CRC16::calc($data);
+            /*$crc16 = CRC16::calc($data);
             $size = strlen($data);
             $size_b = pack('n', $size);
-            $crc16_b = pack('n', $crc16);
+            $crc16_b = pack('n', $crc16);*/
 
-            $data = $size_b . $crc16_b . $data;
-            file_put_contents($fileName, $data, FILE_BINARY);
+            /*$data = $size_b . $crc16_b . $data;
+            file_put_contents($fileName, $data, FILE_BINARY);*/
+            $serviceSettings = new DeviceServiceSettings();
+            $serviceSettings->device_id = $this->id;
+            $serviceSettings->IP_config = SettingsDeviceDetail::model()->find("device_id = $this->id and var_id = 192")->value;
+            $serviceSettings->port_config = SettingsDeviceDetail::model()->find("device_id = $this->id and var_id = 0")->value;
+            $serviceSettings->IP_monitoring = SettingsDeviceDetail::model()->find("device_id = $this->id and var_id = 193")->value;
+            $serviceSettings->port_monitoring = SettingsDeviceDetail::model()->find("device_id = $this->id and var_id = 1")->value;
+            $serviceSettings->save();
+            
+            $deviceCashboxSettings = new DeviceCashboxSettings();
+            
+            $deviceCashboxSettings->device_id = $this->id;
+            
+            $value = SettingsDeviceDetail::model()->find("device_id = $this->id and var_id = 32")->value;
+            
+            $deviceCashboxSettings->model_id = (($value & 0xFF000000) >> 24);
+            
+            $secondBit = (($value & 0x00FF0000) >> 16);
+            
+            
+            $deviceCashboxSettings->nominal0 = ($secondBit & 0x01)?1:0;
+            $deviceCashboxSettings->nominal1 = ($secondBit & 0x02)?1:0;
+            $deviceCashboxSettings->nominal2 = ($secondBit & 0x04)?1:0;
+            $deviceCashboxSettings->nominal3 = ($secondBit & 0x08)?1:0;
+            $deviceCashboxSettings->nominal4 = ($secondBit & 0x10)?1:0;
+            $deviceCashboxSettings->nominal5 = ($secondBit & 0x20)?1:0;
+            $deviceCashboxSettings->nominal6 = ($secondBit & 0x40)?1:0;
+            $deviceCashboxSettings->nominal7 = ($secondBit & 0x80)?1:0;
+            
+            $deviceCashboxSettings->coeficient = $value & 0x0000FFFF;
+            $deviceCashboxSettings->save();
+            
+            $deviceCoinboxSettings = new DeviceCoinboxSettings();
+            
+            $deviceCoinboxSettings->device_id = $this->id;
+            
+            $value = SettingsDeviceDetail::model()->find("device_id = $this->id and var_id = 33")->value;
+            
+            $deviceCoinboxSettings->model_id = (($value & 0xFF000000) >> 24);
+            
+            $secondBit = (($value & 0x00FF0000) >> 16);
+            
+            
+            $deviceCoinboxSettings->nominal0 = ($secondBit & 0x01)?1:0;
+            $deviceCoinboxSettings->nominal1 = ($secondBit & 0x02)?1:0;
+            $deviceCoinboxSettings->nominal2 = ($secondBit & 0x04)?1:0;
+            $deviceCoinboxSettings->nominal3 = ($secondBit & 0x08)?1:0;
+            $deviceCoinboxSettings->nominal4 = ($secondBit & 0x10)?1:0;
+            $deviceCoinboxSettings->nominal5 = ($secondBit & 0x20)?1:0;
+            $deviceCoinboxSettings->nominal6 = ($secondBit & 0x40)?1:0;
+            $deviceCoinboxSettings->nominal7 = ($secondBit & 0x80)?1:0;
+            
+            $deviceCoinboxSettings->coeficient = $value & 0x0000FFFF;
+            $deviceCoinboxSettings->save();
+            
+            
+            
         }
+        
         $state = DeviceStatus::model()->findBYPk($this->id);
         if ($state) {
             $state->u_settings = 1;
             $state->save();
         }
 
-        $tmp = unpack("Nid", $size_b . $crc16_b);
+        /*$tmp = unpack("Nid", $size_b . $crc16_b);
         if (isset($tmp['id'])) {
             $this->settings_id = $tmp['id'];
         } else {
             $this->settings_id = 0;
-        }
+        }*/
+        $this->saveSettings();
         $this->save();
         return TRUE;
     }
@@ -240,8 +298,10 @@ class Device extends CActiveRecord {
         $this->save();
 
         $state = DeviceStatus::model()->findBYPk($this->id);
-        $state->u_settings = 1;
-        $state->save();
+        if ($state) {
+            $state->u_settings = 1;
+            //$state->save(); //Не забыть включить!!!!!!!!!
+        }
 
         return TRUE;
     }
@@ -311,71 +371,72 @@ class Device extends CActiveRecord {
         }
         
         $deviceCashboxSettings = DeviceCashboxSettings::model()->findByPk($this->id);
-        
-        $secondBit = 0x00;
-        if ($deviceCashboxSettings->nominal0) {
-            $secondBit ^= 0x01;
+        if ($deviceCashboxSettings) {
+            $secondBit = 0x00;
+            if ($deviceCashboxSettings->nominal0) {
+                $secondBit ^= 0x01;
+            }
+            if ($deviceCashboxSettings->nominal1) {
+                $secondBit ^= 0x02;
+            }
+            if ($deviceCashboxSettings->nominal2) {
+                $secondBit ^= 0x04;
+            }
+            if ($deviceCashboxSettings->nominal3) {
+                $secondBit ^= 0x08;
+            }
+            if ($deviceCashboxSettings->nominal4) {
+                $secondBit ^= 0x10;
+            }
+            if ($deviceCashboxSettings->nominal5) {
+                $secondBit ^= 0x20;
+            }
+            if ($deviceCashboxSettings->nominal6) {
+                $secondBit ^= 0x40;
+            }
+            if ($deviceCashboxSettings->nominal7) {
+                $secondBit ^= 0x80;
+            }
+            $a = unpack("i",pack('v', $deviceCashboxSettings->coeficient) . pack('C', $secondBit) .  pack('C', $deviceCashboxSettings->model_id));
+            $set = SettingsDeviceDetail::model()->find("device_id = $this->id and var_id = 32");
+            $deviceCashboxSettings->save();
+            $set->value = $a[1];
+            $set->save(); 
         }
-        if ($deviceCashboxSettings->nominal1) {
-            $secondBit ^= 0x02;
-        }
-        if ($deviceCashboxSettings->nominal2) {
-            $secondBit ^= 0x04;
-        }
-        if ($deviceCashboxSettings->nominal3) {
-            $secondBit ^= 0x08;
-        }
-        if ($deviceCashboxSettings->nominal4) {
-            $secondBit ^= 0x10;
-        }
-        if ($deviceCashboxSettings->nominal5) {
-            $secondBit ^= 0x20;
-        }
-        if ($deviceCashboxSettings->nominal6) {
-            $secondBit ^= 0x40;
-        }
-        if ($deviceCashboxSettings->nominal7) {
-            $secondBit ^= 0x80;
-        }
-        $a = unpack("i",pack('v', $deviceCashboxSettings->coeficient) . pack('C', $secondBit) .  pack('C', $deviceCashboxSettings->model_id));
-        $set = SettingsDeviceDetail::model()->find("device_id = $this->id and var_id = 32");
-        $deviceCashboxSettings->save();
-        $set->value = $a[1];
-        $set->save(); 
-        
         
         $deviceCoinboxSettings = DeviceCoinboxSettings::model()->findByPk($this->id);
-        
-        $secondBit = 0x00;
-        if ($deviceCoinboxSettings->nominal0) {
-            $secondBit ^= 0x01;
+        if ($deviceCoinboxSettings) {
+            $secondBit = 0x00;
+            if ($deviceCoinboxSettings->nominal0) {
+                $secondBit ^= 0x01;
+            }
+            if ($deviceCoinboxSettings->nominal1) {
+                $secondBit ^= 0x02;
+            }
+            if ($deviceCoinboxSettings->nominal2) {
+                $secondBit ^= 0x04;
+            }
+            if ($deviceCoinboxSettings->nominal3) {
+                $secondBit ^= 0x08;
+            }
+            if ($deviceCoinboxSettings->nominal4) {
+                $secondBit ^= 0x10;
+            }
+            if ($deviceCoinboxSettings->nominal5) {
+                $secondBit ^= 0x20;
+            }
+            if ($deviceCoinboxSettings->nominal6) {
+                $secondBit ^= 0x40;
+            }
+            if ($deviceCoinboxSettings->nominal7) {
+                $secondBit ^= 0x80;
+            }
+            $a = unpack("i",pack('v', $deviceCoinboxSettings->coeficient) . pack('C', $secondBit) .  pack('C', $deviceCoinboxSettings->model_id));
+            $set = SettingsDeviceDetail::model()->find("device_id = $this->id and var_id = 33");
+            $deviceCoinboxSettings->save();
+            $set->value = $a[1];
+            $set->save();  
         }
-        if ($deviceCoinboxSettings->nominal1) {
-            $secondBit ^= 0x02;
-        }
-        if ($deviceCoinboxSettings->nominal2) {
-            $secondBit ^= 0x04;
-        }
-        if ($deviceCoinboxSettings->nominal3) {
-            $secondBit ^= 0x08;
-        }
-        if ($deviceCoinboxSettings->nominal4) {
-            $secondBit ^= 0x10;
-        }
-        if ($deviceCoinboxSettings->nominal5) {
-            $secondBit ^= 0x20;
-        }
-        if ($deviceCoinboxSettings->nominal6) {
-            $secondBit ^= 0x40;
-        }
-        if ($deviceCoinboxSettings->nominal7) {
-            $secondBit ^= 0x80;
-        }
-        $a = unpack("i",pack('v', $deviceCoinboxSettings->coeficient) . pack('C', $secondBit) .  pack('C', $deviceCoinboxSettings->model_id));
-        $set = SettingsDeviceDetail::model()->find("device_id = $this->id and var_id = 33");
-        $deviceCoinboxSettings->save();
-        $set->value = $a[1];
-        $set->save();   
     }
 
     /**
