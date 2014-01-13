@@ -141,7 +141,7 @@ class ObjectController extends Controller
                 echo 'error';
             }
         }
-        public function actionDeleteDevice($object_id,$device_id) {
+        public function actionDeleteDevice($object_id,$device_id) {           
             $device = Device::model()->findByPk($device_id);
             $device->object_id = 0;
             if ($device->save()) {
@@ -217,6 +217,11 @@ class ObjectController extends Controller
 	 */
 	public function actionDelete($id)
 	{
+            
+                $devices = Device::model()->findAll("object_id = $id");
+                foreach ($devices as $device) {
+                    $device->object_id = 0;
+                }
 		$this->loadModel($id)->delete();
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser

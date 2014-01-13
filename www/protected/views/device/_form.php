@@ -33,8 +33,8 @@
         <?php echo $form->labelEx($model, 'object_id',array('class'=>'span4')); ?>
         <?php echo $form->error($model, 'object_id'); ?>
         
-	<?php $list = CHtml::listData(Object::model()->findAll(), 'id', 'city'); ?>
-        <?php echo $form->dropDownList($model, 'object_id', $list, array('class' => 'span4', 'empty' => 'Выберите объект')); ?>
+	<?php $list = CHtml::listData(Object::model()->findAll(), 'id', 'obj'); ?>
+        <?php echo $form->dropDownList($model, 'object_id', $list, array('class' => 'span4')); ?>
     </div>
         <?php if ($model->isNewRecord):?>
         <div class="row">

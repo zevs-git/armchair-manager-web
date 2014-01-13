@@ -26,9 +26,8 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'staff_type_id'); ?>
-		<?php echo $form->textField($model,'staff_type_id'); ?>
-		<?php echo $form->error($model,'staff_type_id'); ?>
+            <?php $list = array('0'=>'Инкассатор','1'=>'Техник'); ?>
+            <?php echo $form->dropDownList($model, 'staff_type_id', $list, array('class' => 'span2')); ?>
 	</div>
 
 	<div class="row">
@@ -50,9 +49,11 @@
 	</div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Сохранить' : 'Save',array('class'=>'btn btn btn-primary')); ?>
+		<?php echo CHtml::submitButton($model->isNewRecord ? 'Сохранить' : 'Сохранить',array('class'=>'btn btn btn-primary')); ?>
 	</div>
 
 <?php $this->endWidget(); ?>
 
 </div><!-- form -->
+
+<img src="/img/personal_key.jpg" />

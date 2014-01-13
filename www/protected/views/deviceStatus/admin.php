@@ -63,6 +63,7 @@ $this->beginWidget('zii.widgets.CPortlet', array(
                 'deleteButtonVisible' => 'FALSE',
                 'buttons' => array('view' =>
                     array(
+                        'label'=>'Настройки устройтва',
                         'url' => 'Yii::app()->createUrl("DeviceStatus/view", array("id"=>$data->device_id,"asDialog"=>1))',
                         'options' => array(
                             'ajax' => array(
@@ -149,7 +150,7 @@ if (isset($res['res'])) {
         <div class="stat-block">
             <ul>
                 <li class="stat-count" ><span id="device_connected"><?php echo $countTrue; ?></span><span>Подключено</span></li>
-                <li class="stat-percent" ><span id="device_connected_p" class="text-success stat-percent"><?php echo $countTrue / $countAll * 100; ?>%</span></li>
+                <li class="stat-percent" ><span id="device_connected_p" class="text-success stat-percent"><?php echo number_format($countTrue / $countAll * 100,2, '.', ''); ?>%</span></li>
             </ul>
         </div>
     </div>
@@ -157,7 +158,7 @@ if (isset($res['res'])) {
         <div class="stat-block">
             <ul>
                 <li class="stat-count" ><span id="device_not_connected"><?php echo $countFalse; ?></span><span>Не на связи</span></li>
-                <li class="stat-percent" ><span id="device_not_connected_p" class="text-error stat-percent"><?php echo $countFalse / $countAll * 100; ?>%</span></li>
+                <li class="stat-percent" ><span id="device_not_connected_p" class="text-error stat-percent"><?php echo number_format($countFalse / $countAll * 100, 2, '.', ''); ?>%</span></li>
             </ul>
         </div>
     </div>

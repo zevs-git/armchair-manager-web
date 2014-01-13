@@ -69,56 +69,65 @@ if (is_null($objectTariff)) {
     ?>
     <div id="bonus_2" class="triff_bonus">
         <h3>Бонусы</h3>
+        <span>при сумме</span>
         <?php echo $form->textField($objectTariff, 'lk2_l', array('class' => 'span1')); ?>
-        <span>рублей за</span>
+        <span>рублей добавить</span>
         <?php echo $form->textField($objectTariff, 'lk2_r', array('class' => 'span1')); ?>
         <span>сек</span>
     </div>
     <div id="bonus_3" class="triff_bonus">
+        <span>при сумме</span>
         <?php echo $form->textField($objectTariff, 'lk3_l', array('class' => 'span1')); ?>
-        <span>рублей за</span>
+        <span>рублей добавить</span>
         <?php echo $form->textField($objectTariff, 'lk3_r', array('class' => 'span1')); ?>
         <span>сек</span>
     </div>
     <div id="bonus_4" class="triff_bonus">
+        <span>при сумме</span>
         <?php echo $form->textField($objectTariff, 'lk4_l', array('class' => 'span1')); ?>
-        <span>рублей за</span>
+        <span>рублей добавить</span>
         <?php echo $form->textField($objectTariff, 'lk4_r', array('class' => 'span1')); ?>
         <span>сек</span>
     </div>
     <div id="bonus_5" class="triff_bonus">
+        <span>при сумме</span>
         <?php echo $form->textField($objectTariff, 'lk5_l', array('class' => 'span1')); ?>
-        <span>рублей за</span>
+        <span>рублей добавить</span>
         <?php echo $form->textField($objectTariff, 'lk5_r', array('class' => 'span1')); ?>
         <span>сек</span>
     </div>
     <div id="bonus_6" class="triff_bonus">
+        <span>при сумме</span>
         <?php echo $form->textField($objectTariff, 'lk6_l', array('class' => 'span1')); ?>
-        <span>рублей за</span>
+        <span>рублей добавить</span>
         <?php echo $form->textField($objectTariff, 'lk6_r', array('class' => 'span1')); ?>
         <span>сек</span>
     </div>
     <div id="bonus_7" class="triff_bonus">
+        <span>при сумме</span>
         <?php echo $form->textField($objectTariff, 'lk7_l', array('class' => 'span1')); ?>
-        <span>рублей за</span>
+        <span>рублей добавить</span>
         <?php echo $form->textField($objectTariff, 'lk7_r', array('class' => 'span1')); ?>
         <span>сек</span>
     </div>
     <div id="bonus_8" class="triff_bonus">
+        <span>при сумме</span>
         <?php echo $form->textField($objectTariff, 'lk8_l', array('class' => 'span1')); ?>
-        <span>рублей за</span>
+        <span>рублей добавить</span>
         <?php echo $form->textField($objectTariff, 'lk8_r', array('class' => 'span1')); ?>
         <span>сек</span>
     </div>
     <div id="bonus_9" class="triff_bonus">
+        <span>при сумме</span>
         <?php echo $form->textField($objectTariff, 'lk9_l', array('class' => 'span1')); ?>
-        <span>рублей за</span>
+        <span>рублей добавить</span>
         <?php echo $form->textField($objectTariff, 'lk9_r', array('class' => 'span1')); ?>
         <span>сек</span>
     </div>
     <div id="bonus_10" class="triff_bonus">
+        <span>при сумме</span>
         <?php echo $form->textField($objectTariff, 'lk10_l', array('class' => 'span1')); ?>
-        <span>рублей за</span>
+        <span>рублей добавить</span>
         <?php echo $form->textField($objectTariff, 'lk10_r', array('class' => 'span1')); ?>
         <span>сек</span>
     </div>

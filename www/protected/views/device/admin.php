@@ -72,7 +72,7 @@ $this->widget('bootstrap.widgets.TbButton', array(
                 'ICCID',
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
-                        'template'=>'{view}{update}{delete}{settings}',
+                        'template'=>'{view}{delete}{settings}',
 			'buttons' => array(
                                 'settings' => array(
                                         'label'=>'Настройки устройтва',

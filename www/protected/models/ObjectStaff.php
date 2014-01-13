@@ -68,7 +68,11 @@ class ObjectStaff extends CActiveRecord
             if (is_null($value)) {
                 $value = 'Не задан';
             }
-            return '<span id="' . $name. '_value" >' . $value .'</span><button class="btn select-btn btn-primary" style="float:right" id="' . $name .'" data-loading-text=" Загрузка ... " type="button" >Выбрать <i class="icon-list"></i></button>';
+            return '<span id="' . $name. '_value" >' . $value .'</span>'
+                    . '<div style="float:right">'
+                    . (($this->{$name})?'<button class="btn delete-btn btn-danger" id="' . $name .'" data-loading-text=" Загрузка ... " type="button" >Убрать <i class="icon-trash"></i></button>':'')
+                    . '<button class="btn select-btn btn-primary" id="' . $name .'" data-loading-text=" Загрузка ... " type="button" >Выбрать <i class="icon-list"></i></button>'
+                    . '<div>';
         }
 
 	/**
@@ -78,8 +82,8 @@ class ObjectStaff extends CActiveRecord
 	{
 		return array(
 			'object_id' => 'Object',
-			'incasator1' => 'Инкасатор1',
-			'incasator2' => 'Инкасатор2',
+			'incasator1' => 'Инкассатор1',
+			'incasator2' => 'Инкассатор2',
 			'tehnik1' => 'Техник1',
 			'tehnik2' => 'Техник2',
                         'incasator1_val'=>'Первый инкасатор',
