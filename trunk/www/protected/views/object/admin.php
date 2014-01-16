@@ -74,14 +74,15 @@ $this->widget('bootstrap.widgets.TbGridView', array(
                 'view' => array(
                     'label' => 'Настройки объекта',
                     'icon' => 'icon-pencil',
+                    'data_id'=>'$data->id',
                     'url' => 'Yii::app()->createUrl("object/view", array("id"=>$data->id))',
                     'options'=>array(
                         'class'=>'btn btn-small',
                     ),
                 ),
                 'delete' => array(
+                    //'url' => 'Yii::app()->createUrl("object/view", array("id"=>$data->id))',
                     'options'=>array(
-                        'url' => 'Yii::app()->createUrl("object/view", array("id"=>$data->id))',
                         'class'=>'btn btn-small delete',
                     ),
                 ),
@@ -90,3 +91,12 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     ),
 ));
 ?>
+<script>
+    $('.delete').click(function() {
+        if ($(this).attr("href").replace(/.*delete\//, "") == 0) {
+            alert('Нельзя удалить базовый объект');
+            return false;
+        }
+        return true;
+    });
+</script>

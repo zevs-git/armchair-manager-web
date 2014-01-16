@@ -121,7 +121,7 @@ $this->beginWidget('zii.widgets.CPortlet', array(
                 data: "object_id=" + '<?=$model->id?>'+'&device_id='+id,
                 success: function(res) {
                     $.fn.yiiGridView.update('device-grid');
-                    if (res.length < 15 && res.indexOf("success")) {
+                    if (res.length < 15 && res.indexOf("success") >= 0) {
                         $("#data-info").addClass('alert-success');
                         $("#data-info .info").html('Данные сохраненены');
                     } else {

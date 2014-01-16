@@ -1,6 +1,5 @@
 <?php
 $this->breadcrumbs = array(
-    'Настройки' => array('admin'),
     'Шаблоны настроек',
 );
 
@@ -41,11 +40,22 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'columns' => array(
         'id',
         'descr',
-        array(
-            'class' => 'myButtonColumn',
-            'viewButtonVisible' => 'FALSE',
+        array('class' => 'bootstrap.widgets.TbButtonColumn',
+            'template' => '{view} {delete}',
             'buttons' => array(
+                'view' => array(
+                    'label' => 'Редактировать шаблон',
+                    'icon' => 'icon-pencil',
+                    'url' => 'Yii::app()->createUrl("settingsTmplDetail/ServiceSettings", array("id"=>$data->id))',
+                    'options' => array(
+                        'class' => 'btn btn-small',
+                    ),
+                ),
                 'delete' => array(
+                    'options' => array(
+                        'url' => 'Yii::app()->createUrl("object/view", array("id"=>$data->id))',
+                        'class' => 'btn btn-small delete',
+                    ),
                     'click' => 'function(){
 						var url = $(this).attr("href");
 						$.get(url).always( function(){

@@ -69,6 +69,23 @@ class DeviceController extends Controller {
             $model->attributes = $_POST['Device'];
             $model->settings_tmpl_id = $_POST['Device']['settings_tmpl_id'];
             if ($model->saveFromTamplate()) {
+                    $serviceBase = TmplServiceSettings::model()->findByPk(0);
+                    $newService = new DeviceServiceSettings();
+                    $newService->attributes = $serviceBase->attributes;
+                    $newService->device_id = $model->id;
+                    $newService->save();
+
+                    $cashBase = TmplCashboxSettings::model()->findByPk(0);
+                    $newCash = new DeviceCashboxSettings();
+                    $newCash->attributes = $cashBase->attributes;
+                    $newCash->device_id = $model->id;
+                    $newCash->save();
+
+                    $coinBase = TmplCoinboxSettings::model()->findByPk(0);
+                    $newCoin = new DeviceCoinboxSettings();
+                    $newCoin->attributes = $coinBase->attributes;
+                    $newCoin->device_id = $model->id;
+                    $newCoin->save();
                 if (Yii::app()->request->isAjaxRequest) {
                     print 'success';
                     Yii::app()->end();
