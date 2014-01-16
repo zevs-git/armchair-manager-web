@@ -56,6 +56,8 @@ class DeviceStatus extends CActiveRecord {
         return array(
             'deviceCashReport' => array(self::HAS_ONE, 'DeviceCashReport', 'device_id'),
             'device' => array(self::BELONGS_TO, 'Device', 'device_id'),
+            'deviceCashboxSettings' => array(self::BELONGS_TO, 'DeviceCashboxSettings', 'device_id'),
+            'deviceCoinboxSettings' => array(self::BELONGS_TO, 'DeviceCoinboxSettings', 'device_id'),
         );
     }
 
@@ -68,7 +70,7 @@ class DeviceStatus extends CActiveRecord {
                 $this->massage_state_icon . " " .
                 $this->door_state_icon . " " .
                 $this->alarm_state_icon . " " .
-                (($this->u_settings)?"[Обновление настроек]":"");
+                (($this->u_settings) ? "[Обновление настроек]" : "");
     }
 
     public function getpwr_ext_val() {
@@ -103,45 +105,47 @@ class DeviceStatus extends CActiveRecord {
         }
         return $val;
     }
-    
+
     public function getcash_string() {
-               
-        return ($this->deviceCashReport->count_cash)?
+
+        return ($this->deviceCashReport->count_cash) ?
                 "<table style='width:100%;font-size:12px'><tr>"
                 . "<td width=25% style='padding:0;font-weight:700; text-align: center;color: green' rel='tooltip' title='" . $this->deviceCashReport->update_cash . "'>"
-                . $this->deviceCashReport->last_cash 
+                . $this->deviceCashReport->last_cash
                 . "</td>"
                 . "<td style='padding:0;text-align: center;' width=25% rel='tooltip' title='Наполнение купюрника'>"
-                . $this->deviceCashReport->count_cash 
-                . "/400</td>"
+                . $this->deviceCashReport->count_cash
+                . "/"
+                . $this->deviceCashboxSettings->volume
+                . "</td>"
                 . "<td width=50% style='padding:0;text-align: center; color: green;font-weight:700' rel='tooltip' title='Сумма купюр'>"
-                . $this->deviceCashReport->summ_cash 
+                . $this->deviceCashReport->summ_cash
                 . " руб.</td>"
-                . "</tr></table>"
-                :"-";
+                . "</tr></table>" : "-";
     }
-    
+
     public function getcoin_string() {
-               
-        return ($this->deviceCashReport->count_coin)?
+
+        return ($this->deviceCashReport->count_coin) ?
                 "<table style='width:100%;font-size:12px'><tr>"
                 . "<td width=25% style='padding:0;font-weight:700; text-align: center;color: green' rel='tooltip' title='" . $this->deviceCashReport->update_coin . "'>"
-                . $this->deviceCashReport->last_coin 
+                . $this->deviceCashReport->last_coin
                 . "</td>"
                 . "<td width=25% style='padding:0;text-align: center;' rel='tooltip' title='Наполнение монетника'>"
-                . $this->deviceCashReport->count_coin 
-                . "/400</td>"
+                . $this->deviceCashReport->count_coin
+                . "/"
+                . $this->deviceCoinboxSettings->volume
+                . "</td>"
                 . "<td width=50% style='padding:0;text-align: center; color: green;font-weight:700' rel='tooltip' title='Сумма монет'>"
-                . $this->deviceCashReport->summ_coin 
+                . $this->deviceCashReport->summ_coin
                 . " руб.</td>"
-                . "</tr></table>"
-                :"-";
+                . "</tr></table>" : "-";
     }
-    
+
     public function getsumm() {
-        return "<b style='color:green'>" 
-               . $this->deviceCashReport->summ
-               . " руб.</b>";
+        return "<b style='color:green'>"
+                . $this->deviceCashReport->summ
+                . " руб.</b>";
     }
 
     public $is_conneted_r = null;
@@ -169,7 +173,7 @@ class DeviceStatus extends CActiveRecord {
             'balance' => 'Баланс',
             'city' => 'Город',
             'object.obj' => 'Объект',
-            'summ'=>'Сумма'
+            'summ' => 'Сумма'
         );
     }
 
@@ -189,7 +193,7 @@ class DeviceStatus extends CActiveRecord {
         // @todo Please modify the following code to remove attributes that should not be searched.
 
         $criteria = new CDbCriteria;
-        $criteria->with = array( 'device.object' );
+        $criteria->with = array('device.object');
         $criteria->compare('device_id', $this->device->id, true);
         $criteria->compare('dt', $this->dt, true);
         $criteria->compare('cashbox_state', $this->cashbox_state);
@@ -205,14 +209,14 @@ class DeviceStatus extends CActiveRecord {
         $criteria->compare('pwr_ext', $this->pwr_ext);
         $criteria->compare('update_date', $this->update_date, true);
         $criteria->compare('object.obj', $this->device->object->obj, true);
-        
+
         $criteria->condition = 'device.id > 0';
 
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
             'sort' => array(
-                'defaultOrder'=>'dt DESC',
+                'defaultOrder' => 'dt DESC',
                 'attributes' => array(
                     'object.obj' => array(
                         'asc' => 'object.obj',
@@ -220,6 +224,9 @@ class DeviceStatus extends CActiveRecord {
                     ),
                     '*',
                 ),
+            ),
+            'pagination' => array(
+                'pageSize' => 50,
             ),
         ));
     }

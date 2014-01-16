@@ -6,7 +6,7 @@ class SettingsTemplateController extends Controller
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
-	public $layout='//layouts/column2';
+	public $layout='//layouts/settings';
 
 	/**
 	 * @return array action filters
@@ -62,7 +62,7 @@ class SettingsTemplateController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new SettingsTemplate;
+		$model= new SettingsTemplate;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -70,6 +70,25 @@ class SettingsTemplateController extends Controller
 		if(isset($_POST['SettingsTemplate'])){
 			$model->attributes=$_POST['SettingsTemplate'];
 			if($model->save()){
+                            
+                                $serviceBase = TmplServiceSettings::model()->findByPk(0);
+                                $newService = new TmplServiceSettings();
+                                $newService->attributes = $serviceBase->attributes;
+                                $newService->tmpl_id = $model->id;
+                                $newService->save();
+                                
+                                $cashBase = TmplCashboxSettings::model()->findByPk(0);
+                                $newCash = new TmplCashboxSettings();
+                                $newCash->attributes = $cashBase->attributes;
+                                $newCash->tmpl_id = $model->id;
+                                $newCash->save();
+                                
+                                $coinBase = TmplCoinboxSettings::model()->findByPk(0);
+                                $newCoin = new TmplCoinboxSettings();
+                                $newCoin->attributes = $coinBase->attributes;
+                                $newCoin->tmpl_id = $model->id;
+                                $newCoin->save();
+                                
 				if(Yii::app()->request->isAjaxRequest){
                                         echo $model->id;
 					Yii::app()->end();
@@ -92,7 +111,7 @@ class SettingsTemplateController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
-            $url = $this->createUrl("/settingsTmplDetail/admin/$id");
+            $url = $this->createUrl("/settingsTmplDetail/ServiseSettings/$id");
             $this->redirect($url);
 	}
 
@@ -105,6 +124,7 @@ class SettingsTemplateController extends Controller
 	{
 		if(Yii::app()->request->isPostRequest)
 		{
+                        if ($id == 0) {  throw new CHttpException(400,'Invalid request. Please do not repeat this request again.'); }
 			// we only allow deletion via POST request
 			$this->loadModel($id)->delete();
 
@@ -113,7 +133,7 @@ class SettingsTemplateController extends Controller
 				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 		}
                 elseif(Yii::app()->request->isAjaxRequest) {
-                    SettingsTmplDetail::model()->deleteAll("tmpl_id = $id");
+                    if ($id == 0) {  echo "error"; return;}
                     if ($this->loadModel($id)->delete())
                         echo "success";
                     else 

@@ -94,6 +94,7 @@ class StaffController extends Controller
 		if(isset($_POST['Staff']))
 		{
 			$model->attributes=$_POST['Staff'];
+                        //$model->key = hexdec($model->key);
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -122,10 +123,7 @@ class StaffController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Staff');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
+                $this->actionAdmin();
 	}
 
 	/**

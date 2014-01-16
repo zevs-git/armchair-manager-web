@@ -44,7 +44,7 @@
 				'data'=>'js:$(this).parent().parent().find("form").serialize()',
 				'success'=>'function(r){
 					if(/^\d+$/.test(r)){
-						window.location = "/index.php/settingsTmplDetail/admin/"+r;
+						window.location = "/index.php/settingsTmplDetail/ServiceSettings/"+r;
 					}
 					else{
 						$("#TBDialogCrud").html(r).modal("show");

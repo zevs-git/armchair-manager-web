@@ -200,14 +200,28 @@ class DeviceStatusController extends Controller {
             if (isset($res['res'])) {
                 $result['cash_summ'] = $res['res'];
             }
-
+            $result['cash_summ'] .= ' RUR';
             $res = Yii::app()->db->createCommand()
                     ->select('sum(count_cash + count_coin) as res')
                     ->from('device_cash_report')
                     ->queryRow();
 
+            $sql = "SELECT SUM(a.volume + b.volume) AS res
+            FROM device_cashbox_settings a, device_coinbox_settings b
+            WHERE a.`device_id` = b.`device_id`";
+
+            $res1 = Yii::app()->db->createCommand($sql)
+                    ->queryRow();
+            if (isset($res1['res'])) {
+                $volume = $res1['res'];
+            } else {
+                $volume = 800 * $res['res'];
+            }
+            
             if (isset($res['res'])) {
-                $result['cash_summ_p'] = number_format($res['res'] / ($result['device_connected'] * 400) *100, 2, '.', '') . "%";
+                $result['cash_summ_p'] = number_format($res['res'] / $volume *100, 2, '.', '') . "%";
+            } else {
+                $result['cash_summ_p'] = "-";
             }
 
             echo json_encode($result);

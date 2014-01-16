@@ -1,24 +1,24 @@
 <?php
 
 /**
- * This is the model class for table "device_servis_settings".
+ * This is the model class for table "tmpl_servise_settings".
  *
- * The followings are the available columns in table 'device_servis_settings':
- * @property integer $device_id
+ * The followings are the available columns in table 'tmpl_servise_settings':
+ * @property integer $tmpl_id
  * @property string $IP_monitoring
  * @property integer $port_monitoring
  * @property string $IP_config
  * @property integer $port_config
  * @property string $USSD
  */
-class DeviceServiceSettings extends CActiveRecord
+class TmplServiceSettings extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'device_servise_settings';
+		return 'tmpl_service_settings';
 	}
 
 	/**
@@ -29,12 +29,12 @@ class DeviceServiceSettings extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('device_id', 'required'),
-			array('device_id, port_monitoring, port_config', 'numerical', 'integerOnly'=>true),
-			array('IP_monitoring, IP_config', 'length', 'max'=>50),
+			array('tmpl_id, IP_monitoring, port_monitoring, IP_config, port_config', 'required'),
+			array('tmpl_id, port_monitoring, port_config', 'numerical', 'integerOnly'=>true),
+			array('IP_monitoring, IP_config, USSD', 'length', 'max'=>50),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('device_id, IP_monitoring, port_monitoring, IP_config, port_config', 'safe', 'on'=>'search'),
+			array('tmpl_id, IP_monitoring, port_monitoring, IP_config, port_config, USSD', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -55,7 +55,7 @@ class DeviceServiceSettings extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'device_id' => 'Device',
+			'tmpl_id' => 'ID шаблолна',
 			'IP_monitoring' => 'IP/DNS мониторинг',
 			'port_monitoring' => 'Порт мониторинг',
 			'IP_config' => 'IP/DNS конфигуратор',
@@ -81,11 +81,12 @@ class DeviceServiceSettings extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('device_id',$this->device_id);
+		$criteria->compare('tmpl_id',$this->tmpl_id);
 		$criteria->compare('IP_monitoring',$this->IP_monitoring,true);
 		$criteria->compare('port_monitoring',$this->port_monitoring);
 		$criteria->compare('IP_config',$this->IP_config,true);
 		$criteria->compare('port_config',$this->port_config);
+		$criteria->compare('USSD',$this->USSD,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -96,7 +97,7 @@ class DeviceServiceSettings extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return DeviceServisSettings the static model class
+	 * @return TmplServiceSettings the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

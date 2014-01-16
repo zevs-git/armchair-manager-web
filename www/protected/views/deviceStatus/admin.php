@@ -63,7 +63,7 @@ $this->beginWidget('zii.widgets.CPortlet', array(
                 'deleteButtonVisible' => 'FALSE',
                 'buttons' => array('view' =>
                     array(
-                        'label'=>'Настройки устройтва',
+                        'label' => 'Настройки устройтва',
                         'url' => 'Yii::app()->createUrl("DeviceStatus/view", array("id"=>$data->device_id,"asDialog"=>1))',
                         'options' => array(
                             'ajax' => array(
@@ -150,7 +150,7 @@ if (isset($res['res'])) {
         <div class="stat-block">
             <ul>
                 <li class="stat-count" ><span id="device_connected"><?php echo $countTrue; ?></span><span>Подключено</span></li>
-                <li class="stat-percent" ><span id="device_connected_p" class="text-success stat-percent"><?php echo number_format($countTrue / $countAll * 100,2, '.', ''); ?>%</span></li>
+                <li class="stat-percent" ><span id="device_connected_p" class="text-success stat-percent"><?php echo number_format($countTrue / $countAll * 100, 2, '.', ''); ?>%</span></li>
             </ul>
         </div>
     </div>
@@ -173,36 +173,37 @@ if (isset($res['res'])) {
 </div>
 <?php $this->endWidget(); ?>
 <script type="text/javascript">
-    $('[rel=tooltip]').tooltip();
-    $('img').tooltip();
-    setInterval(function() {
-        /*$('[rel=tooltip]').tooltip('destroy');
-        $('img').tooltip('destroy');*/
-        $.fn.yiiGridView.update('device-status-grid', {
-            complete: function() {
-                $('[rel=tooltip]').tooltip();
-                $('img').tooltip();
-            }});
-        updateSummary();
-    }, 10000);
-    
+    $(document).ready(function() {
+        $('[rel=tooltip]').tooltip();
+        $('img').tooltip();
+        setInterval(function() {
+            /*$('[rel=tooltip]').tooltip('destroy');
+             $('img').tooltip('destroy');*/
+            $.fn.yiiGridView.update('device-status-grid', {
+                complete: function() {
+                    $('[rel=tooltip]').tooltip();
+                    $('img').tooltip();
+                }});
+            updateSummary();
+        }, 10000);
+        $('#grid-container').load('/index.php/DeviceStatus/grid');
+    });
+
     function updateSummary() {
         $.ajax({
-                url: "<?php echo $this->createAbsoluteUrl('DeviceStatus/Summary') ?>",
-                cache: false,
-                dataType:'json',
-                success: function(data) {
-                    $('#device_count').html(data.device_count);
-                    $('#device_count_p').html(data.device_count_p);
-                    $('#device_connected').html(data.device_connected);
-                    $('#device_connected_p').html(data.device_connected_p);
-                    $('#device_not_connected').html(data.device_not_connected);
-                    $('#device_not_connected_p').html(data.device_not_connected_p);
-                    $('#cash_summ').html(data.cash_summ);
-                    $('#cash_summ_p').html(data.cash_summ_p);                   
-                }
-            });
+            url: "<?php echo $this->createAbsoluteUrl('DeviceStatus/Summary') ?>",
+            cache: false,
+            dataType: 'json',
+            success: function(data) {
+                $('#device_count').html(data.device_count);
+                $('#device_count_p').html(data.device_count_p);
+                $('#device_connected').html(data.device_connected);
+                $('#device_connected_p').html(data.device_connected_p);
+                $('#device_not_connected').html(data.device_not_connected);
+                $('#device_not_connected_p').html(data.device_not_connected_p);
+                $('#cash_summ').html(data.cash_summ);
+                $('#cash_summ_p').html(data.cash_summ_p);
+            }
+        });
     }
-
-    //$('#grid-container').load('/index.php/DeviceStatus/grid');
 </script>

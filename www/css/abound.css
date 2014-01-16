@@ -540,3 +540,11 @@ footer {
 .caret {
     display: none !important;
 }
+
+.table th, .table td {
+    text-align: center;
+}
+
+.detail-view th, .detail-view td {
+    text-align: left;
+}

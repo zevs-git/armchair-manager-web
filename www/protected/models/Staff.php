@@ -32,7 +32,8 @@ class Staff extends CActiveRecord
 		return array(
 			array('staff_type_id, object_id', 'numerical', 'integerOnly'=>true),
 			array('FIO, comment', 'length', 'max'=>255),
-			array('key, phone', 'length', 'max'=>20),
+			array('phone', 'length', 'max'=>20),
+                        array('key', 'length', 'max'=>8,'min'=>8),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, FIO, staff_type_id, key, phone, comment, object_id', 'safe', 'on'=>'search'),

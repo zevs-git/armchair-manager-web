@@ -1,10 +1,10 @@
 <?php
 
 /**
- * This is the model class for table "device_cashbox_settings".
+ * This is the model class for table "tmpl_cashbox_settings".
  *
- * The followings are the available columns in table 'device_cashbox_settings':
- * @property integer $device_id
+ * The followings are the available columns in table 'tmpl_cashbox_settings':
+ * @property integer $tmpl_id
  * @property integer $model_id
  * @property integer $valuta_id
  * @property integer $volume
@@ -18,13 +18,13 @@
  * @property integer $nominal7
  * @property double $coeficient
  */
-class DeviceCoinboxSettings extends CActiveRecord {
+class TmplCashboxSettings extends CActiveRecord {
 
     /**
      * @return string the associated database table name
      */
     public function tableName() {
-        return 'device_coinbox_settings';
+        return 'tmpl_cashbox_settings';
     }
 
     /**
@@ -34,12 +34,12 @@ class DeviceCoinboxSettings extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('device_id', 'required'),
-            array('device_id, model_id, valuta_id, volume, nominal0, nominal1, nominal2, nominal3, nominal4, nominal5, nominal6, nominal7', 'numerical', 'integerOnly' => true),
+            array('tmpl_id', 'required'),
+            array('tmpl_id, model_id, valuta_id, volume, nominal0, nominal1, nominal2, nominal3, nominal4, nominal5, nominal6, nominal7', 'numerical', 'integerOnly' => true),
             array('coeficient', 'numerical'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('device_id, model_id, valuta_id, volume, nominal0, nominal1, nominal2, nominal3, nominal4, nominal5, nominal6, nominal7, coeficient', 'safe', 'on' => 'search'),
+            array('tmpl_id, model_id, valuta_id, volume, nominal0, nominal1, nominal2, nominal3, nominal4, nominal5, nominal6, nominal7, coeficient', 'safe', 'on' => 'search'),
         );
     }
 
@@ -51,11 +51,12 @@ class DeviceCoinboxSettings extends CActiveRecord {
         0 => 'Рубли'
     );
     public $coeficients = array(
+        //0 => '0.05',
         1 => '0.1',
-        2 => '0.5',
-        3 => '0.2',
-        4 => '5',
-        5 => '10',
+        2 => '0.2',
+        5 => '0.5',
+        50 => '5',
+        100 => '10',
     );
 
     /**
@@ -73,7 +74,7 @@ class DeviceCoinboxSettings extends CActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'device_id' => 'Device',
+            'tmpl_id' => 'Device',
             'model_id' => 'Модель',
             'valuta_id' => 'Валюта',
             'volume' => 'Емкость',
@@ -106,7 +107,7 @@ class DeviceCoinboxSettings extends CActiveRecord {
 
         $criteria = new CDbCriteria;
 
-        $criteria->compare('device_id', $this->device_id);
+        $criteria->compare('tmpl_id', $this->tmpl_id);
         $criteria->compare('model_id', $this->model_id);
         $criteria->compare('valuta_id', $this->valuta_id);
         $criteria->compare('volume', $this->volume);
@@ -129,7 +130,7 @@ class DeviceCoinboxSettings extends CActiveRecord {
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your CActiveRecord descendants!
      * @param string $className active record class name.
-     * @return DeviceCashboxSettings the static model class
+     * @return TmplCashboxSettings the static model class
      */
     public static function model($className = __CLASS__) {
         return parent::model($className);
