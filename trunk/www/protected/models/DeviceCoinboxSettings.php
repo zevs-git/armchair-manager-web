@@ -51,11 +51,12 @@ class DeviceCoinboxSettings extends CActiveRecord {
         0 => 'Рубли'
     );
     public $coeficients = array(
+        //0 => '0.05',
         1 => '0.1',
-        2 => '0.5',
-        3 => '0.2',
-        4 => '5',
-        5 => '10',
+        2 => '0.2',
+        5 => '0.5',
+        50 => '5',
+        100 => '10',
     );
 
     /**

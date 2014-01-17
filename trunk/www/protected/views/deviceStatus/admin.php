@@ -19,7 +19,7 @@ $('.search-form form').submit(function(){
 //$model->dbCriteria->order='dt DESC';
 $this->beginWidget('zii.widgets.CPortlet', array(
     'htmlOptions' => array('style' => 'min-width: 1000px;', 'class' => 'portlet'),
-    'title' => "Монториг системы",
+    'title' => "Мониторинг системы",
 ));
 ?>
 <div id="grid-container">
@@ -174,6 +174,7 @@ if (isset($res['res'])) {
 <?php $this->endWidget(); ?>
 <script type="text/javascript">
     $(document).ready(function() {
+        updateSummary();
         $('[rel=tooltip]').tooltip();
         $('img').tooltip();
         setInterval(function() {

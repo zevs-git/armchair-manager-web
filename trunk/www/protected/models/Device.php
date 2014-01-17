@@ -84,7 +84,7 @@ class Device extends CActiveRecord {
             'ICCID' => 'Номер SIM',
             'object_obj' => 'Объект',
             'phone'=>'Номер телефона',
-            'interval'=>'Интервал передачяи данных',
+            'interval'=>'Интервал передачи данных',
             'zapros'=>'Запрос баланса'
         );
     }
@@ -166,7 +166,7 @@ class Device extends CActiveRecord {
         $state = DeviceStatus::model()->findBYPk($this->id);
         if ($state) {
             $state->u_settings = 1;
-            //$state->save(); //Не забыть включить!!!!!!!!!
+            $state->save(); //Не забыть включить!!!!!!!!!
         }
         
         return TRUE;
