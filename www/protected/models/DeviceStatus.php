@@ -143,9 +143,11 @@ class DeviceStatus extends CActiveRecord {
     }
 
     public function getsumm() {
-        return "<b style='color:green'>"
+        return ($this->deviceCashReport->summ)?
+                "<b style='color:green'>"
                 . $this->deviceCashReport->summ
-                . " руб.</b>";
+                . " руб.</b>":
+                "-";
     }
 
     public $is_conneted_r = null;

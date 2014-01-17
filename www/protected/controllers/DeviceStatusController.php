@@ -192,7 +192,7 @@ class DeviceStatusController extends Controller {
 
             $sql = "SELECT SUM(summ_coin)+SUM(summ_cash) AS res
             FROM device_cash_report c, `device_status` s
-            WHERE c.`device_id` = s.`device_id`";
+            WHERE c.`device_id` = s.`device_id` and unix_timestamp(now()) - unix_timestamp(s.dt) <= 60*5";
 
             $res = Yii::app()->db->createCommand($sql)
                     ->queryRow();
@@ -207,8 +207,8 @@ class DeviceStatusController extends Controller {
                     ->queryRow();
 
             $sql = "SELECT SUM(a.volume + b.volume) AS res
-            FROM device_cashbox_settings a, device_coinbox_settings b
-            WHERE a.`device_id` = b.`device_id`";
+            FROM device_cashbox_settings a, device_coinbox_settings b, `device_status` s
+            WHERE a.`device_id` = b.`device_id` and a.`device_id` = s.`device_id` and unix_timestamp(now()) - unix_timestamp(s.dt) <= 60*5";
 
             $res1 = Yii::app()->db->createCommand($sql)
                     ->queryRow();
@@ -218,8 +218,16 @@ class DeviceStatusController extends Controller {
                 $volume = 800 * $res['res'];
             }
             
+
+            $sql = "SELECT SUM(count_coin)+SUM(count_cash) AS res
+            FROM device_cash_report c, `device_status` s
+            WHERE c.`device_id` = s.`device_id` and unix_timestamp(now()) - unix_timestamp(s.dt) <= 60*5";
+
+            $res2 = Yii::app()->db->createCommand($sql)
+                    ->queryRow();
+            
             if (isset($res['res'])) {
-                $result['cash_summ_p'] = number_format($res['res'] / $volume *100, 2, '.', '') . "%";
+                $result['cash_summ_p'] = number_format($res2['res'] / $volume *100, 2, '.', '') . "%";
             } else {
                 $result['cash_summ_p'] = "-";
             }

@@ -2,9 +2,9 @@
 /* @var $this ObjectController */
 /* @var $model Object */
 
-$this->breadcrumbs=array(
-	'Объекты'=>array('index'),
-	$model->id,
+$this->breadcrumbs = array(
+    'Устрйоства' => array('index'),
+    $model->id,
 );
 ?>
 
