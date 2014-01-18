@@ -63,7 +63,7 @@ $this->beginWidget('zii.widgets.CPortlet', array(
                 'deleteButtonVisible' => 'FALSE',
                 'buttons' => array('view' =>
                     array(
-                        'label' => 'Настройки устройтва',
+                        'label' => 'Статус устройтва',
                         'url' => 'Yii::app()->createUrl("DeviceStatus/view", array("id"=>$data->device_id,"asDialog"=>1))',
                         'options' => array(
                             'ajax' => array(
