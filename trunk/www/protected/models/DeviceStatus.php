@@ -97,8 +97,8 @@ class DeviceStatus extends CActiveRecord {
                 $name = "[Тех. обслуживание]";
             }
             $res = "<span rel='tooltip' title='" . $this->staff->FIO ."'>$name</span>";
-        } elseif($this->door_state) {
-            $res = "[Ключ идентификации не распознан!]";
+        } elseif($this->door_state && $this->is_conneted) {
+            $res = "[Вскрытие]";
         }
         return $res;
     }
