@@ -20,6 +20,7 @@
  * @property string $update_date
  * @property integer $is_conneted
  * @property integer $u_settings
+ * @property integer $incassation_id
  */
 class DeviceStatus extends CActiveRecord {
 
@@ -70,7 +71,19 @@ class DeviceStatus extends CActiveRecord {
                 $this->massage_state_icon . " " .
                 $this->door_state_icon . " " .
                 $this->alarm_state_icon . " " .
-                (($this->u_settings) ? "[Обновление настроек]" : "");
+                (($this->is_conneted)?(($this->u_settings == 1) ? "[Обновление настроек]" :(($this->u_settings == 2)?"[Версия настроек не актуальна]":"")):NULL);
+    }
+    public function getrowClass() {
+        $class = "";
+        if (!$this->is_conneted) {
+            $class = "not_connected";
+        } elseif ($this->u_settings) {
+            $class = "atention";
+        } elseif ($this->mas_state) {
+            $class = "work";
+        }
+        
+        return $class;
     }
 
     public function getpwr_ext_val() {
@@ -95,15 +108,7 @@ class DeviceStatus extends CActiveRecord {
     }
 
     public function getname_val() {
-        $val = "Кресло";
-        if ($this->device_id == 1) {
-            $val = '<b>861785002417983</b>';
-        } elseif ($this->device_id == 2) {
-            $val = '<b>861785002394348</b>';
-        } else {
-            $val = "Кресло " . $this->device_id;
-        }
-        return $val;
+        return $this->device->comment;
     }
 
     public function getcash_string() {
