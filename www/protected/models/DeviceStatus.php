@@ -59,6 +59,7 @@ class DeviceStatus extends CActiveRecord {
             'device' => array(self::BELONGS_TO, 'Device', 'device_id'),
             'deviceCashboxSettings' => array(self::BELONGS_TO, 'DeviceCashboxSettings', 'device_id'),
             'deviceCoinboxSettings' => array(self::BELONGS_TO, 'DeviceCoinboxSettings', 'device_id'),
+            'staff' => array(self::BELONGS_TO, 'Staff', 'incassation_id'),
         );
     }
 
@@ -71,19 +72,35 @@ class DeviceStatus extends CActiveRecord {
                 $this->massage_state_icon . " " .
                 $this->door_state_icon . " " .
                 $this->alarm_state_icon . " " .
-                (($this->is_conneted)?(($this->u_settings == 1) ? "[Обновление настроек]" :(($this->u_settings == 2)?"[Версия настроек не актуальна]":"")):NULL);
+                (($this->is_conneted)?(($this->u_settings == 1) ? "[Обновление настроек]" :(($this->u_settings == 2)?"[Версия настроек не актуальна]":"")):NULL) .
+                $this->incassation_string
+                ;
     }
     public function getrowClass() {
         $class = "";
         if (!$this->is_conneted) {
             $class = "not_connected";
-        } elseif ($this->u_settings) {
+        } elseif ($this->u_settings || $this->door_state) {
             $class = "atention";
         } elseif ($this->mas_state) {
             $class = "work";
         }
         
         return $class;
+    }
+    public function getincassation_string() {
+        $res = NULL;
+        if ($this->incassation_id && $this->door_state) {
+            if ($this->staff->staff_type_id == 0) {
+                $name = "[Инкассация]";
+            } else {
+                $name = "[Тех. обслуживание]";
+            }
+            $res = "<span rel='tooltip' title='" . $this->staff->FIO ."'>$name</span>";
+        } elseif($this->door_state) {
+            $res = "[Ключ идентификации не распознан!]";
+        }
+        return $res;
     }
 
     public function getpwr_ext_val() {
