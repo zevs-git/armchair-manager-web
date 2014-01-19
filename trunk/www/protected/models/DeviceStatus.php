@@ -130,46 +130,48 @@ class DeviceStatus extends CActiveRecord {
 
     public function getcash_string() {
 
-        return ($this->deviceCashReport->count_cash) ?
+        return 
                 "<table style='width:100%;font-size:12px'><tr>"
-                . "<td width=25% style='padding:0;font-weight:700; text-align: center;color: green' rel='tooltip' title='" . $this->deviceCashReport->update_cash . "'>"
-                . $this->deviceCashReport->last_cash
+                . "<td width=25% style='padding:0;font-weight:700; text-align: center;color: green' rel='tooltip' title='" 
+                . $this->deviceCashReport->update_cash . "'>"
+                . ($this->deviceCashReport->last_cash?$this->deviceCashReport->last_cash:0)
                 . "</td>"
-                . "<td style='padding:0;text-align: center;' width=25% rel='tooltip' title='Наполнение купюрника'>"
-                . $this->deviceCashReport->count_cash
+                . "<td width=25% style='padding:0;text-align: center;' rel='tooltip' title='Наполнение купюрника'>"
+                . ($this->deviceCashReport->count_cash?$this->deviceCashReport->count_cash:0)
                 . "/"
-                . $this->deviceCashboxSettings->volume
+                . ($this->deviceCashboxSettings->volume?$this->deviceCashboxSettings->volume:'-')
                 . "</td>"
                 . "<td width=50% style='padding:0;text-align: center; color: green;font-weight:700' rel='tooltip' title='Сумма купюр'>"
-                . $this->deviceCashReport->summ_cash
+                . ($this->deviceCashReport->summ_cash?$this->deviceCashReport->summ_cash:0)
                 . " руб.</td>"
-                . "</tr></table>" : "-";
+                . "</tr></table>";
     }
 
     public function getcoin_string() {
 
-        return ($this->deviceCashReport->count_coin) ?
+        return 
                 "<table style='width:100%;font-size:12px'><tr>"
-                . "<td width=25% style='padding:0;font-weight:700; text-align: center;color: green' rel='tooltip' title='" . $this->deviceCashReport->update_coin . "'>"
-                . $this->deviceCashReport->last_coin
+                . "<td width=25% style='padding:0;font-weight:700; text-align: center;color: green' rel='tooltip' title='" 
+                . $this->deviceCashReport->update_coin . "'>"
+                . ($this->deviceCashReport->last_coin?$this->deviceCashReport->last_coin:0)
                 . "</td>"
                 . "<td width=25% style='padding:0;text-align: center;' rel='tooltip' title='Наполнение монетника'>"
-                . $this->deviceCashReport->count_coin
+                . ($this->deviceCashReport->count_coin?$this->deviceCashReport->count_coin:0)
                 . "/"
-                . $this->deviceCoinboxSettings->volume
+                . ($this->deviceCoinboxSettings->volume?$this->deviceCoinboxSettings->volume:'-')
                 . "</td>"
                 . "<td width=50% style='padding:0;text-align: center; color: green;font-weight:700' rel='tooltip' title='Сумма монет'>"
-                . $this->deviceCashReport->summ_coin
+                . ($this->deviceCashReport->summ_coin?$this->deviceCashReport->summ_coin:0)
                 . " руб.</td>"
-                . "</tr></table>" : "-";
+                . "</tr></table>";
     }
 
     public function getsumm() {
-        return ($this->deviceCashReport->summ)?
+        return /*($this->deviceCashReport->summ)?*/
                 "<b style='color:green'>"
-                . $this->deviceCashReport->summ
-                . " руб.</b>":
-                "-";
+                . (($this->deviceCashReport->summ)?$this->deviceCashReport->summ:0)
+                . " руб.</b>";/*:
+                "0 руб";*/
     }
 
     public $is_conneted_r = null;
@@ -361,9 +363,9 @@ class DeviceStatus extends CActiveRecord {
         if (!$this->is_conneted) {
             return $this->state_img("power_null.png", "Состояние неопределено");
         } elseif ($this->pwr_ext) {
-            return $this->state_img("power_true.png", "Есть питание");
+            return $this->state_img("power_true.png", "Внешнее питание подключено");
         } else {
-            return $this->state_img("power_false.png", "Нет питания");
+            return $this->state_img("power_false.png", "Внешнее питание отключено");
         }
     }
 
