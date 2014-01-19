@@ -548,3 +548,12 @@ footer {
 .detail-view th, .detail-view td {
     text-align: left;
 }
+tr.not_connected {
+    background-color: whitesmoke;
+}
+tr.atention {
+    background-color: floralwhite;
+}
+tr.work {
+    background-color: honeydew;
+}
