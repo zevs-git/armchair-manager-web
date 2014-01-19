@@ -2,6 +2,8 @@
 /* @var $this DeviceStatusController */
 /* @var $model DeviceStatus */
 
+$updateTimeout = 10000;
+
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
 	$('.search-form').toggle();
@@ -33,6 +35,7 @@ $this->beginWidget('zii.widgets.CPortlet', array(
         //'filter' => $model,
         'itemsCssClass' => 'table table-bordered',
         'htmlOptions' => array('style' => 'text-align: center;min-width: 900px;'),
+        'rowCssClassExpression'=>'$data->rowClass',
         'columns' => array(
             array('name' => 'object.obj',
                 'htmlOptions' => array('style' => 'min-width: 220px;'),
@@ -63,7 +66,7 @@ $this->beginWidget('zii.widgets.CPortlet', array(
                 'deleteButtonVisible' => 'FALSE',
                 'buttons' => array('view' =>
                     array(
-                        'label' => 'Статус устройтва',
+                        'label' => 'Статус устройства',
                         'url' => 'Yii::app()->createUrl("DeviceStatus/view", array("id"=>$data->device_id,"asDialog"=>1))',
                         'options' => array(
                             'ajax' => array(
@@ -186,7 +189,7 @@ if (isset($res['res'])) {
                     $('img').tooltip();
                 }});
             updateSummary();
-        }, 10000);
+        }, <?=$updateTimeout?>);
         $('#grid-container').load('/index.php/DeviceStatus/grid');
     });
 
