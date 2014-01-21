@@ -37,22 +37,22 @@ $this->Widget('ext.ActiveHighcharts.HighchartsWidget', array(
             array(
                 'type' => 'bar',
                 'name' => 'Масаж', //title of data
-                'dataResource' => 'mp', //data resource according to datebase column
+                'dataResource' => 'm', //data resource according to datebase column
             ),
             array(
                 'type' => 'bar',
                 'name' => 'Простой', //title of data
-                'dataResource' => 'pp', //data resource according to datebase column
+                'dataResource' => 'p', //data resource according to datebase column
             ),
             array(
                 'type' => 'bar',
                 'name' => 'Не в сети', //title of data
-                'dataResource' => 'cp', //data resource according to datebase column
+                'dataResource' => 'c', //data resource according to datebase column
             ),
             array(
                 'type' => 'bar',
                 'name' => 'Ошибки', //title of data
-                'dataResource' => 'ep', //data resource according to datebase column
+                'dataResource' => 'e', //data resource according to datebase column
             ),
         )
     )

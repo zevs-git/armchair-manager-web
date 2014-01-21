@@ -22,6 +22,7 @@ class ReportPageController extends Controller
                 }*/
                 echo CJSON::encode($dataProvider->getData());
             }else{
+                //print_r($dataProvider->getData());
                 $this->render('index',array(
                         'dataProvider'=>$dataProvider,
                 ));
