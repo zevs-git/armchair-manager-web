@@ -23,8 +23,9 @@
                                 'htmlOptions' => array('class' => 'pull-right nav'),
                                 'items' => array(
                                     array('label' => 'Мониторинг', 'url' => array('/DeviceStatus/admin', 'visible' => !Yii::app()->user->isGuest)),
-                                    array('label' => 'Администрирование', 'url' => '/index.php/Object'),
-                                    array('label' => 'Настройки', 'url' => '/index.php/settingsTemplate/admin'),
+                                    array('label' => 'Администрирование', 'url' => '/Object'),
+                                    array('label' => 'Настройки', 'url' => '/settingsTemplate/admin'),
+                                    array('label' => 'Отчеты', 'url' => array('/ReportPage/StatusReport')),
                                     array('label' => 'Аналитика', 'url' => array('/site/page', 'view' => 'graphs')),
                                     array('label' => 'Выйти (' . Yii::app()->user->name . ')',
                                         'icon'=>'user',
