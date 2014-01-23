@@ -25,7 +25,7 @@
                 'items' => array(
                     array('label' => 'Характеристика работы', 'url' => array('StatusReport'), 'active' => ($this->action->id == 'StatusReport')),
                     array('label' => 'Масаж', 'url' => '#'),
-                    array('label' => 'Инкассация', 'url' => '#'),
+                    array('label' => 'Инкассация', 'url' => array('IncassatorReport'), 'active' => ($this->action->id == 'IncassatorReport')),
                     array('label' => 'Выручка', 'url' => '#'),
                 ),
             ));
