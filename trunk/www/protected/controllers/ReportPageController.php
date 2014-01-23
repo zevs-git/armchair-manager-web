@@ -74,7 +74,8 @@ class ReportPageController extends Controller {
             return;
         };
 
-        $sql = "SELECT ir.device_id,ir.dt,s.FIO,ir.count_cash,ir.summ_cash,ir.count_coin,ir.summ_coin FROM incassator_report ir, device d, staff s
+        $sql = "SELECT ir.device_id,ir.dt,s.FIO,ir.count_cash,ir.summ_cash,ir.count_coin,ir.summ_coin, summ_cash + count_coin as all_summ
+                        FROM incassator_report ir, device d, staff s
                         WHERE ir.device_id = d.id
                         AND CAST(ir.dt as DATE) >= '" . $_REQUEST['date_from'] . "' AND CAST(ir.dt as DATE) <= '" . $_REQUEST['date_to'] . "'
                         AND d.object_id = " . $_REQUEST['object_id'] . "

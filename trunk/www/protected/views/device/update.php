@@ -1,8 +1,8 @@
 <?php
 $this->breadcrumbs=array(
-	'Devices'=>array('index'),
+	'Устрйоства'=>array('index'),
 	$model->id=>array('view','id'=>$model->id),
-	'Update',
+	'Реадактировать',
 );
 ?>
 <?php $this->beginWidget('zii.widgets.CPortlet', array(
