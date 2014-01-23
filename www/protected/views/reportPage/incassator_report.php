@@ -63,7 +63,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
             'header'=>'Сумма монет'),
         array('name'=>'summ_cash',
             'header'=>'Общая сумма',
-            'value'=>'$data->summ_coin+$data->summ_cash'),
+            'name'=>'all_summ'),
     ),
 ));
 ?>
