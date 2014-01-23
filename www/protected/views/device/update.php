@@ -6,7 +6,7 @@ $this->breadcrumbs=array(
 );
 ?>
 <?php $this->beginWidget('zii.widgets.CPortlet', array(
-    'title' => "Настрйоки устройства",
+    'title' => "Настройки устройства",
 ));?>
 <h3>Устройство: [<?php echo $model->IMEI; ?>]</h3>
 <?php $this->renderPartial('form_start',array('model'=>$model))?>
