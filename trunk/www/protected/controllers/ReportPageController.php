@@ -99,8 +99,8 @@ class ReportPageController extends Controller {
             return;
         };
 
-        $sql = "SELECT ir.device_id, CAST(ir.dt AS DATE) AS dt, SUM(ir.summ_cash)+SUM(ir.summ_coin) AS sum
-                        FROM incassator_report ir, device d
+        $sql = "SELECT ir.device_id, CAST(ir.dt AS DATE) AS dt, SUM(ir.summ_cash)+SUM(ir.summ_coin)+IFNULL(SUM(dcr.summ),0) AS sum
+                        FROM incassator_report ir, device d LEFT JOIN device_cash_report dcr ON d.id = dcr.device_id
                         WHERE ir.device_id = d.id
                         AND CAST(ir.dt as DATE) >= '" . $_REQUEST['date_from'] . "' AND CAST(ir.dt as DATE) <= '" . $_REQUEST['date_to'] . "'
                         AND d.object_id = " . $_REQUEST['object_id'] . "
