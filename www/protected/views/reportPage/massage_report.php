@@ -1,7 +1,7 @@
 <?php if (isset($data)):?>
 <?php
 $this->beginWidget('zii.widgets.CPortlet', array(
-    'title' => "Отчет по масажу"
+    'title' => "Отчет по массажу"
 ));
 ?>
 
@@ -18,7 +18,7 @@ $this->beginWidget('zii.widgets.CPortlet', array(
 </div>
 
 <div class="to-print">
-    <h3 align="center">Отчет по масажу</h3>
+    <h3 align="center">Отчет по массажу</h3>
     <h4 align="center">за период с <?=$_REQUEST['date_from']?> по <?=$_REQUEST['date_to']?></h4>
 <?php
 /* echo $dataProvider->getId();
@@ -52,7 +52,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
         array('name'=>'name',
             'header'=>'Место установки'),
         array('name'=>'time',
-            'header'=>'Суммарное время масажа за период'),
+            'header'=>'Суммарное время массажа за период'),
     ),
 ));
 ?>
