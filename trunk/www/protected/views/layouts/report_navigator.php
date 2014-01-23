@@ -24,9 +24,9 @@
                 'stacked' => false, // whether this is a stacked menu
                 'items' => array(
                     array('label' => 'Характеристика работы', 'url' => array('StatusReport'), 'active' => ($this->action->id == 'StatusReport')),
-                    array('label' => 'Масаж', 'url' => '#'),
+                    array('label' => 'Масаж', 'url' => array('MassageReport'), 'active' => ($this->action->id == 'MassageReport')),
                     array('label' => 'Инкассация', 'url' => array('IncassatorReport'), 'active' => ($this->action->id == 'IncassatorReport')),
-                    array('label' => 'Выручка', 'url' => '#'),
+                    array('label' => 'Выручка', 'url' => array('SumaryReport'), 'active' => ($this->action->id == 'SumaryReport')),
                 ),
             ));
             ?>
@@ -48,7 +48,7 @@
 
         <?php
         $this->beginWidget('zii.widgets.CPortlet', array(
-            'title' => "Парметры отчета",
+            'title' => "Параметры отчета",
         ));
         ?>
 

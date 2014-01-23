@@ -1,7 +1,7 @@
 <?php if (isset($data)):?>
 <?php
 $this->beginWidget('zii.widgets.CPortlet', array(
-    'title' => "Отчет \"Инкассация\""
+    'title' => "Отчет по выручке"
 ));
 ?>
 
@@ -18,7 +18,7 @@ $this->beginWidget('zii.widgets.CPortlet', array(
 </div>
 
 <div class="to-print">
-    <h3 align="center">Инкассация</h3>
+    <h3 align="center">Отчет по выручке</h3>
     <h4 align="center">за период с <?=$_REQUEST['date_from']?> по <?=$_REQUEST['date_to']?></h4>
 <?php
 /* echo $dataProvider->getId();
@@ -51,19 +51,8 @@ $this->widget('bootstrap.widgets.TbGridView', array(
             'header'=>'Идентификатор устройства'),
         array('name'=>'dt',
             'header'=>'Дата'),
-        array('name'=>'FIO',
-            'header'=>'ФИО инкассатора'),
-        array('name'=>'count_cash',
-            'header'=>'Количесвто купюр'),
-        array('name'=>'summ_cash',
-            'header'=>'Сумма купюр'),
-        array('name'=>'count_coin',
-            'header'=>'Количесвто монет'),
-        array('name'=>'summ_coin',
-            'header'=>'Сумма монет'),
-        array('name'=>'summ_cash',
-            'header'=>'Общая сумма',
-            'value'=>'$data->summ_coin+$data->summ_cash'),
+        array('name'=>'sum',
+            'header'=>'Сумма выручки'),
     ),
 ));
 ?>
