@@ -36836,3 +36836,129 @@ Stack trace:
 REQUEST_URI=/assets/images/ui-bg_flat_75_ffffff_40x100.png
 HTTP_REFERER=http://chair/reportPage/IncassatorReport
 ---
+2014/01/23 06:46:04 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "assets/images/ui-bg_flat_75_ffffff_40x100.png".' in Z:\home\chair\www\framework\web\CWebApplication.php:286
+Stack trace:
+#0 Z:\home\chair\www\framework\web\CWebApplication.php(141): CWebApplication->runController('assets/images/u...')
+#1 Z:\home\chair\www\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 Z:\home\chair\www\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/assets/images/ui-bg_flat_75_ffffff_40x100.png
+HTTP_REFERER=http://chair/reportPage/StatusReport
+---
+2014/01/23 06:46:07 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "assets/images/ui-bg_glass_75_e6e6e6_1x400.png".' in Z:\home\chair\www\framework\web\CWebApplication.php:286
+Stack trace:
+#0 Z:\home\chair\www\framework\web\CWebApplication.php(141): CWebApplication->runController('assets/images/u...')
+#1 Z:\home\chair\www\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 Z:\home\chair\www\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/assets/images/ui-bg_glass_75_e6e6e6_1x400.png
+HTTP_REFERER=http://chair/reportPage/SumaryReport
+---
+2014/01/23 06:46:07 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "assets/images/ui-bg_glass_55_fbf9ee_1x400.png".' in Z:\home\chair\www\framework\web\CWebApplication.php:286
+Stack trace:
+#0 Z:\home\chair\www\framework\web\CWebApplication.php(141): CWebApplication->runController('assets/images/u...')
+#1 Z:\home\chair\www\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 Z:\home\chair\www\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/assets/images/ui-bg_glass_55_fbf9ee_1x400.png
+HTTP_REFERER=http://chair/reportPage/SumaryReport
+---
+2014/01/23 06:46:07 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "assets/images/ui-bg_highlight-soft_75_cccccc_1x100.png".' in Z:\home\chair\www\framework\web\CWebApplication.php:286
+Stack trace:
+#0 Z:\home\chair\www\framework\web\CWebApplication.php(141): CWebApplication->runController('assets/images/u...')
+#1 Z:\home\chair\www\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 Z:\home\chair\www\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/assets/images/ui-bg_highlight-soft_75_cccccc_1x100.png
+HTTP_REFERER=http://chair/reportPage/SumaryReport
+---
+2014/01/23 06:46:07 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "assets/images/ui-icons_222222_256x240.png".' in Z:\home\chair\www\framework\web\CWebApplication.php:286
+Stack trace:
+#0 Z:\home\chair\www\framework\web\CWebApplication.php(141): CWebApplication->runController('assets/images/u...')
+#1 Z:\home\chair\www\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 Z:\home\chair\www\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/assets/images/ui-icons_222222_256x240.png
+HTTP_REFERER=http://chair/reportPage/SumaryReport
+---
+2014/01/23 06:46:10 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "assets/images/ui-bg_glass_75_dadada_1x400.png".' in Z:\home\chair\www\framework\web\CWebApplication.php:286
+Stack trace:
+#0 Z:\home\chair\www\framework\web\CWebApplication.php(141): CWebApplication->runController('assets/images/u...')
+#1 Z:\home\chair\www\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 Z:\home\chair\www\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/assets/images/ui-bg_glass_75_dadada_1x400.png
+HTTP_REFERER=http://chair/reportPage/SumaryReport
+---
+2014/01/23 06:46:10 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "assets/images/ui-icons_454545_256x240.png".' in Z:\home\chair\www\framework\web\CWebApplication.php:286
+Stack trace:
+#0 Z:\home\chair\www\framework\web\CWebApplication.php(141): CWebApplication->runController('assets/images/u...')
+#1 Z:\home\chair\www\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 Z:\home\chair\www\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/assets/images/ui-icons_454545_256x240.png
+HTTP_REFERER=http://chair/reportPage/SumaryReport
+---
+2014/01/23 07:00:20 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "assets/images/ui-bg_flat_75_ffffff_40x100.png".' in Z:\home\chair\www\framework\web\CWebApplication.php:286
+Stack trace:
+#0 Z:\home\chair\www\framework\web\CWebApplication.php(141): CWebApplication->runController('assets/images/u...')
+#1 Z:\home\chair\www\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 Z:\home\chair\www\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/assets/images/ui-bg_flat_75_ffffff_40x100.png
+HTTP_REFERER=http://chair/reportPage/SumaryReport
+---
+2014/01/23 07:00:22 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "assets/images/ui-bg_glass_55_fbf9ee_1x400.png".' in Z:\home\chair\www\framework\web\CWebApplication.php:286
+Stack trace:
+#0 Z:\home\chair\www\framework\web\CWebApplication.php(141): CWebApplication->runController('assets/images/u...')
+#1 Z:\home\chair\www\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 Z:\home\chair\www\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/assets/images/ui-bg_glass_55_fbf9ee_1x400.png
+HTTP_REFERER=http://chair/reportPage/MassageReport
+---
+2014/01/23 07:00:22 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "assets/images/ui-bg_glass_75_e6e6e6_1x400.png".' in Z:\home\chair\www\framework\web\CWebApplication.php:286
+Stack trace:
+#0 Z:\home\chair\www\framework\web\CWebApplication.php(141): CWebApplication->runController('assets/images/u...')
+#1 Z:\home\chair\www\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 Z:\home\chair\www\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/assets/images/ui-bg_glass_75_e6e6e6_1x400.png
+HTTP_REFERER=http://chair/reportPage/MassageReport
+---
+2014/01/23 07:00:22 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "assets/images/ui-icons_222222_256x240.png".' in Z:\home\chair\www\framework\web\CWebApplication.php:286
+Stack trace:
+#0 Z:\home\chair\www\framework\web\CWebApplication.php(141): CWebApplication->runController('assets/images/u...')
+#1 Z:\home\chair\www\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 Z:\home\chair\www\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/assets/images/ui-icons_222222_256x240.png
+HTTP_REFERER=http://chair/reportPage/MassageReport
+---
+2014/01/23 07:00:22 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "assets/images/ui-bg_highlight-soft_75_cccccc_1x100.png".' in Z:\home\chair\www\framework\web\CWebApplication.php:286
+Stack trace:
+#0 Z:\home\chair\www\framework\web\CWebApplication.php(141): CWebApplication->runController('assets/images/u...')
+#1 Z:\home\chair\www\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 Z:\home\chair\www\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/assets/images/ui-bg_highlight-soft_75_cccccc_1x100.png
+HTTP_REFERER=http://chair/reportPage/MassageReport
+---
+2014/01/23 07:00:23 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "assets/images/ui-bg_glass_75_dadada_1x400.png".' in Z:\home\chair\www\framework\web\CWebApplication.php:286
+Stack trace:
+#0 Z:\home\chair\www\framework\web\CWebApplication.php(141): CWebApplication->runController('assets/images/u...')
+#1 Z:\home\chair\www\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 Z:\home\chair\www\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/assets/images/ui-bg_glass_75_dadada_1x400.png
+HTTP_REFERER=http://chair/reportPage/MassageReport
+---
+2014/01/23 07:00:24 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Невозможно обработать запрос "assets/images/ui-icons_454545_256x240.png".' in Z:\home\chair\www\framework\web\CWebApplication.php:286
+Stack trace:
+#0 Z:\home\chair\www\framework\web\CWebApplication.php(141): CWebApplication->runController('assets/images/u...')
+#1 Z:\home\chair\www\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 Z:\home\chair\www\index.php(13): CApplication->run()
+#3 {main}
+REQUEST_URI=/assets/images/ui-icons_454545_256x240.png
+HTTP_REFERER=http://chair/reportPage/MassageReport
+---
