@@ -23,8 +23,13 @@ class ReportPageController extends Controller
                      AND `srgd`.`day` >= '" . $_REQUEST['date_from'] ."' AND `srgd`.`day` <= '" . $_REQUEST['date_to'] . "'
                      GROUP BY
                      srgd.device_id";
+                
+                $rows = Yii::app()->db->createCommand($sql)->queryAll();
+                $count = count($rows);
+
                 $dataProvider=new CSqlDataProvider($sql, array(
-                    //'totalItemCount'=>$count,
+                    //'keyField'=>'device_id',
+                    'totalItemCount'=>$count,
                     'pagination'=>array(
                         'pageSize'=>100,
                     ),
@@ -61,31 +66,29 @@ class ReportPageController extends Controller
                     ));
                 }
 	}
-
-	// Uncomment the following methods and override them if needed
-	/*
-	public function filters()
-	{
-		// return the filter configuration for this controller, e.g.:
-		return array(
-			'inlineFilterName',
-			array(
-				'class'=>'path.to.FilterClass',
-				'propertyName'=>'propertyValue',
-			),
-		);
+        
+        public function actionIncassatorReport() {
+            if (!isset($_REQUEST['object_id'])) {
+                $this->render('status_report',array(
+                    ));
+                    return;
+                };
+                
+                $sql = "SELECT ir.device_id,ir.dt,s.FIO,ir.count_cash,ir.summ_cash,ir.count_coin,ir.summ_coin FROM incassator_report ir, device d, staff s
+                        WHERE ir.device_id = d.id
+                        AND CAST(ir.dt as DATE) >= '" . $_REQUEST['date_from'] ."' AND CAST(ir.dt as DATE) <= '" . $_REQUEST['date_to'] . "'
+                        AND d.object_id = " . $_REQUEST['object_id'] ."
+                        AND ir.staff_id = s.id";
+                $dataProvider=new CSqlDataProvider($sql, array(
+                    //'totalItemCount'=>$count,
+                    'pagination'=>array(
+                        'pageSize'=>100,
+                    ),
+                ));
+ 
+                    //print_r($dataProvider->getData());
+                $this->render('incassator_report',array(
+                        'data'=>$dataProvider,
+                ));
 	}
-
-	public function actions()
-	{
-		// return external action classes, e.g.:
-		return array(
-			'action1'=>'path.to.ActionClass',
-			'action2'=>array(
-				'class'=>'path.to.AnotherActionClass',
-				'propertyName'=>'propertyValue',
-			),
-		);
-	}
-	*/
 }
