@@ -79,7 +79,8 @@ class ReportPageController extends Controller {
                         WHERE ir.device_id = d.id
                         AND CAST(ir.dt as DATE) >= '" . $_REQUEST['date_from'] . "' AND CAST(ir.dt as DATE) <= '" . $_REQUEST['date_to'] . "'
                         AND d.object_id = " . $_REQUEST['object_id'] . "
-                        AND ir.staff_id = s.id";
+                        AND ir.staff_id = s.id
+						order by ir.device_id, ir.dt";
         $dataProvider = new CSqlDataProvider($sql, array(
             //'totalItemCount'=>$count,
             'pagination' => array(
