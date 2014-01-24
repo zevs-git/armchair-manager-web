@@ -74,7 +74,7 @@ class ReportPageController extends Controller {
             return;
         };
 
-        $sql = "SELECT ir.device_id,ir.dt,s.FIO,ir.count_cash,ir.summ_cash,ir.count_coin,ir.summ_coin, summ_cash + summ_coin as all_summ
+        $sql = "SELECT ir.device_id,d.comment AS name,ir.dt,s.FIO,ir.count_cash,ir.summ_cash,ir.count_coin,ir.summ_coin, summ_cash + summ_coin as all_summ
                         FROM incassator_report ir, device d, staff s
                         WHERE ir.device_id = d.id
                         AND CAST(ir.dt as DATE) >= '" . $_REQUEST['date_from'] . "' AND CAST(ir.dt as DATE) <= '" . $_REQUEST['date_to'] . "'
@@ -99,7 +99,7 @@ class ReportPageController extends Controller {
             return;
         };
 
-        $sql = "SELECT ir.device_id, CAST(ir.dt AS DATE) AS dt, SUM(ir.summ_cash)+SUM(ir.summ_coin)+IFNULL(SUM(dcr.summ),0) AS sum
+        $sql = "SELECT ir.device_id,d.comment AS name, CAST(ir.dt AS DATE) AS dt, SUM(ir.summ_cash)+SUM(ir.summ_coin)+IFNULL(SUM(dcr.summ),0) AS sum
                         FROM incassator_report ir, device d LEFT JOIN device_cash_report dcr ON d.id = dcr.device_id
                         WHERE ir.device_id = d.id
                         AND CAST(ir.dt as DATE) >= '" . $_REQUEST['date_from'] . "' AND CAST(ir.dt as DATE) <= '" . $_REQUEST['date_to'] . "'
@@ -124,12 +124,12 @@ class ReportPageController extends Controller {
             return;
         };
         
-        $sql = "SELECT srgd.device_id,d.comment AS name,SEC_TO_TIME(SUM(srgd.m)) AS time 
-                    FROM status_rep_group_day srgd , device d
-                    WHERE srgd.device_id = d.id
-                    AND CAST(srgd.day as DATE) >= '" . $_REQUEST['date_from'] . "' AND CAST(srgd.day as DATE) <= '" . $_REQUEST['date_to'] . "'
+        $sql = "SELECT m.device_id,d.comment AS name,SEC_TO_TIME(SUM(m.time)) AS time 
+                    FROM massage m , device d
+                    WHERE m.device_id = d.id
+                    AND CAST(m.dt as DATE) >= '" . $_REQUEST['date_from'] . "' AND CAST(m.dt as DATE) <= '" . $_REQUEST['date_to'] . "'
                     AND d.object_id = " . $_REQUEST['object_id'] . "
-                GROUP BY srgd.device_id,d.comment";
+                GROUP BY m.device_id,d.comment";
         
         $dataProvider = new CSqlDataProvider($sql, array(
             //'totalItemCount'=>$count,

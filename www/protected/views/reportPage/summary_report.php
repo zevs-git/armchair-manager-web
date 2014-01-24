@@ -42,13 +42,16 @@ $this->beginWidget('zii.widgets.CPortlet', array(
     </style>
     
     <?php
-$this->widget('bootstrap.widgets.TbGridView', array(
+$this->widget('ext.groupgridview.GroupGridView', array(
     'id' => 'device-grid',
     'itemsCssClass' => 'table table-striped table-bordered',
+    'mergeColumns' => array('device_id','name'),
     'dataProvider' => $data,
     'columns' => array(
         array('name'=>'device_id',
-            'header'=>'Идентификатор устройства'),
+            'header'=>'ID'),
+        array('name'=>'name',
+            'header'=>'Место установки'),
         array('name'=>'dt',
             'header'=>'Дата'),
         array('name'=>'sum',

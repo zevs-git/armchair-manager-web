@@ -47,7 +47,7 @@ $this->beginWidget('zii.widgets.CPortlet', array(
     <?php echo $form->dropDownListRow($cashbox, 'valuta_id',$cashbox->valutes, array('class' => 'text')); ?>
     <?php echo $form->textFieldRow($cashbox, 'volume', array('class' => 'text')); ?>
     <?php echo $form->dropDownListRow($cashbox, 'coeficient',$cashbox->coeficients, array('class' => 'text')); ?>
-    
+    <div id="nominal">
     <?php $this->beginWidget('bootstrap.widgets.TbHeroUnit',array('htmlOptions'=>array('style'=>'padding: 20px;'))); ?>
     <h3>Номиналы</h3>
     <?php echo $form->checkBoxRow($cashbox, 'nominal0', array('class' => 'checkbox')); ?>
@@ -59,6 +59,16 @@ $this->beginWidget('zii.widgets.CPortlet', array(
     <?php echo $form->checkBoxRow($cashbox, 'nominal6', array('class' => 'checkbox')); ?>
     <?php echo $form->checkBoxRow($cashbox, 'nominal7', array('class' => 'checkbox')); ?>
     <?php $this->endWidget(); ?>
+    </div>
+    
+    <?php 
+    if ($cashbox->model_id == 1) {
+        echo "<script>$('#nominal').hide()</script>";
+    }
+    if ($cashbox->model_id == 1) {
+        echo "<script>$('#nominal').hide()</script>";
+    }
+    ?>
     
 
     <div class="row buttons">
