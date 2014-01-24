@@ -42,23 +42,26 @@ $this->beginWidget('zii.widgets.CPortlet', array(
     </style>
     
     <?php
-$this->widget('bootstrap.widgets.TbGridView', array(
+$this->widget('ext.groupgridview.GroupGridView', array(
     'id' => 'device-grid',
     'itemsCssClass' => 'table table-striped table-bordered',
     'dataProvider' => $data,
+    'mergeColumns' => array('device_id','name'),
     'columns' => array(
         array('name'=>'device_id',
-            'header'=>'Идентификатор устройства'),
+            'header'=>'ID'),
+        array('name'=>'name',
+            'header'=>'Место установки'),
         array('name'=>'dt',
             'header'=>'Дата'),
         array('name'=>'FIO',
             'header'=>'ФИО инкассатора'),
         array('name'=>'count_cash',
-            'header'=>'Количесвто купюр'),
+            'header'=>'Количество купюр'),
         array('name'=>'summ_cash',
             'header'=>'Сумма купюр'),
         array('name'=>'count_coin',
-            'header'=>'Количесвто монет'),
+            'header'=>'Количество монет'),
         array('name'=>'summ_coin',
             'header'=>'Сумма монет'),
         array('name'=>'summ_cash',

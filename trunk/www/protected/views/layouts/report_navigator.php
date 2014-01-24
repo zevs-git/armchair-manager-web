@@ -76,6 +76,11 @@
                 'style' => 'height:20px;'
             ),
         ));
+        if (isset($_REQUEST['date_from'])) {
+            echo "<script>$('#date_from').val('" . $_REQUEST['date_from'] . "') </script>";
+        } else {
+            echo "<script>$('#date_from').val('" . date('Y-m-d') . "') </script>";
+        }
         ?>
         <span>Дата окончания:</span>
         <?php
@@ -91,6 +96,11 @@
                 'style' => 'height:20px;'
             ),
         ));
+        if (isset($_REQUEST['date_to'])) {
+            echo "<script>$('#date_to').val('" . $_REQUEST['date_to'] . "') </script>";
+        } else {
+            echo "<script>$('#date_to').val('" . date('Y-m-d') . "') </script>";
+        }
         ?>
         <br />
         <br />

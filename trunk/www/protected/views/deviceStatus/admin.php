@@ -52,9 +52,11 @@ $this->beginWidget('zii.widgets.CPortlet', array(
                 'header' => 'Монеты',
                 'htmlOptions' => array('style' => 'align: center; width: 200px;'),
                 'type' => 'raw'),
-            array('name' => 'summ',
+            array('name' => 'all_summ',
                 'htmlOptions' => array('style' => 'min-width: 70px; text-align: center;font-size:12px'),
-                'type' => 'raw'),
+                'type' => 'raw',
+                'value'=>'"<b style=\'color:green\'>" . (($data->deviceCashReport->summ)?$data->deviceCashReport->summ:0) . " руб.</b>"'
+                ),
             array('name' => 'cashbox_state',
                 'htmlOptions' => array('style' => 'min-width: 200px; text-align: center;'),
                 'header' => 'Состояние',

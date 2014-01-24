@@ -36,7 +36,7 @@ class Staff extends CActiveRecord
                         array('key', 'length', 'max'=>8,'min'=>8),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, FIO, staff_type_id, key, phone, comment, object_id', 'safe', 'on'=>'search'),
+			array('id, FIO, staff_type_id, key, phone, comment, object_id, type_descr', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -48,8 +48,10 @@ class Staff extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+                    'type' => array(self::BELONGS_TO, 'StaffType', 'staff_type_id'),
 		);
 	}
+        public $type_descr;
 
 	/**
 	 * @return array customized attribute labels (name=>label)
@@ -64,6 +66,7 @@ class Staff extends CActiveRecord
 			'phone' => 'Телефон',
 			'comment' => 'Примечание',
 			'object_id' => 'Объект',
+                        'type_descr'=>'Тип персонала'
 		);
 	}
 
@@ -84,7 +87,7 @@ class Staff extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
-
+                $criteria->with = array('type');
 		$criteria->compare('id',$this->id);
 		$criteria->compare('FIO',$this->FIO,true);
 		$criteria->compare('staff_type_id',$this->staff_type_id);
@@ -92,10 +95,20 @@ class Staff extends CActiveRecord
 		$criteria->compare('phone',$this->phone,true);
 		$criteria->compare('comment',$this->comment,true);
 		$criteria->compare('object_id',$this->object_id);
+                $criteria->compare('type.descr', $this->type_descr,true);
 
 		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
+                'criteria' => $criteria,
+                    'sort' => array(
+                        'attributes' => array(
+                            'type_descr' => array(
+                                'asc' => 'type.descr',
+                                'desc' => 'type.descr DESC',
+                            ),
+                            '*',
+                        ),
+                    ),
+            ));
 	}
 
 	/**

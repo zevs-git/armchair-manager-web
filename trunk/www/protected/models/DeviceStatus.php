@@ -62,6 +62,8 @@ class DeviceStatus extends CActiveRecord {
             'staff' => array(self::BELONGS_TO, 'Staff', 'incassation_id'),
         );
     }
+    
+    public $all_summ;
 
     public function getstate() {
         return $this->gprs_state_icon . " " .
@@ -90,6 +92,7 @@ class DeviceStatus extends CActiveRecord {
     }
     public function getincassation_string() {
         $res = NULL;
+        if (!$this->is_conneted) return NULL;
         if ($this->incassation_id && $this->door_state) {
             if ($this->staff->staff_type_id == 0) {
                 $name = "[Инкассация]";
@@ -199,7 +202,7 @@ class DeviceStatus extends CActiveRecord {
             'balance' => 'Баланс',
             'city' => 'Город',
             'object.obj' => 'Объект',
-            'summ' => 'Сумма'
+            'all_summ' => 'Сумма'
         );
     }
 
@@ -219,7 +222,7 @@ class DeviceStatus extends CActiveRecord {
         // @todo Please modify the following code to remove attributes that should not be searched.
 
         $criteria = new CDbCriteria;
-        $criteria->with = array('device.object');
+        $criteria->with = array('device.object','deviceCashReport');
         $criteria->compare('device_id', $this->device->id, true);
         $criteria->compare('dt', $this->dt, true);
         $criteria->compare('cashbox_state', $this->cashbox_state);
@@ -235,6 +238,7 @@ class DeviceStatus extends CActiveRecord {
         $criteria->compare('pwr_ext', $this->pwr_ext);
         $criteria->compare('update_date', $this->update_date, true);
         $criteria->compare('object.obj', $this->device->object->obj, true);
+        $criteria->compare('deviceCashReport.summ', $this->all_summ, true);
 
         $criteria->condition = 'device.id > 0';
 
@@ -247,6 +251,10 @@ class DeviceStatus extends CActiveRecord {
                     'object.obj' => array(
                         'asc' => 'object.obj',
                         'desc' => 'object.obj DESC',
+                    ),
+                    'all_summ' => array(
+                        'asc' => 'deviceCashReport.summ',
+                        'desc' => 'deviceCashReport.summ DESC',
                     ),
                     '*',
                 ),

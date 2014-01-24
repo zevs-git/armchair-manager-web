@@ -65,7 +65,9 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'dataProvider' => $model->search(),
     'filter' => $model,
     'columns' => array(
-        'id',
+        array('name'=>'id',
+             'htmlOptions' => array('style' => 'width: 10px; text-align: center;'),
+        ),
         'IMEI',
         'soft_version',
         //'deviceType.type_name',
@@ -76,6 +78,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
         array(
             'class' => 'bootstrap.widgets.TbButtonColumn',
             'template' => '{view}{delete}',
+            'htmlOptions' => array('style' => 'min-width: 70px; text-align: center;'),
             'buttons' => array(
                 'view' => array(
                     'label' => 'Настройки устройтва',

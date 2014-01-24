@@ -7,10 +7,10 @@ $this->breadcrumbs=array(
 	'Добавить',
 );
 
-$this->menu=array(
+/*$this->menu=array(
 	array('label'=>'Список', 'url'=>array('index')),
 	array('label'=>'Управление', 'url'=>array('admin')),
-);
+);*/
 ?>
 
 <h3>Добавление персонала</h3>

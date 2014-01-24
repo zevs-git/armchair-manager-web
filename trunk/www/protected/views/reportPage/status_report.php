@@ -1,7 +1,7 @@
 <?php if (isset($data)):?>
 <?php
 $this->beginWidget('zii.widgets.CPortlet', array(
-    'title' => "Отчет \"Характеритстика работы кресел\""
+    'title' => "Отчет \"Характеристика работы кресел\""
 ));
 ?>
 

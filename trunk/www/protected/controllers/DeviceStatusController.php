@@ -215,7 +215,7 @@ class DeviceStatusController extends Controller {
             if (isset($res1['res'])) {
                 $volume = $res1['res'];
             } else {
-                $volume = 800 * $res['res'];
+                $volume = 400 * $res['res'];
             }
             
 

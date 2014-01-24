@@ -16,21 +16,6 @@
             ));
             ?>
         </div>
-        <?php if (get_class($this) == 'StaffController'): ?>
-        <?php $this->beginWidget('bootstrap.widgets.TbHeroUnit',array('htmlOptions'=>array('style'=>'padding: 20px;')));?>
-        <div class="sidebar-nav">
-
-            <?php
-            $this->widget('bootstrap.widgets.TbMenu', array(
-            'type'=>'pills', // '', 'tabs', 'pills' (or 'list')
-            'stacked'=>false, // whether this is a stacked menu
-            'items'=>$this->menu,
-            ));
-            ?>
-        </div>
-        <?php $this->endWidget() ?>
-        
-        <?php endif;?>
 
     </div><!--/span-->
     

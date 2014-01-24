@@ -8,12 +8,12 @@ $this->breadcrumbs=array(
 	'Редактировать',
 );
 
-$this->menu=array(
+/*$this->menu=array(
 	array('label'=>'Список', 'url'=>array('index')),
 	array('label'=>'Добавить', 'url'=>array('create')),
 	array('label'=>'Просмотреть', 'url'=>array('view', 'id'=>$model->id)),
 	array('label'=>'Управление', 'url'=>array('admin')),
-);
+);*/
 ?>
 
 <h1>Редактирование [<?php echo $model->FIO; ?>]</h1>
