@@ -135,7 +135,7 @@ class DeviceStatus extends CActiveRecord {
 
         return 
                 "<table style='width:100%;font-size:12px'><tr>"
-                . "<td width=25% style='padding:0;font-weight:700; text-align: center;color: green' rel='tooltip' title='" 
+                . "<td width=25% style='border-left:none; padding:0;font-weight:700; text-align: center;color: green' rel='tooltip' title='" 
                 . $this->deviceCashReport->update_cash . "'>"
                 . ($this->deviceCashReport->last_cash?$this->deviceCashReport->last_cash:0)
                 . "</td>"
@@ -154,7 +154,7 @@ class DeviceStatus extends CActiveRecord {
 
         return 
                 "<table style='width:100%;font-size:12px'><tr>"
-                . "<td width=25% style='padding:0;font-weight:700; text-align: center;color: green' rel='tooltip' title='" 
+                . "<td width=25% style='border-left:none; padding:0;font-weight:700; text-align: center;color: green' rel='tooltip' title='" 
                 . $this->deviceCashReport->update_coin . "'>"
                 . ($this->deviceCashReport->last_coin?$this->deviceCashReport->last_coin:0)
                 . "</td>"
