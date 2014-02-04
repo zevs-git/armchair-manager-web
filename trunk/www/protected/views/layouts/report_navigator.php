@@ -105,7 +105,8 @@
         <br />
         <br />
         <span>Объект:</span>
-        <?php $list = CHtml::listData(Object::model()->findAll(), 'id', 'obj'); ?>
+        <?php $crit = (Yii::app()->user->getId() == "pulkovo")?"id in (1,2)":NULL;
+        $list = CHtml::listData(Object::model()->findAll($crit), 'id', 'obj'); ?>
         <?php echo CHtml::dropDownList('object_id', 'id', $list, array('class' => 'span4')); ?>
         
         <br />

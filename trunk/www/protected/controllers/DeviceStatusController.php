@@ -34,11 +34,13 @@ class DeviceStatusController extends Controller {
               ), */
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
                 'actions' => array('admin', 'delete', 'index', 'view', 'grid', 'Summary'),
-                'users' => array('admin'),
+                'users' => array('admin','pulkovo'),
             ),
             array('deny', // deny all users
                 'users' => array('*'),
             ),
+            
+            
         );
     }
 
@@ -141,7 +143,7 @@ class DeviceStatusController extends Controller {
     /**
      * Manages all models.
      */
-    public function actionAdmin() {
+    public function actionAdmin() {        
         $model = new DeviceStatus('search');
         $model->unsetAttributes();  // clear any default values
         if (isset($_GET['DeviceStatus']))
