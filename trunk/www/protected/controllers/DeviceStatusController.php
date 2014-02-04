@@ -34,13 +34,11 @@ class DeviceStatusController extends Controller {
               ), */
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
                 'actions' => array('admin', 'delete', 'index', 'view', 'grid', 'Summary'),
-                'users' => array('admin','pulkovo'),
+                'users' => array('admin', 'pulkovo'),
             ),
             array('deny', // deny all users
                 'users' => array('*'),
             ),
-            
-            
         );
     }
 
@@ -143,7 +141,7 @@ class DeviceStatusController extends Controller {
     /**
      * Manages all models.
      */
-    public function actionAdmin() {        
+    public function actionAdmin() {
         $model = new DeviceStatus('search');
         $model->unsetAttributes();  // clear any default values
         if (isset($_GET['DeviceStatus']))
@@ -181,20 +179,49 @@ class DeviceStatusController extends Controller {
 
     public function actionSummary() {
         if (Yii::app()->request->isAjaxRequest) {
-            
+
 
             $result = array();
-            $result['device_count'] = Device::model()->count();
-            $result['device_connected'] = DeviceStatus::model()->count("unix_timestamp(now()) - unix_timestamp(dt) <= 60*5");
-            $result['device_connected_p'] = number_format($result['device_connected'] / $result['device_count'] * 100 , 2, '.', '') . "%";
+
+            if (Yii::app()->user->getId() == "pulkovo") {
+                $cond = 'object_id in (1,2)';
+            } else {
+                $cond = NULL;
+            }
+
+            $result['device_count'] = Device::model()->count($cond);
+            
+            
+            $sql = "SELECT COUNT(*) AS res
+            FROM `device_status` s, `device` d
+            WHERE d.`id` = s.`device_id` and unix_timestamp(now()) - unix_timestamp(s.dt) <= 60*5 
+            and d.id = s.device_id";
+
+            if (Yii::app()->user->getId() == "pulkovo") {
+                $sql .= ' and d.object_id in (1,2)';
+            }
+
+            $res = Yii::app()->db->createCommand($sql)
+                    ->queryRow();
+
+            if (isset($res['res'])) {
+               $result['device_connected'] = $res['res'];
+            }
+            
+            $result['device_connected_p'] = number_format($result['device_connected'] / $result['device_count'] * 100, 2, '.', '') . "%";
             $result['device_not_connected'] = $result['device_count'] - $result['device_connected'];
             $result['device_not_connected_p'] = number_format($result['device_not_connected'] / $result['device_count'] * 100, 2, '.', '') . "%";
 
             $result['cash_summ'] = 0;
 
             $sql = "SELECT SUM(summ_coin)+SUM(summ_cash) AS res
-            FROM device_cash_report c, `device_status` s
-            WHERE c.`device_id` = s.`device_id` and unix_timestamp(now()) - unix_timestamp(s.dt) <= 60*5";
+            FROM device_cash_report c, `device_status` s, `device` d
+            WHERE c.`device_id` = s.`device_id` and unix_timestamp(now()) - unix_timestamp(s.dt) <= 60*5 
+            and d.id = s.device_id";
+
+            if (Yii::app()->user->getId() == "pulkovo") {
+                $sql .= ' and d.object_id in (1,2)';
+            }
 
             $res = Yii::app()->db->createCommand($sql)
                     ->queryRow();
@@ -209,8 +236,13 @@ class DeviceStatusController extends Controller {
                     ->queryRow();
 
             $sql = "SELECT SUM(a.volume + b.volume) AS res
-            FROM device_cashbox_settings a, device_coinbox_settings b, `device_status` s
-            WHERE a.`device_id` = b.`device_id` and a.`device_id` = s.`device_id` and unix_timestamp(now()) - unix_timestamp(s.dt) <= 60*5";
+            FROM device_cashbox_settings a, device_coinbox_settings b, `device_status` s, `device` d
+            WHERE a.`device_id` = b.`device_id` and a.`device_id` = s.`device_id` and unix_timestamp(now()) - unix_timestamp(s.dt) <= 60*5 
+            and d.id = s.device_id";
+
+            if (Yii::app()->user->getId() == "pulkovo") {
+                $sql .= ' and d.object_id in (1,2)';
+            }
 
             $res1 = Yii::app()->db->createCommand($sql)
                     ->queryRow();
@@ -219,17 +251,22 @@ class DeviceStatusController extends Controller {
             } else {
                 $volume = 400 * $res['res'];
             }
-            
+
 
             $sql = "SELECT SUM(count_coin)+SUM(count_cash) AS res
-            FROM device_cash_report c, `device_status` s
-            WHERE c.`device_id` = s.`device_id` and unix_timestamp(now()) - unix_timestamp(s.dt) <= 60*5";
+            FROM device_cash_report c, `device_status` s, `device` d
+            WHERE c.`device_id` = s.`device_id` and unix_timestamp(now()) - unix_timestamp(s.dt) <= 60*5 
+            and d.id = s.device_id";
+
+            if (Yii::app()->user->getId() == "pulkovo") {
+                $sql .= ' and d.object_id in (1,2)';
+            }
 
             $res2 = Yii::app()->db->createCommand($sql)
                     ->queryRow();
-            
+
             if (isset($res['res'])) {
-                $result['cash_summ_p'] = number_format($res2['res'] / $volume *100, 2, '.', '') . "%";
+                $result['cash_summ_p'] = number_format($res2['res'] / $volume * 100, 2, '.', '') . "%";
             } else {
                 $result['cash_summ_p'] = "-";
             }
