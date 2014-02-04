@@ -58,12 +58,12 @@ class Device extends CActiveRecord {
     }
 
     public $object_obj;
-    
-    /*public function afterFind() {
-                $this->object_obj = $this->object->obj;
-                parent::afterFind();
-                return true;
-    }*/
+
+    /* public function afterFind() {
+      $this->object_obj = $this->object->obj;
+      parent::afterFind();
+      return true;
+      } */
 
     /**
      * @return array customized attribute labels (name=>label)
@@ -83,9 +83,9 @@ class Device extends CActiveRecord {
             'comment' => 'Место установки',
             'ICCID' => 'Номер SIM',
             'object_obj' => 'Объект',
-            'phone'=>'Номер телефона',
-            'interval'=>'Интервал передачи данных',
-            'zapros'=>'Запрос баланса'
+            'phone' => 'Номер телефона',
+            'interval' => 'Интервал передачи данных',
+            'zapros' => 'Запрос баланса'
         );
     }
 
@@ -105,29 +105,34 @@ class Device extends CActiveRecord {
         // @todo Please modify the following code to remove attributes that should not be searched.
 
         $criteria = new CDbCriteria;
-        $criteria->with = array('object','deviceType');
+        $criteria->with = array('object', 'deviceType');
         $criteria->compare('id', $this->id);
         $criteria->compare('IMEI', $this->IMEI, true);
         $criteria->compare('type_val', $this->type_id, true);
-        
+
         $criteria->compare('soft_version', $this->soft_version);
         //$criteria->compare('object', $this->object, true);
         $criteria->compare('settings_id', $this->settings_id);
-        $criteria->compare('t.comment', $this->comment,true);
-        $criteria->compare('object.obj', $this->object_obj,true);
+        $criteria->compare('t.comment', $this->comment, true);
+        $criteria->compare('object.obj', $this->object_obj, true);
         //$criteria->addSearchCondition('object_obj', $this->object->obj,true);
+
+
+        if (Yii::app()->user->getId() == "pulkovo") {
+            $criteria->condition = 'object.id in (1,2)';
+        }
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
-                'sort' => array(
-                    'attributes' => array(
-                        'object_obj' => array(
-                            'asc' => 'object.obj',
-                            'desc' => 'object.obj DESC',
-                        ),
-                        '*',
+            'sort' => array(
+                'attributes' => array(
+                    'object_obj' => array(
+                        'asc' => 'object.obj',
+                        'desc' => 'object.obj DESC',
                     ),
+                    '*',
                 ),
+            ),
         ));
     }
 
@@ -168,7 +173,7 @@ class Device extends CActiveRecord {
             $state->u_settings = 1;
             $state->save(); //Не забыть включить!!!!!!!!!
         }
-        
+
         return TRUE;
     }
 
@@ -181,13 +186,13 @@ class Device extends CActiveRecord {
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }
-    
-   public function calcCRC($buffer) {
+
+    public function calcCRC($buffer) {
         $crc = 0xFFFF;
         $j = 0;
-        
+
         $len = strlen($buffer);
-        
+
         while ($len--) {
             $crc ^= (ord($buffer[$j++]) << 8) & 0xFFFF;
 

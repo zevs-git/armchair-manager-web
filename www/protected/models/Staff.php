@@ -97,6 +97,7 @@ class Staff extends CActiveRecord
 		$criteria->compare('object_id',$this->object_id);
                 $criteria->compare('type.descr', $this->type_descr,true);
 
+                
 		return new CActiveDataProvider($this, array(
                 'criteria' => $criteria,
                     'sort' => array(

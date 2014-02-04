@@ -239,8 +239,12 @@ class DeviceStatus extends CActiveRecord {
         $criteria->compare('update_date', $this->update_date, true);
         $criteria->compare('object.obj', $this->device->object->obj, true);
         $criteria->compare('deviceCashReport.summ', $this->all_summ, true);
-
+        
         $criteria->condition = 'device.id > 0';
+        
+        if (Yii::app()->user->getId() == "pulkovo") {
+            $criteria->condition = 'device.object_id in (1,2)';    
+        }
 
 
         return new CActiveDataProvider($this, array(

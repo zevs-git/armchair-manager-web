@@ -102,6 +102,10 @@ class Object extends CActiveRecord
 		$criteria->compare('face',$this->face,true);
 		$criteria->compare('phone',$this->phone,true);
 		$criteria->compare('comment',$this->comment,true);
+                
+                if (Yii::app()->user->getId() == "pulkovo") {
+                    $criteria->condition = 'id in (1,2)';
+                }
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
