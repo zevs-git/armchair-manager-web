@@ -1,9 +1,13 @@
+<style>IMG {
+    width: available;
+    width: available;
+    
+    }</style>
 <?php
 /* @var $this DeviceStatusController */
 /* @var $model DeviceStatus */
 
-$updateTimeout = 10000;
-
+$updateTimeout = 1000000;
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
 	$('.search-form').toggle();
@@ -20,7 +24,7 @@ $('.search-form form').submit(function(){
 <?php
 //$model->dbCriteria->order='dt DESC';
 $this->beginWidget('zii.widgets.CPortlet', array(
-    'htmlOptions' => array('style' => 'min-width: 1000px;', 'class' => 'portlet')
+    'htmlOptions' => array('style' => 'min-width: 1000px; margin-top: 25px; margin-bottom: 50px; border: none;', 'class' => 'portlet')
 ));
 ?>
 <div id="grid-container">
@@ -28,7 +32,7 @@ $this->beginWidget('zii.widgets.CPortlet', array(
          src='/images/loading.gif' />
 
     <?php
-    $this->widget('zii.widgets.grid.CGridView', array(
+    $this->widget('bootstrap.widgets.TbGridView', array(
         'id' => 'device-status-grid',
         'dataProvider' => $model->search(),
         //'filter' => $model,
@@ -36,40 +40,56 @@ $this->beginWidget('zii.widgets.CPortlet', array(
         'htmlOptions' => array('class'=>'no-summay','style' => 'text-align: center;min-width: 900px;table-layout:fixed'),
         'rowCssClassExpression'=>'$data->rowClass',
         'columns' => array(
-            array('name' => 'object.obj',
-                'htmlOptions' => array('style' => 'min-width: 220px;'),
+            array('name' => 'object.city',
+                'htmlOptions' => array('style' => 'width: 130px;'),
                 'type' => 'raw',
-                'value' => '"<b  rel=\'tooltip\' title=\'" . $data->device->comment . "\'>г." . $data->device->object->city . " \"" . $data->device->object->obj . "\"</b>"'),
+                'value' => '"<span  rel=\'tooltip\' title=\'" . $data->device->comment . "\'>" . $data->device->object->city . "</span>"',
+                'headerHtmlOptions'=> array('style' => 'width: 125px;')),
+            array('name' => 'object.obj',
+                'htmlOptions' => array('style' => 'width: 130px;'),
+                'type' => 'raw',
+                'value' => '"<span  rel=\'tooltip\' title=\'" . $data->device->comment . "\'>" . $data->device->object->obj . "</span>"',
+                'headerHtmlOptions'=> array('style' => 'width: 125px;')),
             array('name' => 'dt',
-                'htmlOptions' => array('style' => 'width: 130px;font-size:12px'),
-                'value' => 'date_format(date_create($data->dt), "d.m.Y H:i")'),
+                'htmlOptions' => array('style' => 'width: 130px; font-size:12px'),
+                'value' => 'date_format(date_create($data->dt), "d.m.Y H:i")',
+                'headerHtmlOptions'=> array('style' => 'width: 130px;')),
             array('name' => 'cash_string',
                 'header' => 'Купюры',
                 'htmlOptions' => array('style' => 'align: center; width: 200px;'),
-                'type' => 'raw'),
+                'type' => 'raw',
+                'headerHtmlOptions' => array('style' => 'align: center; width: 195px;')),
             array('name' => 'coin_string',
                 'header' => 'Монеты',
                 'htmlOptions' => array('style' => 'align: center; width: 200px;'),
-                'type' => 'raw'),
+                'type' => 'raw',
+                'headerHtmlOptions' => array('style' => 'align: center; width: 195px;')),
             array('name' => 'all_summ',
-                'htmlOptions' => array('style' => 'min-width: 70px; text-align: center;font-size:12px'),
+                'htmlOptions' => array('style' => 'width: 70px; text-align: center;font-size:12px'),
+                'headerHtmlOptions' => array('style' => 'width: 65px; text-align: center;font-size:12px'),
                 'type' => 'raw',
                 'value'=>'"<b style=\'color:green\'>" . (($data->deviceCashReport->summ)?$data->deviceCashReport->summ:0) . " руб.</b>"'
                 ),
+            array('name'=>'balance',
+                  'htmlOptions' => array('style' => 'width: 50px;'),
+                  'headerHtmlOptions' => array('style' => 'width: 45px;'),
+                ), 
             array('name' => 'cashbox_state',
-                'htmlOptions' => array('style' => 'min-width: 200px; text-align: center;'),
+                'htmlOptions' => array('style' => 'width: 200px; text-align: center;'),
+                'headerHtmlOptions' => array('style' => 'width: 200px; text-align: center;'),
                 'header' => 'Состояние',
                 'type' => 'raw',
                 'value' => '$data->state'),
-            'balance',
-            array('class' => 'myButtonColumn',
-                'updateButtonVisible' => 'FALSE',
-                'deleteButtonVisible' => 'FALSE',
+            array('class' => 'bootstrap.widgets.TbButtonColumn',
+                'headerHtmlOptions' => array('style' => 'display: none; text-align: center;'),
+                'template' => '{view}',
                 'buttons' => array('view' =>
                     array(
                         'label' => 'Статус устройства',
                         'url' => 'Yii::app()->createUrl("DeviceStatus/view", array("id"=>$data->device_id,"asDialog"=>1))',
+                        'icon'=> 'icon-zoom-in',
                         'options' => array(
+                            'class' => 'btn btn-mini',
                             'ajax' => array(
                                 'type' => 'POST',
                                 // ajax post will use 'url' specified above 
@@ -91,7 +111,7 @@ $this->beginWidget('zii.widgets.CPortlet', array(
 $this->beginWidget('zii.widgets.jui.CJuiDialog', array(// the dialog
     'id' => 'modal',
     'options' => array(
-        'title' => 'Статус устройтсва',
+        'title' => 'Статус устройства',
         'autoOpen' => FALSE,
         'modal' => false,
         'width' => 600,

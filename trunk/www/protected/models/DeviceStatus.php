@@ -184,7 +184,7 @@ class DeviceStatus extends CActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'device_id' => 'Название',
+            'device_id' => 'ID',
             'dt' => 'Последний ответ',
             'cashbox_state' => 'Связь с купюрником',
             'cash_in_state' => 'Прием купюры',
@@ -238,6 +238,7 @@ class DeviceStatus extends CActiveRecord {
         $criteria->compare('pwr_ext', $this->pwr_ext);
         $criteria->compare('update_date', $this->update_date, true);
         $criteria->compare('object.obj', $this->device->object->obj, true);
+        $criteria->compare('object.city', $this->device->object->city, true);
         $criteria->compare('deviceCashReport.summ', $this->all_summ, true);
         
         $criteria->condition = 'device.id > 0';
@@ -255,6 +256,10 @@ class DeviceStatus extends CActiveRecord {
                     'object.obj' => array(
                         'asc' => 'object.obj',
                         'desc' => 'object.obj DESC',
+                    ),
+                    'object.city' => array(
+                        'asc' => 'object.city',
+                        'desc' => 'object.city DESC',
                     ),
                     'all_summ' => array(
                         'asc' => 'deviceCashReport.summ',
