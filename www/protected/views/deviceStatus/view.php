@@ -47,7 +47,10 @@ $this->menu=array(
         'type'=>'striped bordered condensed',
 	'data'=>$model,
 	'attributes'=>array(
+            'device_id',
             array('name'=>'name_val', 'type'=>'raw','label'=>'Устройство'),
+            'device.object.city',
+            'device.object.obj',
             array('name'=>'gprs_state_icon', 
                 'label'=>'Подключение к серверу',
                 'type'=>'raw'),

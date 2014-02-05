@@ -3,7 +3,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Armchair manager</title>
+    <title>MagicRest monitoring</title>
     <meta name="author" content="pa230291zvs">
 	<link href='http://fonts.googleapis.com/css?family=Carrois+Gothic' rel='stylesheet' type='text/css'>
 

@@ -14,6 +14,7 @@
       top: 0;
     }
   }
+  .ui-widget{font-family:Verdana,Arial,sans-serif;font-size: 0.9em;}
 </style>
 <div class="row-fluid">
     <div class="span2">
@@ -64,13 +65,13 @@
             
             <span>Дата начала:</span>
         <?php
-        $this->widget('zii.widgets.jui.CJuiDatePicker', array(
+        $this->widget('application.extensions.CJuiDateTimePicker.CJuiDateTimePicker', array(
             'language' => 'ru',
             'id'=>'date_from',
             'name' => 'date_from',
             'options' => array(    
                 'showAnim' => 'fold',
-                'dateFormat' => 'yy-mm-dd',
+                'dateFormat' => 'dd.mm.yy',
             ),
             'htmlOptions' => array(
                 'style' => 'height:20px;'
@@ -79,18 +80,18 @@
         if (isset($_REQUEST['date_from'])) {
             echo "<script>$('#date_from').val('" . $_REQUEST['date_from'] . "') </script>";
         } else {
-            echo "<script>$('#date_from').val('" . date('Y-m-d') . "') </script>";
+            echo "<script>$('#date_from').val('" . date('d.m.Y') . "') </script>";
         }
         ?>
         <span>Дата окончания:</span>
         <?php
-        $this->widget('zii.widgets.jui.CJuiDatePicker', array(
+        $this->widget('application.extensions.CJuiDateTimePicker.CJuiDateTimePicker', array(
             'language' => 'ru',
             'id'=>'date_to',
             'name' => 'date_to',
             'options' => array(
                 'showAnim' => 'fold',
-                'dateFormat' => 'yy-mm-dd',
+                'dateFormat' => 'dd.mm.yy',
             ),
             'htmlOptions' => array(
                 'style' => 'height:20px;'
@@ -99,7 +100,7 @@
         if (isset($_REQUEST['date_to'])) {
             echo "<script>$('#date_to').val('" . $_REQUEST['date_to'] . "') </script>";
         } else {
-            echo "<script>$('#date_to').val('" . date('Y-m-d') . "') </script>";
+            echo "<script>$('#date_to').val('" . date('d.m.Y') . "') </script>";
         }
         ?>
         <br />
@@ -107,8 +108,11 @@
         <span>Объект:</span>
         <?php $crit = (Yii::app()->user->getId() == "pulkovo")?"id in (1,2)":NULL;
         $list = CHtml::listData(Object::model()->findAll($crit), 'id', 'obj'); ?>
-        <?php echo CHtml::dropDownList('object_id', 'id', $list, array('class' => 'span4')); ?>
-        
+        <?php echo CHtml::dropDownList('object_id', 'id', $list, array('class' => 'span4','id'=>'object_id')); 
+        if (isset($_REQUEST['object_id'])) {
+            echo "<script>$('#object_id').val('" . $_REQUEST['object_id'] . "') </script>";
+        }
+        ?>
         <br />
         <br />
         

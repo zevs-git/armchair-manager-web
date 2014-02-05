@@ -7,7 +7,7 @@ Yii::setPathOfAlias('bootstrap', dirname(__FILE__) . '/../extensions/bootstrap')
 // CWebApplication properties can be configured here.
 return array(
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
-    'name' => 'Armchair manager',
+    'name' => 'MagicRest monitoring',
     'language' => 'ru',
     //'theme' => 'abound',
     // preloading 'log' component
@@ -18,6 +18,7 @@ return array(
         'application.models.*',
         'application.components.*',
         'application.helpers.*',
+        'application.extensions.EScrollableGridView.*'
     ),
     'modules' => array(
         // uncomment the following to enable the Gii tool
