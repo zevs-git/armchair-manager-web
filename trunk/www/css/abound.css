@@ -557,3 +557,31 @@ tr.atention {
 tr.work {
     background-color: honeydew;
 }
+
+.no-summay div.summary {
+    display: none;
+}
+
+.fixed-summ {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 5px;
+    background-color: ghostwhite;
+}
+.fixed-summ .stat-block {
+	margin-bottom: 0;
+}
+
+.grad-head th {
+	border-bottom:1px solid #DDD;
+	background-color: #F1F1F1;
+	background-image: -moz-linear-gradient(top, #F1F1F1, #DBDBDB);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#F1F1F1), to(#DBDBDB));
+	background-image: -webkit-linear-gradient(top, #F1F1F1, #DBDBDB);
+	background-image: -o-linear-gradient(top, #F1F1F1, #DBDBDB);
+	background-image: linear-gradient(to bottom, #F1F1F1, #DBDBDB);
+	background-repeat: repeat-x;
+	filter: progid:dximagetransform.microsoft.gradient(startColorstr='#ffF1F1F1', endColorstr='#ffDBDBDB', GradientType=0);
+	padding:10px;
+}
