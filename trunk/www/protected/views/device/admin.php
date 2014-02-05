@@ -31,7 +31,7 @@ $('.search-form form').submit(function(){
 <?php $this->beginWidget('bootstrap.widgets.TbModal', array('id' => 'TBDialogCrud')); ?>
 <?php $this->endWidget(); ?>
 
-<h2>Управление устройствами</h2>
+<h3>Управление устройствами</h3>
 <!-- 
 <?php echo CHtml::link('Расширенный поиск', '#', array('class' => 'search-button btn')); ?>
 <div class="search-form" style="display:none">
