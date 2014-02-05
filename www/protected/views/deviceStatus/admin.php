@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /* @var $this DeviceStatusController */
 /* @var $model DeviceStatus */
 
@@ -20,8 +20,7 @@ $('.search-form form').submit(function(){
 <?php
 //$model->dbCriteria->order='dt DESC';
 $this->beginWidget('zii.widgets.CPortlet', array(
-    'htmlOptions' => array('style' => 'min-width: 1000px;', 'class' => 'portlet'),
-    'title' => "Мониторинг системы",
+    'htmlOptions' => array('style' => 'min-width: 1000px;', 'class' => 'portlet')
 ));
 ?>
 <div id="grid-container">
@@ -33,8 +32,8 @@ $this->beginWidget('zii.widgets.CPortlet', array(
         'id' => 'device-status-grid',
         'dataProvider' => $model->search(),
         //'filter' => $model,
-        'itemsCssClass' => 'table table-bordered',
-        'htmlOptions' => array('style' => 'text-align: center;min-width: 900px;'),
+        'itemsCssClass' => 'table table-bordered grad-head table-fixed-header',
+        'htmlOptions' => array('class'=>'no-summay','style' => 'text-align: center;min-width: 900px;table-layout:fixed'),
         'rowCssClassExpression'=>'$data->rowClass',
         'columns' => array(
             array('name' => 'object.obj',
@@ -141,7 +140,8 @@ if (isset($res['res'])) {
     $cash_count = $res['res'];
 }
 ?>
-<div class="row-fluid">
+<div class="row-fluid fixed-summ">
+    
     <div class="span3 ">
         <div class="stat-block">
             <ul>
