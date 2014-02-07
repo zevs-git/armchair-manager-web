@@ -7,7 +7,7 @@
 /* @var $this DeviceStatusController */
 /* @var $model DeviceStatus */
 
-$updateTimeout = 1000000;
+$updateTimeout = 10000;
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
 	$('.search-form').toggle();
