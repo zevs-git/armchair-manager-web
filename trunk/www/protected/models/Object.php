@@ -106,7 +106,7 @@ class Object extends CActiveRecord
 		$criteria->compare('comment',$this->comment,true);
                 
                 $criteria->with = array('type');
-                $criteria->compare('type.descr',$this->object_type,true);
+                $criteria->compare('type.id',$this->object_type,false);
                 
                 if (Yii::app()->user->getId() == "pulkovo") {
                     $criteria->condition = 'id in (1,2)';
