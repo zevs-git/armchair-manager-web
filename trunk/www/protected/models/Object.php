@@ -10,7 +10,7 @@
  * @property string $city
  * @property string $street
  * @property string $house
- * @property string $type
+ * @property string $type_id
  * @property string $obj
  * @property string $face
  * @property string $phone
@@ -34,11 +34,11 @@ class Object extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('country, region, city, street, house, type, obj, face, phone, comment', 'length', 'max'=>255),
+			array('country, region, city, street, house, type_id, obj, face, phone, comment', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
                         array('country, region, city, obj', 'required'),
-			array('id, country, region, city, street, house, type, obj, face, phone, comment', 'safe', 'on'=>'search'),
+			array('id, country, region, city, street, house, type.descr, obj, face, phone, comment,object_type', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -50,8 +50,10 @@ class Object extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+                    'type' => array(self::BELONGS_TO, 'ObjectType', 'type_id'),
 		);
 	}
+        public $object_type;
 
 	/**
 	 * @return array customized attribute labels (name=>label)
@@ -65,7 +67,7 @@ class Object extends CActiveRecord
 			'city' => 'Город',
 			'street' => 'Улица',
 			'house' => 'Дом',
-			'type' => 'Тип',
+			'object_type' => 'Тип',
 			'obj' => 'Название объекта',
 			'face' => 'Контактное лицо',
 			'phone' => 'Телефон',
@@ -90,26 +92,38 @@ class Object extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
-
+                
 		$criteria->compare('id',$this->id,true);
 		$criteria->compare('country',$this->country,true);
 		$criteria->compare('region',$this->region,true);
 		$criteria->compare('city',$this->city,true);
 		$criteria->compare('street',$this->street,true);
 		$criteria->compare('house',$this->house,true);
-		$criteria->compare('type',$this->type,true);
+		$criteria->compare('type_id',$this->type_id,true);
 		$criteria->compare('obj',$this->obj,true);
 		$criteria->compare('face',$this->face,true);
 		$criteria->compare('phone',$this->phone,true);
 		$criteria->compare('comment',$this->comment,true);
+                
+                $criteria->with = array('type');
+                $criteria->compare('type.descr',$this->object_type,true);
                 
                 if (Yii::app()->user->getId() == "pulkovo") {
                     $criteria->condition = 'id in (1,2)';
                 }
 
 		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
+                    'criteria' => $criteria,
+                    'sort' => array(
+                        'attributes' => array(
+                            'object_type' => array(
+                                'asc' => 'type.descr',
+                                'desc' => 'type.descr DESC',
+                            ),
+                            '*',
+                        ),
+                    ),
+                ));
 	}
 
 	/**
