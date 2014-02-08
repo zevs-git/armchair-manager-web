@@ -51,10 +51,12 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'type',array('class'=>'span2')); ?>
-		<?php echo $form->textField($model,'type',array('size'=>60,'maxlength'=>255)); ?>
-		<?php echo $form->error($model,'type'); ?>
-	</div>
+            <?php echo $form->labelEx($model, 'type.descr',array('class'=>'span2')); ?>
+            <?php echo $form->error($model, 'type_id'); ?>
+        
+            <?php $list = CHtml::listData(ObjectType::model()->findAll(), 'id', 'descr'); ?>
+            <?php echo $form->dropDownList($model, 'type_id', $list, array('class' => 'span2')); ?>
+        </div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'obj',array('class'=>'span2')); ?>

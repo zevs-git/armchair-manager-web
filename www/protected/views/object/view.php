@@ -26,7 +26,7 @@ $this->breadcrumbs=array(
 		'city',
 		'street',
 		'house',
-		'type',
+		'type.descr',
 		'obj',
 		'face',
 		'phone',
