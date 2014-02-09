@@ -37,7 +37,7 @@ class Object extends CActiveRecord
 			array('country, region, city, street, house, type_id, obj, face, phone, comment', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-                        array('country, region, city, obj', 'required'),
+                        array('city, obj', 'required'),
 			array('id, country, region, city, street, house, type.descr, obj, face, phone, comment,object_type', 'safe', 'on'=>'search'),
 		);
 	}

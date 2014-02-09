@@ -5,7 +5,7 @@
 ?>
 
 <div class="form">
-
+<?php Yii::app()->clientScript->registerCoreScript('jquery.ui'); ?>
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	'id'=>'object-form',
         'type' => 'inline',
@@ -17,25 +17,38 @@
 )); ?>
 
 	<p class="note">Обязательные поля отмечены символом <span class="required">*</span>.</p>
-
+        
 	<?php echo $form->errorSummary($model); ?>
 
+        <div class="row">
+		<?php echo $form->labelEx($model,'city',array('class'=>'span2')); ?>
+                <?php
+                $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+                        'model'=>$model,
+                        'attribute'=>'city',
+                        'name'=>'city',
+                        'source'=> 'js: autoCompleteTags',
+                        'options'=>array(
+                                'delay'=>100,
+                                'minLength'=>1,
+                                'showAnim'=>'fold',
+                                'select' => 'js:select'
+                        ),
+                ));
+                ?>
+		<?php echo $form->error($model,'city'); ?>
+	</div>
+        
 	<div class="row">
-		<?php echo $form->labelEx($model,'country',array('class'=>'span2')); ?>
-		<?php echo $form->textField($model,'country',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->labelEx($model,'country',array('class'=>'span2',)); ?>
+		<?php echo $form->textField($model,'country',array('size'=>60,'maxlength'=>255,'id'=>'country','readonly'=>true)); ?>
 		<?php echo $form->error($model,'country'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'region',array('class'=>'span2')); ?>
-		<?php echo $form->textField($model,'region',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->textField($model,'region',array('size'=>60,'maxlength'=>255,'id'=>'region','readonly'=>true)); ?>
 		<?php echo $form->error($model,'region'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'city',array('class'=>'span2')); ?>
-		<?php echo $form->textField($model,'city',array('size'=>60,'maxlength'=>255)); ?>
-		<?php echo $form->error($model,'city'); ?>
 	</div>
 
 	<div class="row">
@@ -55,7 +68,7 @@
             <?php echo $form->error($model, 'type_id'); ?>
         
             <?php $list = CHtml::listData(ObjectType::model()->findAll(), 'id', 'descr'); ?>
-            <?php echo $form->dropDownList($model, 'type_id', $list, array('class' => 'span2')); ?>
+            <?php echo $form->dropDownList($model, 'type_id', $list); ?>
         </div>
 
 	<div class="row">
@@ -89,3 +102,49 @@
 <?php $this->endWidget(); ?>
 
 </div><!-- form -->
+  <script>
+      var city_sel = false;
+      function autoCompleteTags( request, response ) {
+        $.ajax({
+          url: "http://ws.geonames.org/searchJSON",
+          dataType: "jsonp",
+          data: {
+            username: "magicrest",
+            lang: "ru",
+            featureClass: "P",
+            style: "full",
+            maxRows: 12,
+            name_startsWith: request.term
+          },
+          success: function( data ) {
+            response( $.map( data.geonames, function( item ) {
+              return {
+                label: item.name + (item.adminName1 ? ", " + item.adminName1 : "") + ", " + item.countryName,
+                value: item.name
+              }
+            }));
+          }
+        });
+    };
+    
+    function select(event, ui) {
+        if (ui.item) {
+            var arr = ui.item.label.split(/\s*,\s*/);
+            $('#country').val(arr[2]);
+            $('#region').val(arr[1]);
+            city_sel = true;
+        }
+    }
+  $(function() {
+      $('#city').keydown( function() {
+           city_sel = false;
+      });
+      $('#city').change(function() {
+          if (!city_sel) {
+               $('#city').val('');
+               $('#country').val('');
+               $('#region').val('');
+          }
+      });
+  });
+  </script>

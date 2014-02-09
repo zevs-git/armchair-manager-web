@@ -27,7 +27,7 @@ $('.search-form form').submit(function(){
 ?>
 
 <h3>Управление объектами</h3>
-
+<?php /*?>
 <?php echo CHtml::link('Расширенный поиск', '#', array('class' => 'search-button')); ?>
 <div class="search-form" style="display:none">
     <?php
@@ -36,6 +36,8 @@ $('.search-form form').submit(function(){
     ));
     ?>
 </div><!-- search-form -->
+ <?php */?>
+ 
 
 
 <div class="btn-toolbar">
@@ -58,7 +60,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'filter' => $model,
     'columns' => array(
         array('name' => 'id', 'htmlOptions' => array('style' => 'width: 40px;')),
-        'country',
+        array('name' => 'country', 'htmlOptions' => array('style' => 'width: 80px;')),
         'region',
         'city',
         //'street',
@@ -73,6 +75,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
 //'comment',
         array('class' => 'bootstrap.widgets.TbButtonColumn',
             'template' => '{view} {delete}',
+            'htmlOptions' => array('style' => 'width: 80px;'),
             'buttons' => array(
                 'view' => array(
                     'label' => 'Настройки объекта',
