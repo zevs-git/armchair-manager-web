@@ -18,7 +18,7 @@ return array(
         'application.models.*',
         'application.components.*',
         'application.helpers.*',
-        'application.extensions.EScrollableGridView.*'
+        'application.extensions.EGeoNameService.*'
     ),
     'modules' => array(
         // uncomment the following to enable the Gii tool
