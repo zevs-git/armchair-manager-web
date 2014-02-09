@@ -106,7 +106,7 @@ class Device extends CActiveRecord {
 
         $criteria = new CDbCriteria;
         $criteria->with = array('object', 'deviceType');
-        $criteria->compare('id', $this->id);
+        $criteria->compare('t.id', $this->id);
         $criteria->compare('IMEI', $this->IMEI, true);
         $criteria->compare('type_val', $this->type_id, true);
 
