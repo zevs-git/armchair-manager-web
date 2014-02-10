@@ -69,9 +69,9 @@
                                         'htmlOptions' => array('onMouseOver' => 'js:$(this).click();'),
                                         'items' => array(
                                             array('label' => 'Характеристика работы', 'url' => array('/reportPage/StatusReport'), 'active' => ($this->action->id == 'StatusReport')),
-                                            array('label' => 'Массаж', 'url' => array('/reportPage/MassageReport'), 'active' => ($this->action->id == 'MassageReport')),
                                             array('label' => 'Инкассация', 'url' => array('/reportPage/IncassatorReport'), 'active' => ($this->action->id == 'IncassatorReport')),
                                             array('label' => 'Выручка', 'url' => array('/reportPage/SumaryReport'), 'active' => ($this->action->id == 'SumaryReport')),
+                                            array('label' => 'Массаж', 'url' => array('/reportPage/MassageReport'), 'active' => ($this->action->id == 'MassageReport')),
                                         ),
                                     ),
                                     array('label' => 'Выйти (' . Yii::app()->user->name . ')',
