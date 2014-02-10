@@ -137,7 +137,7 @@ class ReportPageController extends Controller {
                     (!empty($_REQUEST['country']) ? " AND obj.country = '" . $_REQUEST['country'] . "'" : "") .
                     (!empty($_REQUEST['region']) ? " AND obj.region = '" . $_REQUEST['region'] . "'" : "") .
                     (!empty($_REQUEST['city']) ? " AND obj.city = '" . $_REQUEST['city'] . "'" : "") .
-                    "GROUP BY d.id,CAST(ir.dt AS DATE)
+                    " GROUP BY d.id,CAST(ir.dt AS DATE)
                          order by ir.device_id";
 
             $dataProvider = new CSqlDataProvider($sql, array(
@@ -164,7 +164,7 @@ class ReportPageController extends Controller {
                     (!empty($_REQUEST['country']) ? " AND obj.country = '" . $_REQUEST['country'] . "'" : "") .
                     (!empty($_REQUEST['region']) ? " AND obj.region = '" . $_REQUEST['region'] . "'" : "") .
                     (!empty($_REQUEST['city']) ? " AND obj.city = '" . $_REQUEST['city'] . "'" : "") .
-                    "GROUP BY m.device_id,d.comment";
+                    " GROUP BY m.device_id,d.comment";
             $dataProvider = new CSqlDataProvider($sql, array(
                 //'totalItemCount'=>$count,
                 'pagination' => array(
