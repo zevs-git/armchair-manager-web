@@ -93,7 +93,7 @@ class Object extends CActiveRecord
 
 		$criteria=new CDbCriteria;
                 
-		$criteria->compare('id',$this->id,true);
+		$criteria->compare('t.id',$this->id);
 		$criteria->compare('country',$this->country,true);
 		$criteria->compare('region',$this->region,true);
 		$criteria->compare('city',$this->city,true);

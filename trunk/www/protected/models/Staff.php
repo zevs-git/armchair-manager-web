@@ -88,10 +88,10 @@ class Staff extends CActiveRecord
 
 		$criteria=new CDbCriteria;
                 $criteria->with = array('type');
-		$criteria->compare('id',$this->id);
+		$criteria->compare('t.id',$this->id);
 		$criteria->compare('FIO',$this->FIO,true);
 		$criteria->compare('staff_type_id',$this->staff_type_id);
-		$criteria->compare('key',$this->key,true);
+		$criteria->compare('t.key',$this->key,true);
 		$criteria->compare('phone',$this->phone,true);
 		$criteria->compare('comment',$this->comment,true);
 		$criteria->compare('object_id',$this->object_id);
