@@ -53,7 +53,12 @@ $this->widget('ext.groupgridview.GroupGridView', array(
         array('name'=>'name',
             'header'=>'Место установки'),
         array('name'=>'dt',
-            'header'=>'Дата'),
+            'class'=>'DataColumn',
+            'header'=>'Дата',
+            //'value'=>'"<span " . ((in_array(date("D",strtotime($data["dt"])),array("Mon","Sat","Sun")))?"style=\'background-color:red\'>":">") . $data["dt"] . "<span>"',
+            'evaluateHtmlOptions'=>true,
+            'htmlOptions'=>array('class'=>'"{$data[\'class\']}"'),
+            ),
         array('name'=>'sum',
             'header'=>'Сумма выручки'),
     ),
@@ -62,3 +67,8 @@ $this->widget('ext.groupgridview.GroupGridView', array(
 </div>
 <?php $this->endWidget() ?>
 <?php endif;?>
+<style>
+    .weekend {
+        background-color: antiquewhite;
+    }
+</style>>
