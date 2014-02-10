@@ -28,14 +28,7 @@ $('.search-form form').submit(function(){
 
 <h3>Управление персоналом</h3>
 
-<?php echo CHtml::link('Расширенный поиск','#',array('class'=>'search-button')); ?>
-<div class="search-form" style="display:none">
-<?php $this->renderPartial('_search',array(
-	'model'=>$model,
-)); ?>
-</div><!-- search-form -->
 
-<div class="btn-toolbar">
     <?php
     $this->widget('bootstrap.widgets.TbButton', array(
         'label' => 'Добавить',
@@ -45,7 +38,6 @@ $('.search-form form').submit(function(){
         'url' => $this->createUrl('create'),
     ));
     ?>
-</div>
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'staff-grid',
 	'dataProvider'=>$model->search(),

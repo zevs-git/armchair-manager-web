@@ -19,6 +19,7 @@ $this->beginWidget('zii.widgets.CPortlet', array(
 
 <div class="to-print">
     <h3 align="center">Инкассация</h3>
+    <h4 align="center"><?=$this->searchBy?></h4>
     <h4 align="center">за период с <?=$_REQUEST['date_from']?> по <?=$_REQUEST['date_to']?></h4>
 <?php
 /* echo $dataProvider->getId();
