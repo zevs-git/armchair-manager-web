@@ -129,7 +129,7 @@ class ReportPageController extends Controller {
     public function actionSumaryReport() {
         if ($this->checkInput()) {
             $sql = "SELECT ir.device_id,d.comment AS name, CAST(ir.dt AS DATE) AS dt, SUM(ir.summ_cash)+SUM(ir.summ_coin)+IFNULL(SUM(dcr.summ),0) AS sum,
-                        CASE WHEN DAYOFWEEK(ir.dt) IN (6,7,1) THEN \"weekend\" ELSE \"\" END AS class
+                        CASE WHEN DAYOFWEEK(ir.dt) IN (7,1) THEN \"weekend\" ELSE \"\" END AS class
                         FROM incassator_report ir, device d RIGHT JOIN device_cash_report dcr ON d.id = dcr.device_id, object obj
                         WHERE ir.device_id = d.id
                         AND d.object_id = obj.id
