@@ -222,7 +222,7 @@ class DeviceStatus extends CActiveRecord {
         // @todo Please modify the following code to remove attributes that should not be searched.
 
         $criteria = new CDbCriteria;
-        $criteria->with = array('device.object','deviceCashReport');
+        $criteria->with = array('device','device.object','deviceCashReport','deviceCoinboxSettings','deviceCashboxSettings');
         $criteria->compare('device_id', $this->device->id, true);
         $criteria->compare('dt', $this->dt, true);
         $criteria->compare('cashbox_state', $this->cashbox_state);
