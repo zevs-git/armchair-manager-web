@@ -84,3 +84,13 @@ $this->Widget('ext.Highcharts.HighchartsWidget', array(
 </div>
 <?php $this->endWidget() ?>
 <?php endif;?>
+<script>
+$(document).ready(function() {
+    setTimeout(function() { $.each($("tspan"), function(i,val) {
+        if(val.innerHTML == 'Highcharts.com') val.style.display = 'none';
+        if(val.innerHTML == 'Values') val.innerHTML = '%';
+        }
+    );
+    },100);
+});
+</script>
