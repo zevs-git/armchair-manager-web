@@ -110,7 +110,7 @@
             ?>
             <br />
             <br />
-            <span class="span1" id="country-label">Старна:</span>
+            <span class="span1" id="country-label">Страна:</span>
             <?php
             $crit = (Yii::app()->user->getId() == "pulkovo") ? "id in (1,2)" : NULL;
             $list = array_unique(CHtml::listData(Object::model()->findAll($crit), 'country', 'country'));
