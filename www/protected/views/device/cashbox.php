@@ -43,10 +43,10 @@ $this->beginWidget('zii.widgets.CPortlet', array(
     <?php echo $form->errorSummary($cashbox); ?>
 
     
-    <?php echo $form->dropDownListRow($cashbox, 'model_id', $cashbox->models,array('class' => 'text')); ?>
+    <?php echo $form->dropDownListRow($cashbox, 'model_id', $cashbox->models,array('class' => 'text','id'=>'model_id')); ?>
     <?php echo $form->dropDownListRow($cashbox, 'valuta_id',$cashbox->valutes, array('class' => 'text')); ?>
     <?php echo $form->textFieldRow($cashbox, 'volume', array('class' => 'text')); ?>
-    <?php echo $form->dropDownListRow($cashbox, 'coeficient',$cashbox->coeficients, array('class' => 'text')); ?>
+    <?php echo $form->dropDownListRow($cashbox, 'coeficient',$cashbox->coeficients, array('class' => 'text','id'=>'coeficient')); ?>
     <div id="nominal">
     <?php $this->beginWidget('bootstrap.widgets.TbHeroUnit',array('htmlOptions'=>array('style'=>'padding: 20px;'))); ?>
     <h3>Номиналы</h3>
@@ -65,8 +65,8 @@ $this->beginWidget('zii.widgets.CPortlet', array(
     if ($cashbox->model_id == 1) {
         echo "<script>$('#nominal').hide()</script>";
     }
-    if ($cashbox->model_id == 1) {
-        echo "<script>$('#nominal').hide()</script>";
+    if ($cashbox->model_id == 2) {
+        echo "<script>$('#coeficient').hide()</script>";
     }
     ?>
     
@@ -80,3 +80,15 @@ $this->beginWidget('zii.widgets.CPortlet', array(
 
 </div><!-- form -->
 <?php $this->endWidget() ?>
+
+<script>
+    $('#model_id').change(function() {
+        if($( this ).val() == 1) {
+          $('#nominal').hide('fade');  
+          $('#coeficient').show('fade');
+        } else {
+          $('#nominal').show('fade');  
+          $('#coeficient').hide('fade');  
+        }
+    });
+</script>

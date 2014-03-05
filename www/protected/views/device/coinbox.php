@@ -43,10 +43,10 @@ $this->beginWidget('zii.widgets.CPortlet', array(
     <?php echo $form->errorSummary($coinbox); ?>
 
     
-    <?php echo $form->dropDownListRow($coinbox, 'model_id', $coinbox->models,array('class' => 'text')); ?>
+    <?php echo $form->dropDownListRow($coinbox, 'model_id', $coinbox->models,array('class' => 'text','id'=>'model_id')); ?>
     <?php echo $form->dropDownListRow($coinbox, 'valuta_id',$coinbox->valutes, array('class' => 'text')); ?>
     <?php echo $form->textFieldRow($coinbox, 'volume', array('class' => 'text')); ?>
-    <?php echo $form->dropDownListRow($coinbox, 'coeficient',$coinbox->coeficients, array('class' => 'text')); ?>
+    <?php echo $form->dropDownListRow($coinbox, 'coeficient',$coinbox->coeficients, array('class' => 'text','id'=>'coeficient')); ?>
     
     <?php $this->beginWidget('bootstrap.widgets.TbHeroUnit',array('htmlOptions'=>array('style'=>'padding: 20px;'))); ?>
     <h3>Номиналы</h3>
@@ -64,9 +64,30 @@ $this->beginWidget('zii.widgets.CPortlet', array(
     <div class="row buttons">
 <?php echo CHtml::submitButton($model->isNewRecord ? 'Сохранить' : 'Сохранить', array('class' => 'btn btn btn-primary')); ?>
     </div>
+    
+     <?php 
+    if ($cashbox->model_id == 1) {
+        echo "<script>$('#nominal').hide()</script>";
+    }
+    if ($cashbox->model_id == 2) {
+        echo "<script>$('#coeficient').hide()</script>";
+    }
+    ?>
 
 
 <?php $this->endWidget(); ?>
 
 </div><!-- form -->
 <?php $this->endWidget() ?>
+
+<script>
+    $('#model_id').change(function() {
+        if($( this ).val() == 1) {
+          $('#nominal').hide('fade');  
+          $('#coeficient').show('fade');
+        } else {
+          $('#nominal').show('fade');  
+          $('#coeficient').hide('fade');  
+        }
+    });
+</script>
