@@ -76,16 +76,16 @@ class ReportPageController extends Controller {
         }
         if (is_numeric($_REQUEST['object_id']) || !empty($_REQUEST['country']) || !empty($_REQUEST['city']) || !empty($_REQUEST['region'])) {
             if (is_numeric($_REQUEST['object_id'])) {
-                unset($_REQUEST['country']);
+                /*unset($_REQUEST['country']);
                 unset($_REQUEST['city']);
-                unset($_REQUEST['region']);
+                unset($_REQUEST['region']);*/
                 $this->searchBy = "по объекту '" . Object::model()->findByPk($_REQUEST['object_id'])->obj . "'";
             } else if (!empty($_REQUEST['city'])) {
-                unset($_REQUEST['region']);
-                unset($_REQUEST['country']);
+                /*unset($_REQUEST['region']);
+                unset($_REQUEST['country']);*/
                 $this->searchBy = "по городу '" . $_REQUEST['city'] . "'";
             } else if (!empty($_REQUEST['region'])) {
-                unset($_REQUEST['country']);
+                /*unset($_REQUEST['country']);*/
                 $this->searchBy = "по региону '" . $_REQUEST['region'] . "'";
             } else {
                 $this->searchBy = "по стране '" . $_REQUEST['country'] . "'";
@@ -176,6 +176,46 @@ class ReportPageController extends Controller {
         $this->render('massage_report', array(
             'data' => $dataProvider,
         ));
+    }
+    
+    public function ActiongetListData() {
+        $dataType = @$_REQUEST['datatype'];
+        $country  = @$_REQUEST['country'];
+        $region   = @$_REQUEST['region'];
+        $city     = @$_REQUEST['city'];
+        
+        $crit = NULL;
+        
+        $crit .=  ($country)?"country = '$country'":"country = 'Россия'";
+        $crit .=  ($region)?"and region = '$region'":$region;
+        $crit .=  ($city)?"and city = '$city'":$city;
+       
+        
+        switch($dataType) {
+            case 'country': 
+                $list = array_unique(CHtml::listData(Object::model()->findAll($crit), 'country', 'country'));
+                break;
+            case 'region': 
+                $list = array_unique(CHtml::listData(Object::model()->findAll($crit), 'region', 'region'));
+                break;
+            case 'city': 
+                $list = array_unique(CHtml::listData(Object::model()->findAll($crit), 'city', 'city'));
+                break;
+            case 'object_id': 
+                $list = CHtml::listData(Object::model()->findAll($crit), 'id', 'obj');
+                break;
+        }
+        //echo '<select>';
+        echo '<option value="">Выберите значение</option>';
+        
+        foreach ($list as $val) {
+            echo '<option value="' . $val .'">' .$val . '</option>';
+        }
+        
+        //echo '</select>';
+                
+        //print_r($list);
+        //echo json_encode($list);
     }
 
 }
