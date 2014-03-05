@@ -25,16 +25,31 @@
         var ids = ['country', 'region', 'city', 'object_id'];
         $('#' + active + '-label').addClass('bold');
         ids.forEach(function(entry) {
-            if (active != entry) {
+            if (ids.indexOf(active) < ids.indexOf(entry)) {
                 $('#' + entry).val('');
+                loadList(entry);
                 $('#' + entry + '-label').removeClass('bold');
+            }
+        });
+    }
+    
+    function loadList(type) {
+        $.ajax({
+            url: '<?php echo $this->createAbsoluteUrl('reportPage/getListData') ?>',
+            dataType: 'html',
+            data: 'datatype=' + type + 
+                        '&country=' + $('#country').val() +
+                        '&region=' + $('#region').val() +
+                        '&city=' + $('#city').val(),
+            success: function(data) {
+                $('#'+type).html(data);
             }
         });
     }
     function hideParams() {
         if ($('#parameters').is(':visible')) {
-                $('#parameters').hide('slideUp');
-                $('#hide-btn i').attr('class', 'icon-plus-sign');
+            $('#parameters').hide('slideUp');
+            $('#hide-btn i').attr('class', 'icon-plus-sign');
         } else {
             $('#parameters').show('slideDown');
             $('#hide-btn i').attr('class', 'icon-minus-sign');
@@ -42,11 +57,11 @@
     }
     $(document).ready(function() {
         $('#country').change(selectOp);
-    $('#region').change(selectOp);
-    $('#city').change(selectOp);
-    $('#object_id').change(selectOp);
+        $('#region').change(selectOp);
+        $('#city').change(selectOp);
+        $('#object_id').change(selectOp);
         $('#hide-btn').click(hideParams);
-        
+
     });
 
 </script>
@@ -141,17 +156,17 @@
             ?>
             <?php
             echo CHtml::dropDownList('object_id', 'id', $list, array('class' => 'span4', 'id' => 'object_id', 'empty' => 'Выберите объект'));
-            if (isset($_REQUEST['object_id'])) {
-                echo "<script>$('#object_id').val('" . $_REQUEST['object_id'] . "') </script>";
-            }
-            if (isset($_REQUEST['city'])) {
-                echo "<script>$('#city').val('" . $_REQUEST['city'] . "') </script>";
-            }
             if (isset($_REQUEST['country'])) {
                 echo "<script>$('#country').val('" . $_REQUEST['country'] . "') </script>";
             }
             if (isset($_REQUEST['region'])) {
                 echo "<script>$('#region').val('" . $_REQUEST['region'] . "') </script>";
+            }
+            if (isset($_REQUEST['city'])) {
+                echo "<script>$('#city').val('" . $_REQUEST['city'] . "') </script>";
+            }
+            if (isset($_REQUEST['object_id'])) {
+                echo "<script>$('#object_id').val('" . $_REQUEST['object_id'] . "') </script>";
             }
             if ($this->showRep) {
                 echo "<script>hideParams();</script>";
