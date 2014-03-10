@@ -243,9 +243,13 @@ class DeviceStatus extends CActiveRecord {
         
         $criteria->condition = 'device.id > 0';
         
-        if (Yii::app()->user->getId() == "pulkovo") {
-            $criteria->condition = 'device.object_id in (1,2)';    
+        if (!Yii::app()->user->checkAccess('Wather') && !Yii::app()->user->checkAccess('Operator')) {
+            $criteria->condition = '(`t`.error_number > 0 or `t`.alarm_state = 1) and device.id > 0'; 
         }
+        
+        /*if (Yii::app()->user->getId() == "pulkovo") {
+            $criteria->condition = 'device.object_id in (1,2)';    
+        }*/
 
 
         return new CActiveDataProvider($this, array(
@@ -412,6 +416,10 @@ class DeviceStatus extends CActiveRecord {
         } elseif ($this->pwr_in_id == 3) {
             return $this->state_img("power_4.png", "Высокий заряд аккумулятора");
         }
+    }
+    
+    public function getIconWithText($name) {
+        return 0;//$this->{$name};
     }
 
     /**

@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs = array(
     'Шаблоны настроек' => array('/SettingsTemplate/admin'),
-    'Сервисные настроки',
+    'Сервисные настройки',
 );
 
 $this->menu = array(

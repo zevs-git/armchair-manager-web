@@ -21,7 +21,7 @@
             <?php
             $this->widget('zii.widgets.CBreadcrumbs', array(
                 'links' => $this->breadcrumbs,
-                'homeLink' => CHtml::link('Dashboard'),
+                'homeLink' => CHtml::link('Главная'),
                 'htmlOptions' => array('class' => 'breadcrumb')
             ));
             ?><!-- breadcrumbs -->
