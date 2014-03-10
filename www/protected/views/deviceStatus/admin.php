@@ -7,7 +7,7 @@
 /* @var $this DeviceStatusController */
 /* @var $model DeviceStatus */
 
-$updateTimeout = 10000;
+$updateTimeout = 100000000;
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
 	$('.search-form').toggle();
@@ -28,9 +28,6 @@ $this->beginWidget('zii.widgets.CPortlet', array(
 ));
 ?>
 <div id="grid-container">
-    <img id="loader" style="display: none; width: 100px; height: 100px; position: absolute; left: 50%; margin-left: -50px; top:50%;"
-         src='/images/loading.gif' />
-
     <?php
     $this->widget('bootstrap.widgets.TbGridView', array(
         'id' => 'device-status-grid',
@@ -58,16 +55,19 @@ $this->beginWidget('zii.widgets.CPortlet', array(
                 'header' => 'Купюры',
                 'htmlOptions' => array('style' => 'align: center; width: 200px;'),
                 'type' => 'raw',
+                'visible'=>Yii::app()->user->checkAccess('Wather'),
                 'headerHtmlOptions' => array('style' => 'align: center; width: 195px;')),
             array('name' => 'coin_string',
                 'header' => 'Монеты',
                 'htmlOptions' => array('style' => 'align: center; width: 200px;'),
                 'type' => 'raw',
+                'visible'=>Yii::app()->user->checkAccess('Wather'),
                 'headerHtmlOptions' => array('style' => 'align: center; width: 195px;')),
             array('name' => 'all_summ',
                 'htmlOptions' => array('style' => 'width: 70px; text-align: center;font-size:12px'),
                 'headerHtmlOptions' => array('style' => 'width: 65px; text-align: center;font-size:12px'),
                 'type' => 'raw',
+                'visible'=>Yii::app()->user->checkAccess('Wather'),
                 'value'=>'"<b style=\'color:green\'>" . (($data->deviceCashReport->summ)?$data->deviceCashReport->summ:0) . " руб.</b>"'
                 ),
             array('name'=>'balance',
@@ -86,18 +86,19 @@ $this->beginWidget('zii.widgets.CPortlet', array(
                 'buttons' => array('view' =>
                     array(
                         'label' => 'Статус устройства',
-                        'url' => 'Yii::app()->createUrl("DeviceStatus/view", array("id"=>$data->device_id,"asDialog"=>1))',
+                        'url' => '$data->device_id',
                         'icon'=> 'icon-zoom-in',
                         'options' => array(
                             'class' => 'btn btn-mini',
-                            'ajax' => array(
+                            'onclick' => 'return openDetail(this);',
+                            /*'ajax' => array(
                                 'type' => 'POST',
                                 // ajax post will use 'url' specified above 
                                 'url' => "js:$(this).attr('href')",
                                 'update' => '#id_view',
                                 'beforeSend' => 'function() { $("#loader").show(); }',
                                 'complete' => 'function() { $("#loader").hide(); $("#modal").dialog("open");}',
-                            ),
+                            ),*/
                         ),
                     ),
                 ),
@@ -115,7 +116,7 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(// the dialog
         'autoOpen' => FALSE,
         'modal' => false,
         'width' => 600,
-        'height' => 500,
+        'height' => 550,
         'show' => array(
             'effect' => 'fade',
             'duration' => 250,
@@ -127,7 +128,10 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(// the dialog
     ),
 ));
 ?>
-<div id="id_view"></div>
+<div id="id_view"> 
+    <?php   $id = -100; include 'view.php';   ?>    
+    
+</div>
 
 <?php $this->endWidget(); ?>
 
@@ -189,7 +193,7 @@ if (isset($res['res'])) {
     </div>
     <div class="span3 ">
         <div class="stat-block">
-            <ul>
+            <ul style="<?=(!Yii::app()->user->checkAccess('Wather'))?'display:none':''?>">
                 <li class="stat-count" ><span id="cash_summ"><?php echo $Balance; ?> RUB</span><span>В купюрониках</span></li>
                 <li class="stat-percent"><span id="cash_summ_p" class="text-success stat-percent"><?php echo number_format($cash_count / ($countAll * 400), 2, '.', '') * 100; ?>%</span></li>
             </ul>
@@ -231,5 +235,12 @@ if (isset($res['res'])) {
                 $('#cash_summ_p').html(data.cash_summ_p);
             }
         });
+    }
+    function openDetail(but) {
+        device_id = but.getAttribute("href"); 
+        jQuery('#DetailTabs li.active').removeClass('active');
+        $("#modal").dialog("open"); 
+        jQuery('a[href="#Detail"]').tab('show');
+        return false;
     }
 </script>

@@ -1,6 +1,6 @@
 <?php
 
-class DeviceStatusController extends Controller {
+class DeviceStatusController extends RController {
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
@@ -12,9 +12,8 @@ class DeviceStatusController extends Controller {
      */
     public function filters() {
         return array(
-            'accessControl', // perform access control for CRUD operations
-            'postOnly + delete', // we only allow deletion via POST request
-        );
+            'rights', 
+          );
     }
 
     /**
@@ -22,16 +21,8 @@ class DeviceStatusController extends Controller {
      * This method is used by the 'accessControl' filter.
      * @return array access control rules
      */
-    public function accessRules() {
+    /*public function accessRules() {
         return array(
-            /* array('allow',  // allow all users to perform 'index' and 'view' actions
-              'actions'=>array('index','view'),
-              'users'=>array('*'),
-              ),
-              array('allow', // allow authenticated user to perform 'create' and 'update' actions
-              'actions'=>array('create','update'),
-              'users'=>array('@'),
-              ), */
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
                 'actions' => array('admin', 'delete', 'index', 'view', 'grid', 'Summary'),
                 'users' => array('admin', 'pulkovo'),
@@ -40,7 +31,7 @@ class DeviceStatusController extends Controller {
                 'users' => array('*'),
             ),
         );
-    }
+    }*/
 
     /**
      * Displays a particular model.
@@ -49,12 +40,50 @@ class DeviceStatusController extends Controller {
     public function actionView($id) {
         if (Yii::app()->request->isAjaxRequest) {
             $this->renderPartial('view', array(
-                'model' => $this->loadModel($id),
+                'id' =>$id,
                 'asDialog' => !empty($_GET['asDialog']),
                     ), false, true);
             Yii::app()->end();
         } else
             $this->render('view', array(
+                 'id' =>$id,
+            ));
+    }
+    
+    public function actionDetail($id) {
+        if (Yii::app()->request->isAjaxRequest) {
+            $this->renderPartial('detail', array(
+                'model' => $this->loadModel($id),
+                'asDialog' => !empty($_GET['asDialog']),
+                    ), false, true);
+            Yii::app()->end();
+        } else
+            $this->render('detail', array(
+                'model' => $this->loadModel($id),
+            ));
+    }
+    
+    public function actionDeviceLog($id) {
+        $model = new CommandLog('search');
+        if (isset($_GET['CommandLog'])) {// чтобы работали функции поиска нужно передать параметры в модель
+            $model->attributes = $_GET['CommandLog'];
+            echo "tut";
+            exit();
+        }
+            $this->renderPartial('device_log', array(
+                    'model' => $model,
+                    'id' => $id), false, true);
+    }
+    
+    public function actionDeviceConfig($id) {
+        if (Yii::app()->request->isAjaxRequest) {
+            $this->renderPartial('device_config', array(
+                'model' => $this->loadModel($id),
+                'asDialog' => !empty($_GET['asDialog']),
+                    ), false, true);
+            Yii::app()->end();
+        } else
+            $this->render('device_config', array(
                 'model' => $this->loadModel($id),
             ));
     }
@@ -161,6 +190,13 @@ class DeviceStatusController extends Controller {
      */
     public function loadModel($id) {
         $model = DeviceStatus::model()->findByPk($id);
+        if ($model === null)
+            throw new CHttpException(404, 'The requested page does not exist.');
+        return $model;
+    }
+    
+    public function loadLogModel($id) {
+        $model = CommandLog::model()->search($id);
         if ($model === null)
             throw new CHttpException(404, 'The requested page does not exist.');
         return $model;
