@@ -1,6 +1,7 @@
-<img id="loader" 
+<?php /*<img id="loader" 
          style="width: 100px; height: 100px; position: absolute; left: 50%; margin-left: -50px; top:40%;"
-         src="/images/loading.gif" />
+         src="/images/loading.gif" />*/
+?>
 
 <?php
 $this->widget('bootstrap.widgets.TbTabs', array(
@@ -29,7 +30,7 @@ $this->widget('bootstrap.widgets.TbTabs', array(
         }
         var ctUrl = baseURL.replace('{action}',tabId.replace('#','')).replace('-100',device_id);
         jQuery(tabId).html('Загрузка данных ...');
-        $("#loader").show();
+        //$("#loader").show();
         if (ctUrl != '') {
             $.ajax({
                 url: ctUrl,
@@ -42,11 +43,11 @@ $this->widget('bootstrap.widgets.TbTabs', array(
                 success: function(html)
                 {
                     jQuery(tabId).html(html);
-                    $("#loader").hide();
+                    //$("#loader").hide();
                 },
                 error: function() {
                     jQuery(tabId).html(html);
-                    $("#loader").hide();
+                    //$("#loader").hide();
                 }
             });
         }
