@@ -51,7 +51,7 @@ class logCommandMsg extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'descr' => 'Descr',
+			'descr' => 'Событие',
 		);
 	}
 

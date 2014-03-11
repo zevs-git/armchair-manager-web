@@ -7,8 +7,10 @@
  * @property integer $id
  * @property integer $device_id
  * @property string $dt
- * @property integer $state
+ * @property char $state
  * @property integer $command_id
+ * @property integer $value1
+ * @property integer $value2
  */
 class CommandExecuting extends CActiveRecord
 {
@@ -28,7 +30,7 @@ class CommandExecuting extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('device_id, state, command_id', 'numerical', 'integerOnly'=>true),
+			array('device_id, command_id', 'numerical', 'integerOnly'=>true),
 			array('dt', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -100,4 +102,7 @@ class CommandExecuting extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+        const MASSAGE = 9;
+        const SETTINGS = 8;
+        const RESTART = 11;
 }
