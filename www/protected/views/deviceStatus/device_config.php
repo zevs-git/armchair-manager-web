@@ -1,6 +1,6 @@
 <div id='success' class="alert alert-success" style='display:none'>
   <button type="button" class="close" data-dismiss="alert">&times;</button>
-  Отправлена команда на обновление настроек.
+  Команда отправлена.
 </div>
 <div id='error' class="alert alert-error" style='display:none'>
   <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -56,7 +56,7 @@
         //'icon' => 'plus-sign',
         'type' => 'danger',
         'buttonType' => 'ajaxLink',
-        'url' => $this->createUrl('UpdateSettings',array('id'=>$model->device_id)),
+        'url' => $this->createUrl('DeviceRestart',array('id'=>$model->device_id)),
         'ajaxOptions' => array(
             //'url' => $this->createUrl('UpdateSettings',array('id'=>$model->device_id)),
             'beforeSend' => 'function(r){$("#success").hide();$("#error").hide();}',
