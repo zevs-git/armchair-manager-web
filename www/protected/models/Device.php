@@ -168,13 +168,16 @@ class Device extends CActiveRecord {
         $this->settings_id = 0;
         $this->save();
 
-        $state = DeviceStatus::model()->findBYPk($this->id);
+        self::UpdateSettingsCommand($this->id);
+        return TRUE;
+    }
+    public static function UpdateSettingsCommand($device_id) {
+        $state = DeviceStatus::model()->findBYPk($device_id);
         if ($state) {
             $state->u_settings = 1;
-            $state->save(); //Не забыть включить!!!!!!!!!
+            $state->save();
         }
-
-        return TRUE;
+        Yii::app()->db->createCommand("CALL p_comand_log($device_id,8);")->execute();
     }
 
     /**

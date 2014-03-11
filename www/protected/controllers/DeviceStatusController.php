@@ -310,5 +310,29 @@ class DeviceStatusController extends RController {
             echo json_encode($result);
         }
     }
+    
+    public function ActionUpdateSettings($id) {
+        Device::UpdateSettingsCommand($id);
+    }
+    
+    public function ActionExecMassage($id,$min,$sec) {
+        $command = new CommandExecuting();
+        $command->device_id = $id;
+        $command->value1 = $min;
+        $command->value2 = $sec;
+        $command->command_id = CommandExecuting::MASSAGE;
+        $command->save();
+        
+        Yii::app()->db->createCommand("CALL p_comand_log($id,9);")->execute();
+    }
+    
+    public function ActionDeviceRestart($id) {
+        $command = new CommandExecuting();
+        $command->device_id = $id;
+        $command->command_id = CommandExecuting::RESTART;
+        $command->save();
+        
+        Yii::app()->db->createCommand("CALL p_comand_log($id,11);")->execute();
+    }
 
 }
