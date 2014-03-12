@@ -14,6 +14,7 @@
 		array('name'=>'dt','htmlOptions'=>array('style' => 'padding: 0px;')
                 ),
                 array('name'=>'message.descr',
+                      'value'=>'$data->message->descr . " " . $data->text',
                       'htmlOptions'=>array('style' => 'text-align: left; padding: 0px;')
                 ),
 	),

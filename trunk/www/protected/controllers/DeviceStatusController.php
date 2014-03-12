@@ -323,7 +323,9 @@ class DeviceStatusController extends RController {
         $command->command_id = CommandExecuting::MASSAGE;
         $command->save();
         
-        Yii::app()->db->createCommand("CALL p_comand_log($id,9);")->execute();
+        $text = " $min мин $sec секунд";
+        
+        Yii::app()->db->createCommand("CALL p_comand_log($id,9,'$text');")->execute();
     }
     
     public function ActionDeviceRestart($id) {
@@ -332,7 +334,8 @@ class DeviceStatusController extends RController {
         $command->command_id = CommandExecuting::RESTART;
         $command->save();
         
-        Yii::app()->db->createCommand("CALL p_comand_log($id,11);")->execute();
+        $text = "";
+        Yii::app()->db->createCommand("CALL p_comand_log($id,11,'$text');")->execute();
     }
 
 }
