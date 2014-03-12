@@ -177,7 +177,7 @@ class Device extends CActiveRecord {
             $state->u_settings = 1;
             $state->save();
         }
-        Yii::app()->db->createCommand("CALL p_comand_log($device_id,8);")->execute();
+        Yii::app()->db->createCommand("CALL p_comand_log($device_id,8,'');")->execute();
     }
 
     /**

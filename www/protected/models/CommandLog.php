@@ -8,6 +8,7 @@
  * @property integer $device_id
  * @property string $dt
  * @property integer $command_id
+ * @property string $text
  */
 class CommandLog extends CActiveRecord
 {
