@@ -128,18 +128,18 @@ class ReportPageController extends Controller {
 
     public function actionSumaryReport() {
         if ($this->checkInput()) {
-            $sql = "SELECT ir.device_id,d.comment AS name, CAST(ir.dt AS DATE) AS dt, SUM(ir.summ_cash)+SUM(ir.summ_coin)+IFNULL(SUM(dcr.summ),0) AS sum,
-                        CASE WHEN DAYOFWEEK(ir.dt) IN (7,1) THEN \"weekend\" ELSE \"\" END AS class
-                        FROM incassator_report ir, device d RIGHT JOIN device_cash_report dcr ON d.id = dcr.device_id, object obj
-                        WHERE ir.device_id = d.id
+            $sql = "SELECT d.id,d.comment AS name, CAST(c.dt AS DATE) AS dt, SUM(c.value) AS sum,
+                        CASE WHEN DAYOFWEEK(c.dt) IN (7,1) THEN \"weekend\" ELSE \"\" END AS class
+                        FROM cash c, device d, object obj
+                        WHERE c.device_id = d.id
                         AND d.object_id = obj.id
-                        AND ir.dt >= '" . date("Y-m-d H:i:s", strtotime($_REQUEST['date_from'])) . "' AND ir.dt <= '" . date("Y-m-d H:i:s", strtotime($_REQUEST['date_to'])) . "'" .
+                        AND c.dt >= '" . date("Y-m-d H:i:s", strtotime($_REQUEST['date_from'])) . "' AND c.dt <= '" . date("Y-m-d H:i:s", strtotime($_REQUEST['date_to'])) . "'" .
                     (is_numeric($_REQUEST['object_id']) ? " AND obj.id = " . $_REQUEST['object_id'] : "") .
                     (!empty($_REQUEST['country']) ? " AND obj.country = '" . $_REQUEST['country'] . "'" : "") .
                     (!empty($_REQUEST['region']) ? " AND obj.region = '" . $_REQUEST['region'] . "'" : "") .
                     (!empty($_REQUEST['city']) ? " AND obj.city = '" . $_REQUEST['city'] . "'" : "") .
-                    " GROUP BY d.id,CAST(ir.dt AS DATE)
-                         order by ir.device_id";
+                    " GROUP BY d.id,CAST(c.dt AS DATE)
+                         order by d.id";
 
             $dataProvider = new CSqlDataProvider($sql, array(
                 //'totalItemCount'=>$count,

@@ -34,13 +34,7 @@ $this->beginWidget('zii.widgets.CPortlet', array(
   $.fn.highchartsview.update("' . $chart_id . '", url);
   }'
   )); */
-?>
-    <style>
-        .summary {
-            display: none;
-        }
-    </style>
-    
+?>    
     <?php
 $this->widget('ext.groupgridview.GroupGridView', array(
     'id' => 'device-grid',
@@ -69,6 +63,9 @@ $this->widget('ext.groupgridview.GroupGridView', array(
 <?php endif;?>
 <style>
     .weekend {
-        background-color: antiquewhite;
+        background-color: antiquewhite !important;
+    }
+    .summary {
+            display: none;
     }
 </style>>
