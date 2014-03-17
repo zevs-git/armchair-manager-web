@@ -110,6 +110,8 @@ class CommandLog extends CActiveRecord
                     break;
                 case 'w': $class = 'icon-warning-sign';
                     break;
+                case 's': $class = 'icon-ok-sign';
+                    break;
                     default : $class = 'icon-info-sign icon-red';
                     break;
             }
@@ -121,6 +123,8 @@ class CommandLog extends CActiveRecord
                 case 'e': $class = 'error';
                     break;
                 case 'w': $class = 'warning';
+                    break;
+                case 's': $class = 'success';
                     break;
                     default : $class = '';
                     break;
