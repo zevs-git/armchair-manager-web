@@ -170,8 +170,8 @@ if (isset($res['res'])) {
         <div class="stat-block">
             <ul>
                 <!-- <li class="stat-graph inlinebar" id="weekly-visit">8,4,6,5,9,10</li> -->
-                <li class="stat-count" ><span id="device_count"><?php echo $countAll; ?></span><span>Устройств в базе</span></li>
-                <li class="stat-percent" ><span id="device_count_p" class="text-success stat-percent"></span></li>
+                <li class="stat-count" ><span id="device_count"><?php echo $countTrue . " из " . $countAll; ?></span><span>Устройств в базе</span></li>
+                <li class="stat-percent" ><span id="device_connected_p" class="text-success stat-percent"><?php echo number_format($countTrue / $countAll * 100, 2, '.', ''); ?>%</span></li>
             </ul>
         </div>
     </div>
@@ -225,7 +225,7 @@ if (isset($res['res'])) {
             cache: false,
             dataType: 'json',
             success: function(data) {
-                $('#device_count').html(data.device_count);
+                $('#device_count').html(data.device_connected + ' из ' + data.device_count);
                 $('#device_count_p').html(data.device_count_p);
                 $('#device_connected').html(data.device_connected);
                 $('#device_connected_p').html(data.device_connected_p);

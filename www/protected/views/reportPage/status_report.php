@@ -19,6 +19,7 @@ $this->beginWidget('zii.widgets.CPortlet', array(
 
 <div class="to-print">
     <h3 align="center">Характеристика работы кресел</h3>
+    <h4 align="center"><?=$this->searchBy?></h4>
     <h4 align="center">за период с <?=$_REQUEST['date_from']?> по <?=$_REQUEST['date_to']?></h4>
 <?php
 /* echo $dataProvider->getId();
@@ -34,52 +35,56 @@ $this->beginWidget('zii.widgets.CPortlet', array(
   $.fn.highchartsview.update("' . $chart_id . '", url);
   }'
   )); */
-
-$this->Widget('ext.Highcharts.HighchartsWidget', array(
-    'options' => array(
-        'title' => array(
-            'text' => ''
-        ),
-        'xAxis' => array(
-            "categories" => $data['device'],
-        ),
-        'plotOptions' => array(
+foreach  ($data as $obj_data) {
+    //$obj = array_shift(array_slice($obj_data,0,1));
+    //print_r($obj_data);
+    ?><h4 align="center">Объект "<?php echo $obj_data['obj_name'][0]?>"</h4><?php
+    $this->Widget('ext.Highcharts.HighchartsWidget', array(
+        'options' => array(
+            'title' => array(
+                'text' => ''
+            ),
+            'xAxis' => array(
+                "categories" => $obj_data['device'],
+            ),
+            'plotOptions' => array(
+                'series' => array(
+                    'stacking' => 'percent'
+                )
+            ),
+            'tooltip' => array(
+                'pointFormat' => '<span style="color:{series.color}">{series.name}</span>: <b>{point.percentage:.0f}%</b><br/>',
+            //'shared'=>true
+            ),
             'series' => array(
-                'stacking' => 'percent'
+                array(
+                    'type' => 'bar',
+                    'name' => 'Ошибки', //title of data
+                    'data' => $obj_data['e'],
+                    'color' => 'red',
+                ),
+                array(
+                    'type' => 'bar',
+                    'name' => 'Не в сети', //title of data
+                    'data' => $obj_data['c'],
+                    'color' => 'grey',
+                ),
+                array(
+                    'type' => 'bar',
+                    'name' => 'Масаж', //title of data
+                    'data' => $obj_data['m'], //data resource according to datebase column
+                    'color' => '#8bbc21',
+                ),
+                array(
+                    'color' => '#2f7ed8',
+                    'type' => 'bar',
+                    'name' => 'Простой', //title of data
+                    'data' => $obj_data['p'],
+                ),
             )
-        ),
-        'tooltip' => array(
-            'pointFormat' => '<span style="color:{series.color}">{series.name}</span>: <b>{point.percentage:.0f}%</b><br/>',
-        //'shared'=>true
-        ),
-        'series' => array(
-            array(
-                'type' => 'bar',
-                'name' => 'Ошибки', //title of data
-                'data' => $data['e'],
-                'color' => 'red',
-            ),
-            array(
-                'type' => 'bar',
-                'name' => 'Не в сети', //title of data
-                'data' => $data['c'],
-                'color' => 'grey',
-            ),
-            array(
-                'type' => 'bar',
-                'name' => 'Масаж', //title of data
-                'data' => $data['m'], //data resource according to datebase column
-                'color' => '#8bbc21',
-            ),
-            array(
-                'color' => '#2f7ed8',
-                'type' => 'bar',
-                'name' => 'Простой', //title of data
-                'data' => $data['p'],
-            ),
         )
-    )
-));
+    ));
+}
 ?>
 </div>
 <?php $this->endWidget() ?>
