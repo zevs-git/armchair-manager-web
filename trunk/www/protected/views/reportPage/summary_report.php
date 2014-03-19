@@ -19,6 +19,7 @@ $this->beginWidget('zii.widgets.CPortlet', array(
 
 <div class="to-print">
     <h3 align="center">Отчет по выручке</h3>
+    <h4 align="center"><?=$this->searchBy?></h4>
     <h4 align="center">за период с <?=$_REQUEST['date_from']?> по <?=$_REQUEST['date_to']?></h4>
 <?php
 /* echo $dataProvider->getId();
@@ -39,10 +40,10 @@ $this->beginWidget('zii.widgets.CPortlet', array(
 $this->widget('ext.groupgridview.GroupGridView', array(
     'id' => 'device-grid',
     'itemsCssClass' => 'table table-striped table-bordered',
-    'mergeColumns' => array('device_id','name'),
+    'mergeColumns' => array('id','name'),
     'dataProvider' => $data,
     'columns' => array(
-        array('name'=>'device_id',
+        array('name'=>'id',
             'header'=>'ID'),
         array('name'=>'name',
             'header'=>'Место установки'),
