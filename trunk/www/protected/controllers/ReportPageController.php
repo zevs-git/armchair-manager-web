@@ -9,7 +9,9 @@ class ReportPageController extends Controller {
     public function actionStatusReport() {
         if ($this->checkInput()) {
             $sql = "SELECT
-                    `d`.`id` AS `device_id`,
+                     obj.id as obj_id, obj.obj as obj_name,
+                     `d`.`id` AS `device_id`,
+                     `d`.`comment`,
                      IFNULL(`srgd`.`m`, 0) AS `m`,
                      IFNULL(`srgd`.`p`, 0) AS `p`,
                      IFNULL(`srgd`.`c`, 0) AS `c`,
@@ -24,7 +26,7 @@ class ReportPageController extends Controller {
                     (!empty($_REQUEST['country']) ? " AND obj.country = '" . $_REQUEST['country'] . "'" : "") .
                     (!empty($_REQUEST['region']) ? " AND obj.region = '" . $_REQUEST['region'] . "'" : "") .
                     (!empty($_REQUEST['city']) ? " AND obj.city = '" . $_REQUEST['city'] . "'" : "") .
-                    " GROUP BY srgd.device_id";
+                    " GROUP BY obj.id,obj.obj,`d`.`id`,`d`.`comment`";
 
             $rows = Yii::app()->db->createCommand($sql)->queryAll();
             $count = count($rows);
@@ -37,18 +39,25 @@ class ReportPageController extends Controller {
                 ),
             ));
 
+            $obj = NULL;
             $data = array();
-            $data['device'] = array();
-            $data['m'] = array();
-            $data['p'] = array();
-            $data['c'] = array();
-            $data['e'] = array();
+            
             foreach ($dataProvider->getData() as $data_row) {
-                $data['device'][] = $data_row['device_id'];
-                $data['m'][] = (int) $data_row['m'];
-                $data['p'][] = (int) $data_row['p'];
-                $data['c'][] = (int) $data_row['c'];
-                $data['e'][] = (int) $data_row['e'];
+                if (!isset($obj) || $obj != $data_row['obj_id']) {
+                    $obj = $data_row['obj_id'];
+                    $data[$obj] = array();
+                    $data[$obj]['device'] = array();
+                    $data[$obj]['m'] = array();
+                    $data[$obj]['p'] = array();
+                    $data[$obj]['c'] = array();
+                    $data[$obj]['e'] = array();
+                }
+                $data[$obj]['device'][] = $data_row['comment'] . " [" . $data_row['device_id'] . "]";
+                $data[$obj]['obj_name'][] = $data_row['obj_name'];
+                $data[$obj]['m'][] = (int) $data_row['m'];
+                $data[$obj]['p'][] = (int) $data_row['p'];
+                $data[$obj]['c'][] = (int) $data_row['c'];
+                $data[$obj]['e'][] = (int) $data_row['e'];
             }
         }
 
@@ -140,7 +149,6 @@ class ReportPageController extends Controller {
                     (!empty($_REQUEST['city']) ? " AND obj.city = '" . $_REQUEST['city'] . "'" : "") .
                     " GROUP BY d.id,CAST(c.dt AS DATE)
                          order by d.id";
-
             $dataProvider = new CSqlDataProvider($sql, array(
                 //'totalItemCount'=>$count,
                 'pagination' => array(
