@@ -136,67 +136,65 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(// the dialog
 <?php $this->endWidget(); ?>
 
 <?php
-$countAll = Device::model()->count();
-$countTrue = $model->count("unix_timestamp(now()) - unix_timestamp(dt) <= 60*5");
-$countFalse = $countAll - $countTrue;
-
-$Balance = 0;
-
-
-$sql = "SELECT SUM(summ_coin)+SUM(summ_cash) AS res
-FROM device_cash_report c, `device_status` s
-WHERE c.`device_id` = s.`device_id`";
-
-$res = Yii::app()->db->createCommand($sql)
-        ->queryRow();
-
-if (isset($res['res'])) {
-    $Balance = $res['res'];
-}
-
-$res = Yii::app()->db->createCommand()
-        ->select('sum(count_cash + count_coin) as res')
-        ->from('device_cash_report')
-        ->queryRow();
-
-
-if (isset($res['res'])) {
-    $cash_count = $res['res'];
-}
+$this->beginWidget('zii.widgets.jui.CJuiDialog', array(// the dialog
+    'id' => 'modal-messages',
+    'options' => array(
+        'title' => 'Уведомления',
+        'autoOpen' => FALSE,
+        'modal' => false,
+        'width' => 600,
+        'height' => 550,
+        'show' => array(
+            'effect' => 'fade',
+            'duration' => 250,
+        ),
+        'hide' => array(
+            'effect' => 'fade',
+            'duration' => 500,
+        ),
+    ),
+));
 ?>
+<div id="id_view-messages">
+</div>
+
+<?php $this->endWidget(); ?>
+
 <div class="row-fluid fixed-summ">
     
     <div class="span3 ">
         <div class="stat-block">
             <ul>
                 <!-- <li class="stat-graph inlinebar" id="weekly-visit">8,4,6,5,9,10</li> -->
-                <li class="stat-count" ><span id="device_count"><?php echo $countTrue . " из " . $countAll; ?></span><span>Устройств в базе</span></li>
-                <li class="stat-percent" ><span id="device_connected_p" class="text-success stat-percent"><?php echo number_format($countTrue / $countAll * 100, 2, '.', ''); ?>%</span></li>
+                <li class="stat-count" ><span id="device_count"></span><span>Подключено устройств</span></li>
+                <li class="stat-percent" ><span id="device_connected_p" class="text-success stat-percent"></span></li>
             </ul>
         </div>
     </div>
     <div class="span3 ">
         <div class="stat-block">
             <ul>
-                <li class="stat-count" ><span id="device_connected"><?php echo $countTrue; ?></span><span>Подключено</span></li>
-                <li class="stat-percent" ><span id="device_connected_p" class="text-success stat-percent"><?php echo number_format($countTrue / $countAll * 100, 2, '.', ''); ?>%</span></li>
-            </ul>
-        </div>
-    </div>
-    <div class="span3 ">
-        <div class="stat-block">
-            <ul>
-                <li class="stat-count" ><span id="device_not_connected"><?php echo $countFalse; ?></span><span>Не на связи</span></li>
-                <li class="stat-percent" ><span id="device_not_connected_p" class="text-error stat-percent"><?php echo number_format($countFalse / $countAll * 100, 2, '.', ''); ?>%</span></li>
-            </ul>
-        </div>
-    </div>
-    <div class="span3 ">
-        <div class="stat-block">
-            <ul style="<?=(!Yii::app()->user->checkAccess('Wather'))?'display:none':''?>">
                 <li class="stat-count" ><span id="cash_summ"><?php echo $Balance; ?> RUB</span><span>В купюрониках</span></li>
-                <li class="stat-percent"><span id="cash_summ_p" class="text-success stat-percent"><?php echo number_format($cash_count / ($countAll * 400), 2, '.', '') * 100; ?>%</span></li>
+                <li class="stat-percent"><span id="cash_summ_p" class="text-success stat-percent"></span></li>
             </ul>
+        </div>
+    </div>
+    <div class="span3 ">
+        <div class="stat-block">
+            <ul>
+                <li class="stat-count" ><span id="mass_time"><?php echo $countFalse; ?></span><span>Время массажа за сегодня</span></li>
+                <li class="stat-percent"><span id="mass_perc" class="text-success stat-percent"></span></li>
+            </ul>
+        </div>
+    </div>
+    <div class="span3 ">
+        <div class="stat-block">
+            <a href="#" onclick="openMessages();">
+            <ul>
+                <li class="stat-count" ><span>Уведомления</span><span id="last_message" style="width:500px"></span></li>
+                <li class="stat-percent"><span id="messages_count" class="text-error stat-percent"></span></li>
+            </ul>
+            </a>
         </div>
     </div>
 </div>
@@ -218,6 +216,32 @@ if (isset($res['res'])) {
         }, <?=$updateTimeout?>);
         $('#grid-container').load('/index.php/DeviceStatus/grid');
     });
+    
+    function openMessages() {
+        $("#modal-messages").dialog("open");
+        $.ajax({
+                url: '/DeviceStatus/ReadMessages',
+                type: 'POST',
+                dataType: 'html',
+                cache: false,
+        });
+            
+        $.ajax({
+                url: '/DeviceStatus/Messages',
+                type: 'POST',
+                dataType: 'html',
+                cache: false,
+                success: function(html)
+                {
+                    jQuery('#id_view-messages').html(html);
+                    //$("#loader").hide();
+                },
+                error: function() {
+                    jQuery('#id_view-messages').html('Не удалось загрузить уведомления');
+                }
+            });
+        return false;
+    }
 
     function updateSummary() {
         $.ajax({
@@ -226,12 +250,14 @@ if (isset($res['res'])) {
             dataType: 'json',
             success: function(data) {
                 $('#device_count').html(data.device_connected + ' из ' + data.device_count);
-                $('#device_count_p').html(data.device_count_p);
                 $('#device_connected').html(data.device_connected);
                 $('#device_connected_p').html(data.device_connected_p);
-                $('#device_not_connected').html(data.device_not_connected);
-                $('#device_not_connected_p').html(data.device_not_connected_p);
+                $('#mass_time').html(data.mass_time);
+                $('#mass_perc').html(data.mass_perc);
                 $('#cash_summ').html(data.cash_summ);
+                $('#messages_count').html(data.messages_count);
+                $('#last_message').html(data.last_message);
+                
                 $('#cash_summ_p').html(data.cash_summ_p);
             }
         });
