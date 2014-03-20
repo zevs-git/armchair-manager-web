@@ -12,10 +12,10 @@ class ReportPageController extends Controller {
                      obj.id as obj_id, obj.obj as obj_name,
                      `d`.`id` AS `device_id`,
                      `d`.`comment`,
-                     IFNULL(`srgd`.`m`, 0) AS `m`,
-                     IFNULL(`srgd`.`p`, 0) AS `p`,
-                     IFNULL(`srgd`.`c`, 0) AS `c`,
-                     IFNULL(`srgd`.`e`, 0) AS `e`
+                     IFNULL(SUM(`srgd`.`m`), 0) AS `m`, 
+                     IFNULL(SUM(`srgd`.`p`), 0) AS `p`, 
+                     IFNULL(SUM(`srgd`.`c`), 0) AS `c`, 
+                     IFNULL(SUM(`srgd`.`e`), 0) AS `e`
                      FROM (object obj,`device` `d`
                      LEFT JOIN `status_rep_group_day` `srgd`
                      ON ((`d`.`id` = `srgd`.`device_id`)))

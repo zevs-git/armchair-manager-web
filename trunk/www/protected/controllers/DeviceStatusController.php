@@ -245,8 +245,6 @@ class DeviceStatusController extends RController {
             }
             
             $result['device_connected_p'] = number_format($result['device_connected'] / $result['device_count'] * 100, 2, '.', '') . "%";
-            $result['device_not_connected'] = $result['device_count'] - $result['device_connected'];
-            $result['device_not_connected_p'] = number_format($result['device_not_connected'] / $result['device_count'] * 100, 2, '.', '') . "%";
 
             $result['cash_summ'] = 0;
 
@@ -306,6 +304,38 @@ class DeviceStatusController extends RController {
             } else {
                 $result['cash_summ_p'] = "-";
             }
+            
+            $sql = "SELECT SEC_TO_TIME(SUM(time)) as time,SUM(time)/(TIME_TO_SEC(TIMEDIFF(NOW(),CAST(CURRENT_DATE() AS DATETIME))) * " . $result['device_connected'] . ")*100 as perc FROM massage m WHERE m.dt BETWEEN CURRENT_DATE() AND NOW();";
+            
+            $res = Yii::app()->db->createCommand($sql)->queryRow();
+             
+            if (isset($res['time'])) {
+                 $result['mass_time'] = $res['time'];
+                 $result['mass_perc'] = number_format($res['perc'], 2, '.', '') . "%";
+            } else {
+                 $result['mass_time'] = '00:00';
+                 $result['mass_perc'] = 0;
+            }          
+            
+            $sql = 'SELECT COUNT(*) as res FROM user_messages um WHERE um.user_id = 1 AND um.`read` = 0;';
+            
+            $res = Yii::app()->db->createCommand($sql)->queryRow();
+            
+            if (isset($res['res'])) {
+                 $result['messages_count'] = $res['res'];
+            } else {
+                 $result['messages_count'] = 0;
+            }
+            
+            $last_mes = new UserMessages();
+            $last_mes = UserMessages::model()->find('`user_id` = 1 AND `read` = 0 ORDER BY `dt` DESC');
+            
+            if ($last_mes) {
+                $result['last_message'] = "<font color=red>" . date('H:i:s',strtotime($last_mes->dt)) . " [" . $last_mes->device_id . "] " . $last_mes->message->descr . "</font>";
+            } else {
+                $result['last_message'] = 'Нет новых уведомлений';
+            }
+            
 
             echo json_encode($result);
         }
@@ -336,6 +366,22 @@ class DeviceStatusController extends RController {
         
         $text = "";
         Yii::app()->db->createCommand("CALL p_comand_log($id,11,'$text');")->execute();
+    }
+    
+    public function ActionMessages() {
+                $model=new UserMessages('search');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['UserMessages']))
+			$model->attributes=$_GET['UserMessages'];
+
+		$this->render('messages',array(
+			'model'=>$model,
+		));
+    }
+    public function ActionReadMessages() {
+                $sql = 'UPDATE user_messages um SET um.`read` = 1 WHERE um.user_id = 1 AND um.`read` = 0';
+                Yii::app()->db->createCommand($sql)->execute();
+                
     }
 
 }
