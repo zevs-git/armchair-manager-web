@@ -101,6 +101,11 @@
                                                 'visible'=>Yii::app()->user->checkAccess('ReportPage.MassageReport')
                                                 
                                             ),
+                                            array('label' => 'Отчет по персоналу', 'url' => array('/reportPage/StaffReport'), 
+                                                'active' => ($this->action->id == 'StaffReport'),
+                                                'visible'=>Yii::app()->user->checkAccess('ReportPage.StaffReport')
+                                                
+                                            ),
                                         ),
                                     ),
                                     array('label' => 'Выйти (' . Yii::app()->user->name . ')',

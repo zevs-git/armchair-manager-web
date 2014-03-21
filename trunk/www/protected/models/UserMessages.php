@@ -99,6 +99,8 @@ class UserMessages extends CActiveRecord
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+                        'sort' => array(
+                        'defaultOrder' => 'dt DESC'),
                         'pagination' => array(
                         'pageSize' => 15,
                         ),

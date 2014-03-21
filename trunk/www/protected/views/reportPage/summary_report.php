@@ -40,11 +40,11 @@ $this->beginWidget('zii.widgets.CPortlet', array(
 $this->widget('ext.groupgridview.GroupGridView', array(
     'id' => 'device-grid',
     'itemsCssClass' => 'table table-striped table-bordered',
-    'mergeColumns' => array('id','name'),
+    'mergeColumns' => array('obj','name'),
     'dataProvider' => $data,
     'columns' => array(
-        array('name'=>'id',
-            'header'=>'ID'),
+        array('name'=>'obj',
+            'header'=>'Объект'),
         array('name'=>'name',
             'header'=>'Место установки'),
         array('name'=>'dt',

@@ -22,7 +22,7 @@
 <script>
     function selectOp(id) {
         var active = $(this).attr('name');
-        var ids = ['country', 'region', 'city', 'object_id'];
+        var ids = ['region', 'city', 'object_id'];
         $('#' + active + '-label').addClass('bold');
         ids.forEach(function(entry) {
             if (ids.indexOf(active) < ids.indexOf(entry)) {
@@ -31,6 +31,11 @@
                 $('#' + entry + '-label').removeClass('bold');
             }
         });
+        if (($('#region').val() || $('#city').val() || $('#object_id').val())) {
+            $('#sub_btn').show();
+        } else {
+            $('#sub_btn').hide();
+        }
     }
     
     function loadList(type) {
@@ -38,7 +43,7 @@
             url: '<?php echo $this->createAbsoluteUrl('reportPage/getListData') ?>',
             dataType: 'html',
             data: 'datatype=' + type + 
-                        '&country=' + $('#country').val() +
+                        //'&country=' + $('#country').val() +
                         '&region=' + $('#region').val() +
                         '&city=' + $('#city').val(),
             success: function(data) {
@@ -56,11 +61,15 @@
         }
     }
     $(document).ready(function() {
-        $('#country').change(selectOp);
+        //$('#country').change(selectOp);
         $('#region').change(selectOp);
         $('#city').change(selectOp);
         $('#object_id').change(selectOp);
-        $('#hide-btn').click(hideParams);
+        //$('#hide-btn').click(hideParams);
+        
+        $('#params_data .portlet-decoration').click(hideParams);
+        
+        $('#sub_btn').hide();
 
     });
 
@@ -71,6 +80,7 @@
         <?php
         $this->beginWidget('zii.widgets.CPortlet', array(
             'title' => "Параметры отчета <a style='float:right' id='hide-btn' class='btn btn-small' href='#'><i class='icon-minus-sign'></i> </a>",
+            'htmlOptions'=>array('id'=>'params_data','style'=>'cursor: pointer;'),
         ));
         ?>
         <div id="parameters">
@@ -120,19 +130,16 @@
             if (isset($_REQUEST['date_to'])) {
                 echo "<script>$('#date_to').val('" . $_REQUEST['date_to'] . "') </script>";
             } else {
-                echo "<script>$('#date_to').val('" . date('d.m.Y') . "') </script>";
+                echo "<script>$('#date_to').val('" . date('d.m.Y') . ' 23:59' . "') </script>";
             }
             ?>
             <br />
             <br />
-            <span class="span1" id="country-label">Страна:</span>
             <?php
-            $crit = (Yii::app()->user->getId() == "pulkovo") ? "id in (1,2)" : NULL;
-            $list = array_unique(CHtml::listData(Object::model()->findAll($crit), 'country', 'country'));
+            /*$crit = (Yii::app()->user->getId() == "pulkovo") ? "id in (1,2)" : NULL;
+            $list = array_unique(CHtml::listData(Object::model()->findAll($crit), 'country', 'country'));*/
             ?>
-            <?php echo CHtml::dropDownList('country', 'country', $list, array('class' => 'span4', 'id' => 'country', 'empty' => 'Выберите страну')); ?>
-            <br />
-            <br />
+            <?//php echo CHtml::dropDownList('country', 'country', $list, array('class' => 'span4', 'id' => 'country', 'empty' => 'Выберите страну')); ?>
             <span class="span1" id="region-label">Регион:</span>
             <?php
             $crit = (Yii::app()->user->getId() == "pulkovo") ? "id in (1,2)" : NULL;
@@ -143,7 +150,8 @@
             <br />
             <span class="span1" id="city-label">Город:</span>
             <?php
-            $crit = (Yii::app()->user->getId() == "pulkovo") ? "id in (1,2)" : NULL;
+            $crit = "1 = 1";
+            $crit .= !empty($_REQUEST['region'])?(" AND region = '" . $_REQUEST['region'] . "'"):NULL;
             $list = array_unique(CHtml::listData(Object::model()->findAll($crit), 'city', 'city'));
             ?>
             <?php echo CHtml::dropDownList('city', 'city', $list, array('class' => 'span4', 'id' => 'city', 'empty' => 'Выберите город')); ?>
@@ -151,7 +159,9 @@
             <br />
             <span class="span1" id="object_id-label">Объект:</span>
             <?php
-            $crit = (Yii::app()->user->getId() == "pulkovo") ? "id in (1,2)" : NULL;
+            $crit = "1 = 1";
+            $crit .= !empty($_REQUEST['region'])?(" AND region = '" . $_REQUEST['region'] . "'"):NULL;
+            $crit .= !empty($_REQUEST['city'])?(" AND city = '" . $_REQUEST['city'] . "'"):NULL;
             $list = CHtml::listData(Object::model()->findAll($crit), 'id', 'obj');
             ?>
             <?php
@@ -175,7 +185,7 @@
             <br />
             <br />
             <div class="btn-toolbar">
-                <?php echo CHtml::submitButton('Построить отчет', array('class' => 'btn btn btn-primary')); ?>
+                <?php echo CHtml::submitButton('Построить отчет', array('class' => 'btn btn btn-primary','id'=>'sub_btn')); ?>
             </div>
 
             <?php $this->endWidget() ?>

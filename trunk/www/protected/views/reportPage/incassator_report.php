@@ -47,10 +47,10 @@ $this->widget('ext.groupgridview.GroupGridView', array(
     'id' => 'device-grid',
     'itemsCssClass' => 'table table-striped table-bordered',
     'dataProvider' => $data,
-    'mergeColumns' => array('device_id','name'),
+    'mergeColumns' => array('obj','name'),
     'columns' => array(
-        array('name'=>'device_id',
-            'header'=>'ID'),
+        array('name'=>'obj',
+            'header'=>'Объект'),
         array('name'=>'name',
             'header'=>'Место установки'),
         array('name'=>'dt',

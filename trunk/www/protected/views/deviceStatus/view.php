@@ -11,7 +11,7 @@ $this->widget('bootstrap.widgets.TbTabs', array(
     'tabs' => array(
         array('id' => 'Detail', 'label' => 'Статус','url'=>'dasad', 'content' =>''),
         array('id' => 'DeviceLog', 'label' => 'Лог', 'content' => '','active' => true),
-        array('id' => 'DeviceConfig', 'label' => 'Управлене', 'content' =>''),
+        array('id' => 'DeviceConfig', 'label' => 'Управление', 'content' =>''),
     ),
     'events'=>array('shown'=>'js:loadContent'),
 ));

@@ -46,6 +46,10 @@ return array(
             'class' => 'RWebUser',
             'allowAutoLogin' => true,
         ),
+        'email' => array(
+            'class' => 'application.extensions.email.Email',
+            'delivery' => 'php',
+        ),
         'authManager' => array(
             'class' => 'RDbAuthManager',
             'defaultRoles' => array('Guest'),
