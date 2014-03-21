@@ -31,11 +31,8 @@
                 $('#' + entry + '-label').removeClass('bold');
             }
         });
-        if (($('#region').val() || $('#city').val() || $('#object_id').val())) {
-            $('#sub_btn').show();
-        } else {
-            $('#sub_btn').hide();
-        }
+        
+        showBTN();
     }
     
     function loadList(type) {
@@ -60,6 +57,14 @@
             $('#hide-btn i').attr('class', 'icon-minus-sign');
         }
     }
+    function showBTN() {
+        if (($('#region').val() || $('#city').val() || $('#object_id').val())) {
+            $('#sub_btn').show();
+        } else {
+            $('#sub_btn').hide();
+        }
+        
+    }
     $(document).ready(function() {
         //$('#country').change(selectOp);
         $('#region').change(selectOp);
@@ -70,6 +75,8 @@
         $('#params_data .portlet-decoration').click(hideParams);
         
         $('#sub_btn').hide();
+        $('#date_from').change(showBTN);
+        $('#date_to').change(showBTN);
 
     });
 
