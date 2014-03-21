@@ -10,6 +10,7 @@
  * @property string $IP_config
  * @property integer $port_config
  * @property string $USSD
+ * @property INT $interval
  */
 class DeviceServiceSettings extends CActiveRecord
 {
@@ -30,11 +31,11 @@ class DeviceServiceSettings extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('device_id', 'required'),
-			array('device_id, port_monitoring, port_config', 'numerical', 'integerOnly'=>true),
+			array('device_id, port_monitoring, port_config,interval', 'numerical', 'integerOnly'=>true),
 			array('IP_monitoring, IP_config', 'length', 'max'=>50),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('device_id, IP_monitoring, port_monitoring, IP_config, port_config', 'safe', 'on'=>'search'),
+			array('device_id, IP_monitoring, port_monitoring, IP_config, port_config, interval', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -60,6 +61,8 @@ class DeviceServiceSettings extends CActiveRecord
 			'port_monitoring' => 'Порт мониторинг',
 			'IP_config' => 'IP/DNS конфигуратор',
 			'port_config' => 'Порт конфигуратор',
+                        'interval' => 'Интервал',
+                        'USSD' => 'Запрос баланса',
 		);
 	}
 

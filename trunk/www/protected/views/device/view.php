@@ -28,8 +28,8 @@ $this->breadcrumbs = array(
                 'comment',
                 'ICCID',
                 'phone',
-                'interval',
-                'zapros'
+                //'interval',
+                //'zapros'
 	),
 )); ?>
 

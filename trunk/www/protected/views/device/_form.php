@@ -57,14 +57,6 @@
         <?php echo $form->labelEx($model,'phone',array('class'=>'span4')); ?>
 	<?php echo $form->textField($model,'phone',array('class'=>'span4','maxlength'=>20)); ?>
         </div>  
-        <div class="row">
-        <?php echo $form->labelEx($model,'interval',array('class'=>'span4')); ?>
-	<?php echo $form->textField($model,'interval',array('class'=>'span4','maxlength'=>20)); ?>
-        </div>  
-        <div class="row">
-        <?php echo $form->labelEx($model,'zapros',array('class'=>'span4')); ?>
-	<?php echo $form->textField($model,'zapros',array('class'=>'span4','maxlength'=>20)); ?>
-        </div>
     	<?php if (!Yii::app()->request->isAjaxRequest): ?>
 	<div class="form-actions">
 		<?php $this->widget('bootstrap.widgets.TbButton', array(

@@ -110,7 +110,7 @@ class DeviceController extends Controller {
 
         if (isset($_POST['Device'])) {
             $model->attributes = $_POST['Device'];
-            if ($model->saveSettings()) {
+            if ($model->save()) {
                 if (Yii::app()->request->isAjaxRequest) {
                     echo 'success';
                     Yii::app()->end();
