@@ -149,7 +149,7 @@ class ReportPageController extends Controller {
                     //(!empty($_REQUEST['country']) ? " AND obj.country = '" . $_REQUEST['country'] . "'" : "") .
                     (!empty($_REQUEST['region']) ? " AND o.region = '" . $_REQUEST['region'] . "'" : "") .
                     (!empty($_REQUEST['city']) ? " AND o.city = '" . $_REQUEST['city'] . "'" : "") .
-                    "order by o.obj,d.comment, ik.dt";
+                    " order by o.obj,d.comment, ik.dt";
 
             $dataProvider = new CSqlDataProvider($sql, array(
                 //'totalItemCount'=>$count,
