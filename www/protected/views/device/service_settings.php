@@ -51,7 +51,9 @@ if (is_null($deviceServiceSettings)) {
     <?php echo $form->textFieldRow($deviceServiceSettings, 'IP_monitoring', array('class' => 'text')); ?>
     <?php echo $form->textFieldRow($deviceServiceSettings, 'port_monitoring', array('class' => 'text')); ?>
     <?php echo $form->textFieldRow($deviceServiceSettings, 'IP_config', array('class' => 'text')); ?>
-<?php echo $form->textFieldRow($deviceServiceSettings, 'port_config', array('class' => 'text')); ?>
+    <?php echo $form->textFieldRow($deviceServiceSettings, 'port_config', array('class' => 'text')); ?>
+    <?php echo $form->textFieldRow($deviceServiceSettings, 'USSD', array('class' => 'text')); ?>
+    <?php echo $form->textFieldRow($deviceServiceSettings, 'interval', array('class' => 'text')); ?>
 
     <div class="row buttons">
 <?php echo CHtml::submitButton($model->isNewRecord ? 'Сохранить' : 'Сохранить', array('class' => 'btn btn btn-primary')); ?>
