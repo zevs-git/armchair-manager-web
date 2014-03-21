@@ -23,7 +23,7 @@ class ReportPageController extends Controller {
                      `srgd`.`day` >= '" . (date("Y-m-d", strtotime($_REQUEST['date_from']))) . "' AND `srgd`.`day` <= '" . date("Y-m-d", strtotime($_REQUEST['date_to'])) . "'
                      AND d.object_id = obj.id" .
                     (is_numeric($_REQUEST['object_id']) ? " AND obj.id = " . $_REQUEST['object_id'] : "") .
-                    (!empty($_REQUEST['country']) ? " AND obj.country = '" . $_REQUEST['country'] . "'" : "") .
+                    //(!empty($_REQUEST['country']) ? " AND obj.country = '" . $_REQUEST['country'] . "'" : "") .
                     (!empty($_REQUEST['region']) ? " AND obj.region = '" . $_REQUEST['region'] . "'" : "") .
                     (!empty($_REQUEST['city']) ? " AND obj.city = '" . $_REQUEST['city'] . "'" : "") .
                     " GROUP BY obj.id,obj.obj,`d`.`id`,`d`.`comment`";
@@ -72,18 +72,18 @@ class ReportPageController extends Controller {
         if (!isset($_REQUEST['date_from']) || !isset($_REQUEST['date_to'])) {
             foreach (Yii::app()->session->toArray() as $key => $value) {
                 $key = str_replace('report_', '', $key);
-                if (in_array($key, array('country', 'city', 'region', 'object_id', 'date_from', 'date_to'))) {
+                if (in_array($key, array('city', 'region', 'object_id', 'date_from', 'date_to'))) {
                     $_REQUEST[$key] = $value;
                 }
             }
         }
 
         foreach ($_REQUEST as $key => $value) {
-            if (in_array($key, array('country', 'city', 'region', 'object_id', 'date_from', 'date_to'))) {
+            if (in_array($key, array('city', 'region', 'object_id', 'date_from', 'date_to'))) {
                 Yii::app()->session->add('report_' . $key, $value);
             }
         }
-        if (is_numeric($_REQUEST['object_id']) || !empty($_REQUEST['country']) || !empty($_REQUEST['city']) || !empty($_REQUEST['region'])) {
+        if (is_numeric($_REQUEST['object_id']) || !empty($_REQUEST['city']) || !empty($_REQUEST['region'])) {
             if (is_numeric($_REQUEST['object_id'])) {
                 /*unset($_REQUEST['country']);
                 unset($_REQUEST['city']);
@@ -110,18 +110,18 @@ class ReportPageController extends Controller {
     public function actionIncassatorReport() {
         if ($this->checkInput()) {
 
-            $sql = "SELECT ir.device_id,d.comment AS name,ir.dt,s.FIO,ir.count_cash,ir.summ_cash,ir.count_coin,ir.summ_coin, summ_cash + summ_coin as all_summ
+            $sql = "SELECT obj.obj,d.comment AS name,ir.dt,s.FIO,ir.count_cash,ir.summ_cash,ir.count_coin,ir.summ_coin, summ_cash + summ_coin as all_summ
                             FROM incassator_report ir, device d, staff s, object obj
                             WHERE ir.device_id = d.id
                             AND d.object_id = obj.id
                             AND ir.dt >= '" . date("Y-m-d H:i:s", strtotime($_REQUEST['date_from'])) . "' AND ir.dt <= '" . date("Y-m-d H:i:s", strtotime($_REQUEST['date_to'])) . "'" .
                     (is_numeric($_REQUEST['object_id']) ? " AND obj.id = " . $_REQUEST['object_id'] : "") .
-                    (!empty($_REQUEST['country']) ? " AND obj.country = '" . $_REQUEST['country'] . "'" : "") .
+                    //(!empty($_REQUEST['country']) ? " AND obj.country = '" . $_REQUEST['country'] . "'" : "") .
                     (!empty($_REQUEST['region']) ? " AND obj.region = '" . $_REQUEST['region'] . "'" : "") .
                     (!empty($_REQUEST['city']) ? " AND obj.city = '" . $_REQUEST['city'] . "'" : "") .
                     " AND ir.staff_id = s.id
                             AND summ_cash + summ_coin > 0
-                            order by ir.device_id, ir.dt";
+                            order by obj.obj,d.comment, ir.dt";
 
             $dataProvider = new CSqlDataProvider($sql, array(
                 //'totalItemCount'=>$count,
@@ -134,21 +134,49 @@ class ReportPageController extends Controller {
             'data' => $dataProvider,
         ));
     }
+    
+    public function actionStaffReport() {
+        if ($this->checkInput()) {
+
+            $sql = "SELECT o.obj,ik.dt,s.FIO, st.descr as type
+                    FROM ident_key ik,staff s,object o, device d, staff_type st
+                    WHERE ik.`key` = CONV(s.`key`,16,10)
+                    AND ik.device_id = d.id
+                    AND d.object_id = o.id
+                    AND s.staff_type_id = st.id
+                    AND ik.dt >= '" . date("Y-m-d H:i:s", strtotime($_REQUEST['date_from'])) . "' AND ik.dt <= '" . date("Y-m-d H:i:s", strtotime($_REQUEST['date_to'])) . "'" .
+                    (is_numeric($_REQUEST['object_id']) ? " AND o.id = " . $_REQUEST['object_id'] : "") .
+                    //(!empty($_REQUEST['country']) ? " AND obj.country = '" . $_REQUEST['country'] . "'" : "") .
+                    (!empty($_REQUEST['region']) ? " AND o.region = '" . $_REQUEST['region'] . "'" : "") .
+                    (!empty($_REQUEST['city']) ? " AND o.city = '" . $_REQUEST['city'] . "'" : "") .
+                    "order by o.obj,d.comment, ik.dt";
+
+            $dataProvider = new CSqlDataProvider($sql, array(
+                //'totalItemCount'=>$count,
+                'pagination' => array(
+                    'pageSize' => 100,
+                ),
+            ));
+        };
+        $this->render('staff_report', array(
+            'data' => $dataProvider,
+        ));
+    }
 
     public function actionSumaryReport() {
         if ($this->checkInput()) {
-            $sql = "SELECT d.id,d.comment AS name, CAST(c.dt AS DATE) AS dt, SUM(c.value) AS sum,
+            $sql = "SELECT obj.obj,d.id,d.comment AS name, CAST(c.dt AS DATE) AS dt, SUM(c.value) AS sum,
                         CASE WHEN DAYOFWEEK(c.dt) IN (7,1) THEN \"weekend\" ELSE \"\" END AS class
                         FROM cash c, device d, object obj
                         WHERE c.device_id = d.id
                         AND d.object_id = obj.id
                         AND c.dt >= '" . date("Y-m-d H:i:s", strtotime($_REQUEST['date_from'])) . "' AND c.dt <= '" . date("Y-m-d H:i:s", strtotime($_REQUEST['date_to'])) . "'" .
                     (is_numeric($_REQUEST['object_id']) ? " AND obj.id = " . $_REQUEST['object_id'] : "") .
-                    (!empty($_REQUEST['country']) ? " AND obj.country = '" . $_REQUEST['country'] . "'" : "") .
+                    //(!empty($_REQUEST['country']) ? " AND obj.country = '" . $_REQUEST['country'] . "'" : "") .
                     (!empty($_REQUEST['region']) ? " AND obj.region = '" . $_REQUEST['region'] . "'" : "") .
                     (!empty($_REQUEST['city']) ? " AND obj.city = '" . $_REQUEST['city'] . "'" : "") .
-                    " GROUP BY d.id,CAST(c.dt AS DATE)
-                         order by d.id";
+                    " GROUP BY obj.obj,d.id,CAST(c.dt AS DATE)
+                         order by obj.obj,d.id,c.dt";
             $dataProvider = new CSqlDataProvider($sql, array(
                 //'totalItemCount'=>$count,
                 'pagination' => array(
@@ -164,16 +192,16 @@ class ReportPageController extends Controller {
     public function actionMassageReport() {
         if ($this->checkInput()) {
 
-            $sql = "SELECT m.device_id,d.comment AS name,SEC_TO_TIME(SUM(m.time)) AS time 
+            $sql = "SELECT obj.obj,m.device_id,d.comment AS name,SEC_TO_TIME(SUM(m.time)) AS time 
                     FROM massage m , device d, object obj
                     WHERE m.device_id = d.id
                     AND d.object_id = obj.id
                     AND m.dt >= '" . date("Y-m-d H:i:s", strtotime($_REQUEST['date_from'])) . "' AND m.dt <= '" . date("Y-m-d H:i:s", strtotime($_REQUEST['date_to'])) . "'" .
                     (is_numeric($_REQUEST['object_id']) ? " AND obj.id = " . $_REQUEST['object_id'] : "") .
-                    (!empty($_REQUEST['country']) ? " AND obj.country = '" . $_REQUEST['country'] . "'" : "") .
+                    //(!empty($_REQUEST['country']) ? " AND obj.country = '" . $_REQUEST['country'] . "'" : "") .
                     (!empty($_REQUEST['region']) ? " AND obj.region = '" . $_REQUEST['region'] . "'" : "") .
                     (!empty($_REQUEST['city']) ? " AND obj.city = '" . $_REQUEST['city'] . "'" : "") .
-                    " GROUP BY m.device_id,d.comment";
+                    " GROUP BY obj.obj,m.device_id,d.comment";
             $dataProvider = new CSqlDataProvider($sql, array(
                 //'totalItemCount'=>$count,
                 'pagination' => array(
@@ -188,21 +216,21 @@ class ReportPageController extends Controller {
     
     public function ActiongetListData() {
         $dataType = @$_REQUEST['datatype'];
-        $country  = @$_REQUEST['country'];
+        //$country  = @$_REQUEST['country'];
         $region   = @$_REQUEST['region'];
         $city     = @$_REQUEST['city'];
         
         $crit = NULL;
         
-        $crit .=  ($country)?"country = '$country'":"country = 'Россия'";
+        $crit .=  "country = 'Россия'";
         $crit .=  ($region)?"and region = '$region'":$region;
         $crit .=  ($city)?"and city = '$city'":$city;
        
         
         switch($dataType) {
-            case 'country': 
+            /*case 'country': 
                 $list = array_unique(CHtml::listData(Object::model()->findAll($crit), 'country', 'country'));
-                break;
+                break;*/
             case 'region': 
                 $list = array_unique(CHtml::listData(Object::model()->findAll($crit), 'region', 'region'));
                 break;

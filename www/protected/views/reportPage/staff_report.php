@@ -1,7 +1,7 @@
 <?php if (isset($data)):?>
 <?php
 $this->beginWidget('zii.widgets.CPortlet', array(
-    'title' => "Отчет по массажу"
+    'title' => "Отчет \"Инкассация\""
 ));
 ?>
 
@@ -18,7 +18,7 @@ $this->beginWidget('zii.widgets.CPortlet', array(
 </div>
 
 <div class="to-print">
-    <h3 align="center">Отчет по массажу</h3>
+    <h3 align="center">Отчет по персоналу</h3>
     <h4 align="center"><?=$this->searchBy?></h4>
     <h4 align="center">за период с <?=$_REQUEST['date_from']?> по <?=$_REQUEST['date_to']?></h4>
 <?php
@@ -47,14 +47,16 @@ $this->widget('ext.groupgridview.GroupGridView', array(
     'id' => 'device-grid',
     'itemsCssClass' => 'table table-striped table-bordered',
     'dataProvider' => $data,
-    'mergeColumns' => array('obj'),
+    'mergeColumns' => array('obj','type','FIO'),
     'columns' => array(
         array('name'=>'obj',
             'header'=>'Объект'),
-        array('name'=>'name',
-            'header'=>'Место установки'),
-        array('name'=>'time',
-            'header'=>'Суммарное время массажа за период'),
+        array('name'=>'type',
+            'header'=>'Тип'),
+        array('name'=>'FIO',
+            'header'=>'ФИО'),
+        array('name'=>'dt',
+            'header'=>'Дата'),
     ),
 ));
 ?>
