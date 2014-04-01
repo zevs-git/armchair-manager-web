@@ -23,6 +23,7 @@ class User extends CActiveRecord
          * @var string $role
          * @var timestamp $create_at
          * @var timestamp $lastvisit_at
+         * @var int        $departament_id
 	 */
 
 	/**
@@ -82,6 +83,8 @@ class User extends CActiveRecord
         $relations = Yii::app()->getModule('user')->relations;
         if (!isset($relations['profile']))
             $relations['profile'] = array(self::HAS_ONE, 'Profile', 'user_id');
+        
+        $relations['departament'] = array(self::BELONGS_TO, 'Departament', 'departament_id');
         return $relations;
 	}
 
@@ -104,6 +107,7 @@ class User extends CActiveRecord
 			'lastvisit_at' => UserModule::t("Last visit"),
 			'superuser' => UserModule::t("Superuser"),
 			'status' => UserModule::t("Status"),
+                        'departament' => 'Департамент'
 		);
 	}
 	
@@ -123,7 +127,7 @@ class User extends CActiveRecord
                 'condition'=>'superuser=1',
             ),
             'notsafe'=>array(
-            	'select' => 'id, username, password, email, activkey, create_at, lastvisit_at, superuser, status,role',
+            	'select' => 'id, username, password, email, activkey, create_at, lastvisit_at, superuser, status,role,departament_id',
             ),
         );
     }

@@ -15,6 +15,7 @@
  * @property string $face
  * @property string $phone
  * @property string $comment
+ * @property int    $departament_id
  */
 class Object extends CActiveRecord
 {
@@ -38,7 +39,7 @@ class Object extends CActiveRecord
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
                         array('city, obj', 'required'),
-			array('id, country, region, city, street, house, type.descr, obj, face, phone, comment,object_type', 'safe', 'on'=>'search'),
+			array('id, country, region, city, street, house, type.descr, obj, face, phone, comment,object_type,departament_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -51,6 +52,8 @@ class Object extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
                     'type' => array(self::BELONGS_TO, 'ObjectType', 'type_id'),
+                    'departanent' => array(self::BELONGS_TO, 'Departanent', 'departanent_id'),
+                    
 		);
 	}
         public $object_type;
