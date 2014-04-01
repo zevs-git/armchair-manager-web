@@ -138,7 +138,7 @@ class ReportPageController extends Controller {
     public function actionStaffReport() {
         if ($this->checkInput()) {
 
-            $sql = "SELECT o.obj,ik.dt,s.FIO, st.descr as type
+            $sql = "SELECT o.obj,d.comment, ik.dt,s.FIO, st.descr as type
                     FROM ident_key ik,staff s,object o, device d, staff_type st
                     WHERE ik.`key` = CONV(s.`key`,16,10)
                     AND ik.device_id = d.id

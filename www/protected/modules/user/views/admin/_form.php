@@ -42,6 +42,13 @@
                         <?php echo $form->dropDownList($model,'role',CHtml::listData(User::getRolesList(),'name','descr')); ?>
                     </div>
 	</div>
+        
+        <div class="row" <?=(!$model->isNewRecord)?'style="display:none"':''?> >
+                    <div>
+                        <?php echo $form->labelEx($model,'departament',array('class'=>'span2')); ?>
+                        <?php echo $form->dropDownList($model,'role',CHtml::listData(Departament::model()->findAll() ,'id','name')); ?>
+                    </div>
+	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'status',array('class'=>'span2')); ?>

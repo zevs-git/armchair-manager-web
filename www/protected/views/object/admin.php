@@ -53,6 +53,7 @@ $('.search-form form').submit(function(){
 </div>
 
 <?php
+echo Yii::app()->user->role;
 $this->widget('bootstrap.widgets.TbGridView', array(
     'id' => 'object-grid',
     'itemsCssClass' => 'table table-striped table-bordered',
@@ -64,7 +65,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
         'region',
         'city',
         //'street',
-//'house',
+        //'house',
         array('name' => 'object_type', 'type' => 'html',
             'value' => '$data->type->descr',
             'filter'=>CHtml::listData(ObjectType::model()->findAll(), 'id', 'descr'),

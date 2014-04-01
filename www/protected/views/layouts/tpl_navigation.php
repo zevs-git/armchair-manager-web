@@ -57,11 +57,12 @@
                                         'visible'=>Yii::app()->user->checkAccess('DeviceStatus.Admin')),
                                     array('label' => 'Администрирование', 'url' => '/Object',
                                         'visible'=>Yii::app()->user->checkAccess('Company_admin'),
-                                        'active' => (in_array(get_class($this), array('ObjectController', 'DeviceController', 'StaffController'))),
+                                        'active' => (in_array(get_class($this), array('ObjectController', 'DeviceController', 'StaffController','DepartamentController'))),
                                         'items' => array(
                                             array('label' => 'Объекты', 'url' => array('//Object'), 'active' => (get_class($this) == 'ObjectController')),
                                             array('label' => 'Устройства', 'url' => array('//Device'), 'active' => (get_class($this) == 'DeviceController')),
                                             array('label' => 'Персонал', 'url' => array('//Staff'), 'active' => (get_class($this) == 'StaffController')),
+                                            array('label' => 'Департаменты', 'url' => array('//Departament'), 'active' => (get_class($this) == 'DepartamentController')),
                                         ),),
                                     array('label' => 'Настройки', 'url' => '/settingsTemplate/admin',
                                         'active' => (in_array(get_class($this),array('settingsTemplate','AdminController'))),
