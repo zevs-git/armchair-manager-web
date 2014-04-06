@@ -1,3 +1,9 @@
+<style>
+    div.form > form .row {
+        margin-bottom: 10px;
+    }
+</style>
+
 <?php if (Yii::app()->request->isAjaxRequest): ?>
 <div class="modal-header">
 	<a class="close" data-dismiss="modal">&times;</a>
@@ -20,8 +26,12 @@
 	<?php echo $form->errorSummary($model); ?>
 
 <div class="row">
+    <?php if (Yii::app()->user->checkAccess('Admin')): ?> 
         <?php echo $form->labelEx($model,'IMEI',array('class'=>'span4')); ?>
 	<?php echo $form->textField($model,'IMEI',array('class'=>'span4','maxlength'=>20)); ?>
+    <?php else:?>
+        <?php echo $form->hiddenField($model,'IMEI',array('class'=>'span4','maxlength'=>20)); ?>
+    <?php endif;?>
 </div>           
     <div class="row">
         <?php echo $form->labelEx($model, 'type_id',array('class'=>'span4')); ?>
