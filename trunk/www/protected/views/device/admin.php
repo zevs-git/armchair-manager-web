@@ -44,21 +44,25 @@ $this->renderPartial('_search', array(
 
 <div class="btn-toolbar">
     <?php
-    $this->widget('bootstrap.widgets.TbButton', array(
-        'label' => 'Новое устройство',
-        'icon' => 'plus-sign',
-        'type' => 'primary',
-        'buttonType' => 'ajaxLink',
-        'url' => $this->createUrl('create'),
-        'ajaxOptions' => array(
+    if (Yii::app()->user->checkAccess('Device.create')) {
+        $this->widget('bootstrap.widgets.TbButton', array(
+            'label' => 'Новое устройство',
+            'icon' => 'plus-sign',
+            'type' => 'primary',
+            'buttonType' => 'ajaxLink',
             'url' => $this->createUrl('create'),
-            'success' => 'function(r){$("#TBDialogCrud").html(r).modal("show");}',
-        ),
-    ));
+            'ajaxOptions' => array(
+                'url' => $this->createUrl('create'),
+                'success' => 'function(r){$("#TBDialogCrud").html(r).modal("show");}',
+            ),
+        ));
+    }
     ?>
 </div>
 
 <?php
+
+$buttons_tmpl = (Yii::app()->user->checkAccess('Device.delete'))?'{view}{delete}':'{view}';
 $this->widget('bootstrap.widgets.TbGridView', array(
     'id' => 'device-grid',
     'itemsCssClass' => 'table table-striped table-bordered',
@@ -77,7 +81,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
         'ICCID',
         array(
             'class' => 'bootstrap.widgets.TbButtonColumn',
-            'template' => '{view}{delete}',
+            'template' => $buttons_tmpl,
             'htmlOptions' => array('style' => 'min-width: 70px; text-align: center;'),
             'buttons' => array(
                 'view' => array(

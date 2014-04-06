@@ -61,7 +61,10 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'filter' => $model,
     'columns' => array(
         array('name' => 'id', 'htmlOptions' => array('style' => 'width: 40px;')),
-        array('name' => 'departament_name','filter'=>CHtml::listData(Departament::model()->findAll(), 'id', 'name'),'value' => '$data->departament->name',),
+        array('name' => 'departament_name',
+            'filter'=>CHtml::listData(Departament::model()->findAll(), 'id', 'name'),
+            'value' => '$data->departament->name',
+            'visible'=>Yii::app()->user->checkAccess('Superadmin')),
         array('name' => 'country', 'htmlOptions' => array('style' => 'width: 80px;')),
         'region',
         'city',
