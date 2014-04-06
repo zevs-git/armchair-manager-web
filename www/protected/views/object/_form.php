@@ -43,6 +43,14 @@
 		<?php echo $form->error($model,'city'); ?>
 	</div>
         
+        <div class="row">
+		<?php echo $form->labelEx($model,'departament_id',array('class'=>'span2',)); ?>
+            
+                <?php $list = CHtml::listData(Departament::model()->findAll(), 'id', 'name'); ?>
+                <?php echo $form->dropDownList($model, 'departament_id', $list); ?>
+		<?php echo $form->error($model,'departament_id'); ?>
+	</div>
+        
 	<div class="row">
 		<?php echo $form->labelEx($model,'country',array('class'=>'span2',)); ?>
 		<?php echo $form->textField($model,'country',array('size'=>60,'maxlength'=>255,'id'=>'country','readonly'=>true)); ?>

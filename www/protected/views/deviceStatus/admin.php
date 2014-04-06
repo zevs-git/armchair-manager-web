@@ -174,7 +174,7 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(// the dialog
     <div class="span3 ">
         <div class="stat-block">
             <ul>
-                <?php if(Yii::app()->getModule('user')->user()->role != 'Tehnik'): ?>
+                <?php if(!(Yii::app()->getModule('user')->user()->role == 'Tehnik' || Yii::app()->getModule('user')->user()->role == 'Operator')): ?>
                 <li class="stat-count" ><span id="cash_summ"><?php echo $Balance; ?> RUB</span><span style="width:500px">Сумма в купюрниках/наполненность</span></li>
                 <li class="stat-percent"><span id="cash_summ_p" class="text-success stat-percent"></span></li>
                 <?php endif; ?>

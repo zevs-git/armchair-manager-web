@@ -118,7 +118,7 @@ class Device extends CActiveRecord {
         //$criteria->addSearchCondition('object_obj', $this->object->obj,true);
 
 
-        if (!Yii::app()->getModule('user')->user()->role != 'Admin' || !Yii::app()->getModule('user')->user()->role != 'Superadmin') {
+        if (!Yii::app()->user->checkAccess('Superadmin')) {
             $criteria->addCondition('object.departament_id = ' . Yii::app()->getModule('user')->user()->departament_id);
         }
 

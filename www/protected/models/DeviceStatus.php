@@ -247,8 +247,8 @@ class DeviceStatus extends CActiveRecord {
             $criteria->condition = '(`t`.error_number > 0 or `t`.alarm_state = 1 or u_settings > 0 or TIME_TO_SEC(TIMEDIFF(NOW(),update_date) > 60*5)) and device.id > 0'; 
         }
         
-        if (!Yii::app()->user->checkAccess('Admin') && !Yii::app()->user->checkAccess('Superadmin')) {
-            $criteria->condition .= " and object.departament_id = " . Yii::app()->getModule('user')->user()->departament_id; 
+        if (!Yii::app()->user->checkAccess('Superadmin')) {
+            $criteria->addCondition("object.departament_id = " . Yii::app()->getModule('user')->user()->departament_id); 
         }
         
         /*if (Yii::app()->user->getId() == "pulkovo") {

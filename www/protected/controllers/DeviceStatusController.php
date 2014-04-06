@@ -222,7 +222,7 @@ class DeviceStatusController extends RController {
             $sql = "SELECT COUNT(*) AS res
             FROM `device` d, `object` obj
             WHERE d.object_id = obj.id ";
-            if(!Yii::app()->getModule('user')->user()->role != 'Admin' || !Yii::app()->getModule('user')->user()->role != 'Superadmin') {
+            if (!Yii::app()->user->checkAccess('Superadmin')) {
                 $sql .= ' and obj.departament_id = ' . Yii::app()->getModule('user')->user()->departament_id . ';';
             }
             
@@ -237,7 +237,7 @@ class DeviceStatusController extends RController {
             WHERE d.`id` = s.`device_id` and unix_timestamp(now()) - unix_timestamp(s.dt) <= 60*5 
             and d.id = s.device_id
             and d.object_id = obj.id";
-            if(!Yii::app()->getModule('user')->user()->role != 'Admin' || !Yii::app()->getModule('user')->user()->role != 'Superadmin') {
+            if (!Yii::app()->user->checkAccess('Superadmin')) {
                 $sql .= ' and obj.departament_id = ' . Yii::app()->getModule('user')->user()->departament_id . ';';
             }
 
@@ -258,7 +258,7 @@ class DeviceStatusController extends RController {
             and d.id = s.device_id
             and d.object_id = obj.id";
 
-            if(!Yii::app()->getModule('user')->user()->role != 'Admin' || !Yii::app()->getModule('user')->user()->role != 'Superadmin') {
+            if (!Yii::app()->user->checkAccess('Superadmin')) {
                 $sql .= ' and obj.departament_id = ' . Yii::app()->getModule('user')->user()->departament_id . ';';
             }
 
@@ -276,7 +276,7 @@ class DeviceStatusController extends RController {
             and d.id = s.device_id
             and d.object_id = obj.id";
 
-            if(!Yii::app()->getModule('user')->user()->role != 'Admin' || !Yii::app()->getModule('user')->user()->role != 'Superadmin') {
+            if (!Yii::app()->user->checkAccess('Superadmin')) {
                 $sql .= ' and obj.departament_id = ' . Yii::app()->getModule('user')->user()->departament_id . ';';
             }
 
@@ -295,7 +295,7 @@ class DeviceStatusController extends RController {
             and d.id = s.device_id
             and d.object_id = obj.id";
 
-            if(!Yii::app()->getModule('user')->user()->role != 'Admin' || !Yii::app()->getModule('user')->user()->role != 'Superadmin') {
+            if (!Yii::app()->user->checkAccess('Superadmin')) {
                 $sql .= ' and obj.departament_id = ' . Yii::app()->getModule('user')->user()->departament_id . ';';
             }
 
@@ -314,7 +314,7 @@ class DeviceStatusController extends RController {
                     . "and m.device_id = d.id "
                     . "and d.object_id = obj.id ";
             
-            if(!Yii::app()->getModule('user')->user()->role != 'Admin' || !Yii::app()->getModule('user')->user()->role != 'Superadmin') {
+            if (!Yii::app()->user->checkAccess('Superadmin')) {
                 $sql .= ' and obj.departament_id = ' . Yii::app()->getModule('user')->user()->departament_id;
             }
             
@@ -334,7 +334,7 @@ class DeviceStatusController extends RController {
                     . "and um.device_id = d.id "
                     . "and d.object_id = obj.id ";
             
-            if(!Yii::app()->getModule('user')->user()->role != 'Admin' || !Yii::app()->getModule('user')->user()->role != 'Superadmin') {
+            if (!Yii::app()->user->checkAccess('Superadmin')) {
                 $sql .= ' and obj.departament_id = ' . Yii::app()->getModule('user')->user()->departament_id;
             }
             
