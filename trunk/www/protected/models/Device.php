@@ -118,8 +118,8 @@ class Device extends CActiveRecord {
         //$criteria->addSearchCondition('object_obj', $this->object->obj,true);
 
 
-        if (Yii::app()->user->getId() == "pulkovo") {
-            $criteria->condition = 'object.id in (1,2)';
+        if (!Yii::app()->getModule('user')->user()->role != 'Admin' || !Yii::app()->getModule('user')->user()->role != 'Superadmin') {
+            $criteria->addCondition('object.departament_id = ' . Yii::app()->getModule('user')->user()->departament_id);
         }
 
         return new CActiveDataProvider($this, array(
@@ -205,6 +205,30 @@ class Device extends CActiveRecord {
         }
 
         return $crc;
+    }
+    public static function getAccessIDSQLStr() {
+        $res = 'is NULL';
+        
+        $ids = self::getAccessIDArray();
+        if (count($ids) > 0) {
+            $res = 'in (' . implode(',', $ids) . ')';
+        }
+        return $res;
+    }
+    
+    public static function getAccessIDArray() {
+        $res = array();
+        $rows = Yii::app()->db->createCommand()->select(array('d.id'))
+                ->from('device d')
+                ->join('object o', 'd.object_id=o.id')
+                ->where('o.departament_id=:id', array(':id'=>Yii::app()->getModule('user')->user()->departament_id))
+                ->queryAll();
+        
+        foreach ($rows as $row) {
+            $res[] = $row['id'];
+        }
+        
+        return $res;
     }
 
 }

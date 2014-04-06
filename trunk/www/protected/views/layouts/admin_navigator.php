@@ -5,7 +5,7 @@
             <?php
             $this->widget('zii.widgets.CBreadcrumbs', array(
                 'links' => $this->breadcrumbs,
-                'homeLink' => CHtml::link('Администрирование',yii::app()->createUrl('//Object')),
+                'homeLink' => CHtml::link('Администрирование',yii::app()->createUrl('//Device')),
                 'htmlOptions' => array('class' => 'breadcrumb')
             ));
             ?><!-- breadcrumbs -->

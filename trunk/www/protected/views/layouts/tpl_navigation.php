@@ -54,58 +54,70 @@
                                 'htmlOptions' => array('class' => 'pull-right nav'),
                                 'items' => array(
                                     array('label' => 'Мониторинг', 'url' => array('/DeviceStatus/admin'),
-                                        'visible'=>Yii::app()->user->checkAccess('DeviceStatus.Admin')),
-                                    array('label' => 'Администрирование', 'url' => '/Object',
-                                        'visible'=>Yii::app()->user->checkAccess('Company_admin'),
-                                        'active' => (in_array(get_class($this), array('ObjectController', 'DeviceController', 'StaffController','DepartamentController'))),
+                                        'visible' => Yii::app()->user->checkAccess('DeviceStatus.Admin')),
+                                    array('label' => 'Администрирование', 'url' => '/Device',
+                                        'visible' => (Yii::app()->user->checkAccess('Object.admin') || Yii::app()->user->checkAccess('Device.admin') || Yii::app()->user->checkAccess('Staff.admin') || Yii::app()->user->checkAccess('Departament.admin')),
+                                        'active' => (in_array(get_class($this), array('ObjectController', 'DeviceController', 'StaffController', 'DepartamentController'))),
                                         'items' => array(
-                                            array('label' => 'Объекты', 'url' => array('//Object'), 'active' => (get_class($this) == 'ObjectController')),
-                                            array('label' => 'Устройства', 'url' => array('//Device'), 'active' => (get_class($this) == 'DeviceController')),
-                                            array('label' => 'Персонал', 'url' => array('//Staff'), 'active' => (get_class($this) == 'StaffController')),
-                                            array('label' => 'Департаменты', 'url' => array('//Departament'), 'active' => (get_class($this) == 'DepartamentController')),
-                                        ),),
+                                            array('label' => 'Объекты', 'url' => array('//Object'),
+                                                'active' => (get_class($this) == 'ObjectController'),
+                                            'visible'=>Yii::app()->user->checkAccess('Object.Admin'),
+                                            ),
+                                            array('label' => 'Устройства', 'url' => array('//Device'),
+                                                'active' => (get_class($this) == 'DeviceController'),
+                                            'visible'=>Yii::app()->user->checkAccess('Device.Admin')
+                                            ),
+                                            array('label' => 'Персонал', 'url' => array('//Staff'),
+                                                'active' => (get_class($this) == 'StaffController'),
+                                            'visible'=>Yii::app()->user->checkAccess('Staff.Admin'),
+                                            ),
+                                            array('label' => 'Департаменты', 'url' => array('//Departament'),
+                                                'active' => (get_class($this) == 'DepartamentController'),
+                                            'visible'=>Yii::app()->user->checkAccess('Departament.Admin'),
+                                            ),
+                                        ),
+                                    ),
                                     array('label' => 'Настройки', 'url' => '/settingsTemplate/admin',
-                                        'active' => (in_array(get_class($this),array('settingsTemplate','AdminController'))),
+                                        'active' => (in_array(get_class($this), array('settingsTemplate', 'AdminController'))),
                                         'items' => array(
                                             array('label' => 'Шаблоны настроек', 'url' => array('//settingsTemplate/admin'), 'active' => (get_class($this) == 'settingsTemplate'),
-                                                'visible'=>Yii::app()->user->checkAccess('SettingsTemplate.*')
+                                                'visible' => Yii::app()->user->checkAccess('SettingsTemplate.*')
                                             ),
                                             array('label' => 'Пользователи', 'url' => array('//user/admin'), 'active' => (get_class($this) == 'AdminController'),
-                                                'visible'=>Yii::app()->user->checkAccess('User.Admin.*')
+                                                'visible' => Yii::app()->user->checkAccess('User.Admin.*')
                                             ),
                                             array('label' => 'Профиль', 'url' => array('//user/profile'), 'active' => (get_class($this) == 'ProfileController'),
-                                                'visible'=>Yii::app()->user->checkAccess('User.Profile.*')
-                                             ),
-                                        ),),
+                                                'visible' => Yii::app()->user->checkAccess('User.Profile.*')
+                                            ),
+                                        ),
+                                    ),
                                     array('label' => 'Отчеты', 'url' => '#',
-                                        'active' => (in_array(get_class($this),array('ReportPageController'))),
+                                        'active' => (in_array(get_class($this), array('ReportPageController'))),
                                         'htmlOptions' => array('onMouseOver' => 'js:$(this).click();'),
-                                        'visible'=>(Yii::app()->user->checkAccess('ReportPage.StatusReport') ||
-                                            Yii::app()->user->checkAccess('ReportPage.MassageReport') ||
-                                            Yii::app()->user->checkAccess('ReportPage.IncassatorReport') ||
-                                            Yii::app()->user->checkAccess('ReportPage.SumaryReport')),
+                                        'visible' => (Yii::app()->user->checkAccess('ReportPage.StatusReport') ||
+                                        Yii::app()->user->checkAccess('ReportPage.MassageReport') ||
+                                        Yii::app()->user->checkAccess('ReportPage.IncassatorReport') ||
+                                        Yii::app()->user->checkAccess('ReportPage.SumaryReport')),
                                         'items' => array(
-                                            array('label' => 'Характеристика работы', 'url' => array('/reportPage/StatusReport'), 
+                                            array('label' => 'Характеристика работы', 'url' => array('/reportPage/StatusReport'),
                                                 'active' => ($this->action->id == 'StatusReport'),
-                                                'visible'=>Yii::app()->user->checkAccess('ReportPage.StatusReport')
+                                                'visible' => Yii::app()->user->checkAccess('ReportPage.StatusReport')
                                             ),
-                                            array('label' => 'Инкассация', 'url' => array('/reportPage/IncassatorReport'), 
+                                            array('label' => 'Инкассация', 'url' => array('/reportPage/IncassatorReport'),
                                                 'active' => ($this->action->id == 'IncassatorReport'),
-                                                'visible'=>Yii::app()->user->checkAccess('ReportPage.IncassatorReport')
+                                                'visible' => Yii::app()->user->checkAccess('ReportPage.IncassatorReport')
                                             ),
-                                            array('label' => 'Выручка', 'url' => array('/reportPage/SumaryReport'), 
+                                            array('label' => 'Выручка', 'url' => array('/reportPage/SumaryReport'),
                                                 'active' => ($this->action->id == 'SumaryReport'),
-                                                'visible'=>Yii::app()->user->checkAccess('ReportPage.SumaryReport')
+                                                'visible' => Yii::app()->user->checkAccess('ReportPage.SumaryReport')
                                             ),
-                                            array('label' => 'Массаж', 'url' => array('/reportPage/MassageReport'), 
+                                            array('label' => 'Массаж', 'url' => array('/reportPage/MassageReport'),
                                                 'active' => ($this->action->id == 'MassageReport'),
-                                                'visible'=>Yii::app()->user->checkAccess('ReportPage.MassageReport')
-                                                
+                                                'visible' => Yii::app()->user->checkAccess('ReportPage.MassageReport')
                                             ),
-                                            array('label' => 'Отчет по персоналу', 'url' => array('/reportPage/StaffReport'), 
+                                            array('label' => 'Отчет по персоналу', 'url' => array('/reportPage/StaffReport'),
                                                 'active' => ($this->action->id == 'StaffReport'),
-                                                'visible'=>Yii::app()->user->checkAccess('ReportPage.StaffReport')
-                                                
+                                                'visible' => Yii::app()->user->checkAccess('ReportPage.StaffReport')
                                             ),
                                         ),
                                     ),

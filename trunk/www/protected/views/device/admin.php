@@ -69,11 +69,11 @@ $this->widget('bootstrap.widgets.TbGridView', array(
              'htmlOptions' => array('style' => 'width: 10px; text-align: center;'),
         ),
         'IMEI',
-        'soft_version',
         //'deviceType.type_name',
         array('name' => 'object_obj', 'type' => 'html',
             'value' => '$data->object->obj'),
         'comment',
+        'soft_version',
         'ICCID',
         array(
             'class' => 'bootstrap.widgets.TbButtonColumn',

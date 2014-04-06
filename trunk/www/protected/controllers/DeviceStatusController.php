@@ -218,23 +218,27 @@ class DeviceStatusController extends RController {
 
 
             $result = array();
-
-            if (Yii::app()->user->getId() == "pulkovo") {
-                $cond = 'object_id in (1,2)';
-            } else {
-                $cond = NULL;
+            
+            $sql = "SELECT COUNT(*) AS res
+            FROM `device` d, `object` obj
+            WHERE d.object_id = obj.id ";
+            if(!Yii::app()->getModule('user')->user()->role != 'Admin' || !Yii::app()->getModule('user')->user()->role != 'Superadmin') {
+                $sql .= ' and obj.departament_id = ' . Yii::app()->getModule('user')->user()->departament_id . ';';
             }
+            
+            $res = Yii::app()->db->createCommand($sql)
+                    ->queryRow();
 
-            $result['device_count'] = Device::model()->count($cond);
+            $result['device_count'] = $res['res'];
             
             
             $sql = "SELECT COUNT(*) AS res
-            FROM `device_status` s, `device` d
+            FROM `device_status` s, `device` d, `object` obj
             WHERE d.`id` = s.`device_id` and unix_timestamp(now()) - unix_timestamp(s.dt) <= 60*5 
-            and d.id = s.device_id";
-
-            if (Yii::app()->user->getId() == "pulkovo") {
-                $sql .= ' and d.object_id in (1,2)';
+            and d.id = s.device_id
+            and d.object_id = obj.id";
+            if(!Yii::app()->getModule('user')->user()->role != 'Admin' || !Yii::app()->getModule('user')->user()->role != 'Superadmin') {
+                $sql .= ' and obj.departament_id = ' . Yii::app()->getModule('user')->user()->departament_id . ';';
             }
 
             $res = Yii::app()->db->createCommand($sql)
@@ -249,12 +253,13 @@ class DeviceStatusController extends RController {
             $result['cash_summ'] = 0;
 
             $sql = "SELECT SUM(summ_coin)+SUM(summ_cash) AS res
-            FROM device_cash_report c, `device_status` s, `device` d
+            FROM device_cash_report c, `device_status` s, `device` d, `object` obj
             WHERE c.`device_id` = s.`device_id` and unix_timestamp(now()) - unix_timestamp(s.dt) <= 60*5 
-            and d.id = s.device_id";
+            and d.id = s.device_id
+            and d.object_id = obj.id";
 
-            if (Yii::app()->user->getId() == "pulkovo") {
-                $sql .= ' and d.object_id in (1,2)';
+            if(!Yii::app()->getModule('user')->user()->role != 'Admin' || !Yii::app()->getModule('user')->user()->role != 'Superadmin') {
+                $sql .= ' and obj.departament_id = ' . Yii::app()->getModule('user')->user()->departament_id . ';';
             }
 
             $res = Yii::app()->db->createCommand($sql)
@@ -264,18 +269,15 @@ class DeviceStatusController extends RController {
                 $result['cash_summ'] = $res['res'];
             }
             $result['cash_summ'] .= ' RUR';
-            $res = Yii::app()->db->createCommand()
-                    ->select('sum(count_cash + count_coin) as res')
-                    ->from('device_cash_report')
-                    ->queryRow();
 
             $sql = "SELECT SUM(a.volume + b.volume) AS res
-            FROM device_cashbox_settings a, device_coinbox_settings b, `device_status` s, `device` d
+            FROM device_cashbox_settings a, device_coinbox_settings b, `device_status` s, `device` d, `object` obj
             WHERE a.`device_id` = b.`device_id` and a.`device_id` = s.`device_id` and unix_timestamp(now()) - unix_timestamp(s.dt) <= 60*5 
-            and d.id = s.device_id";
+            and d.id = s.device_id
+            and d.object_id = obj.id";
 
-            if (Yii::app()->user->getId() == "pulkovo") {
-                $sql .= ' and d.object_id in (1,2)';
+            if(!Yii::app()->getModule('user')->user()->role != 'Admin' || !Yii::app()->getModule('user')->user()->role != 'Superadmin') {
+                $sql .= ' and obj.departament_id = ' . Yii::app()->getModule('user')->user()->departament_id . ';';
             }
 
             $res1 = Yii::app()->db->createCommand($sql)
@@ -288,12 +290,13 @@ class DeviceStatusController extends RController {
 
 
             $sql = "SELECT SUM(count_coin)+SUM(count_cash) AS res
-            FROM device_cash_report c, `device_status` s, `device` d
+            FROM device_cash_report c, `device_status` s, `device` d, `object` obj
             WHERE c.`device_id` = s.`device_id` and unix_timestamp(now()) - unix_timestamp(s.dt) <= 60*5 
-            and d.id = s.device_id";
+            and d.id = s.device_id
+            and d.object_id = obj.id";
 
-            if (Yii::app()->user->getId() == "pulkovo") {
-                $sql .= ' and d.object_id in (1,2)';
+            if(!Yii::app()->getModule('user')->user()->role != 'Admin' || !Yii::app()->getModule('user')->user()->role != 'Superadmin') {
+                $sql .= ' and obj.departament_id = ' . Yii::app()->getModule('user')->user()->departament_id . ';';
             }
 
             $res2 = Yii::app()->db->createCommand($sql)
@@ -305,7 +308,15 @@ class DeviceStatusController extends RController {
                 $result['cash_summ_p'] = "-";
             }
             
-            $sql = "SELECT SEC_TO_TIME(SUM(time)) as time,SUM(time)/(TIME_TO_SEC(TIMEDIFF(NOW(),CAST(CURRENT_DATE() AS DATETIME))) * " . $result['device_connected'] . ")*100 as perc FROM massage m WHERE m.dt BETWEEN CURRENT_DATE() AND NOW();";
+            $sql = "SELECT SEC_TO_TIME(SUM(time)) as time,SUM(time)/(TIME_TO_SEC(TIMEDIFF(NOW(),CAST(CURRENT_DATE() AS DATETIME))) * " . $result['device_connected'] . ")*100 as perc "
+                    . "FROM massage m, `object` obj, `device` d "
+                    . "WHERE m.dt BETWEEN CURRENT_DATE() AND NOW() "
+                    . "and m.device_id = d.id "
+                    . "and d.object_id = obj.id ";
+            
+            if(!Yii::app()->getModule('user')->user()->role != 'Admin' || !Yii::app()->getModule('user')->user()->role != 'Superadmin') {
+                $sql .= ' and obj.departament_id = ' . Yii::app()->getModule('user')->user()->departament_id;
+            }
             
             $res = Yii::app()->db->createCommand($sql)->queryRow();
              
@@ -317,7 +328,15 @@ class DeviceStatusController extends RController {
                  $result['mass_perc'] = 0;
             }          
             
-            $sql = 'SELECT COUNT(*) as res FROM user_messages um WHERE um.user_id = 1 AND um.`read` = 0;';
+            $sql = 'SELECT COUNT(*) as res '
+                    . 'FROM user_messages um, `object` obj, `device` d '
+                    . 'WHERE um.`read` = 0 '
+                    . "and um.device_id = d.id "
+                    . "and d.object_id = obj.id ";
+            
+            if(!Yii::app()->getModule('user')->user()->role != 'Admin' || !Yii::app()->getModule('user')->user()->role != 'Superadmin') {
+                $sql .= ' and obj.departament_id = ' . Yii::app()->getModule('user')->user()->departament_id;
+            }
             
             $res = Yii::app()->db->createCommand($sql)->queryRow();
             
@@ -341,11 +360,11 @@ class DeviceStatusController extends RController {
         }
     }
     
-    public function ActionUpdateSettings($id) {
+    public function actionUpdateSettings($id) {
         Device::UpdateSettingsCommand($id);
     }
     
-    public function ActionExecMassage($id,$min,$sec) {
+    public function actionExecMassage($id,$min,$sec) {
         $command = new CommandExecuting();
         $command->device_id = $id;
         $command->value1 = $min;
@@ -358,7 +377,7 @@ class DeviceStatusController extends RController {
         Yii::app()->db->createCommand("CALL p_comand_log($id,9,'$text');")->execute();
     }
     
-    public function ActionDeviceRestart($id) {
+    public function actionDeviceRestart($id) {
         $command = new CommandExecuting();
         $command->device_id = $id;
         $command->command_id = CommandExecuting::RESTART;
@@ -368,7 +387,7 @@ class DeviceStatusController extends RController {
         Yii::app()->db->createCommand("CALL p_comand_log($id,11,'$text');")->execute();
     }
     
-    public function ActionMessages() {
+    public function actionMessages() {
                 $model=new UserMessages('search');
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['UserMessages']))
@@ -378,7 +397,7 @@ class DeviceStatusController extends RController {
 			'model'=>$model,
 		));
     }
-    public function ActionReadMessages() {
+    public function actionReadMessages() {
                 $sql = 'UPDATE user_messages um SET um.`read` = 1 WHERE um.user_id = 1 AND um.`read` = 0';
                 Yii::app()->db->createCommand($sql)->execute();
                 

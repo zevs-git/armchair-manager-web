@@ -86,7 +86,7 @@ $this->beginWidget('zii.widgets.CPortlet', array(
 <?php $this->beginWidget('bootstrap.widgets.TbModal', array('id' => 'dataModal')); ?>
     <div class="modal-header">
         <a class="close" data-dismiss="modal">×</a>
-        <h4><?= Yii::t("menu", "Выберите из списка персонала") ?></h4>
+        <h4><?= Yii::t("menu", "Выберите из списка устройтв") ?></h4>
     </div>
     <div class="modal-body"></div>
     <div class="modal-footer">

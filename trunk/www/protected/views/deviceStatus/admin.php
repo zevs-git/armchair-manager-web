@@ -55,19 +55,19 @@ $this->beginWidget('zii.widgets.CPortlet', array(
                 'header' => 'Купюры',
                 'htmlOptions' => array('style' => 'align: center; width: 200px;'),
                 'type' => 'raw',
-                'visible'=>Yii::app()->user->checkAccess('Wather'),
+                'visible'=>Yii::app()->user->checkAccess('Watcher'),
                 'headerHtmlOptions' => array('style' => 'align: center; width: 195px;')),
             array('name' => 'coin_string',
                 'header' => 'Монеты',
                 'htmlOptions' => array('style' => 'align: center; width: 200px;'),
                 'type' => 'raw',
-                'visible'=>Yii::app()->user->checkAccess('Wather'),
+                'visible'=>Yii::app()->user->checkAccess('Watcher'),
                 'headerHtmlOptions' => array('style' => 'align: center; width: 195px;')),
             array('name' => 'all_summ',
                 'htmlOptions' => array('style' => 'width: 70px; text-align: center;font-size:12px'),
                 'headerHtmlOptions' => array('style' => 'width: 65px; text-align: center;font-size:12px'),
                 'type' => 'raw',
-                'visible'=>Yii::app()->user->checkAccess('Wather'),
+                'visible'=>Yii::app()->user->checkAccess('Watcher'),
                 'value'=>'"<b style=\'color:green\'>" . (($data->deviceCashReport->summ)?$data->deviceCashReport->summ:0) . " руб.</b>"'
                 ),
             array('name'=>'balance',
@@ -174,8 +174,10 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(// the dialog
     <div class="span3 ">
         <div class="stat-block">
             <ul>
+                <?php if(Yii::app()->getModule('user')->user()->role != 'Tehnik'): ?>
                 <li class="stat-count" ><span id="cash_summ"><?php echo $Balance; ?> RUB</span><span style="width:500px">Сумма в купюрниках/наполненность</span></li>
                 <li class="stat-percent"><span id="cash_summ_p" class="text-success stat-percent"></span></li>
+                <?php endif; ?>
             </ul>
         </div>
     </div>

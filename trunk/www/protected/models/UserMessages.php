@@ -87,7 +87,7 @@ class UserMessages extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
-
+                $criteria->with = array('device');
 		$criteria->compare('id',$this->id);
 		$criteria->compare('user_id',$this->user_id);
 		$criteria->compare('dt',$this->dt,true);
@@ -96,6 +96,10 @@ class UserMessages extends CActiveRecord
 		$criteria->compare('read',$this->read);
 		$criteria->compare('email',$this->email);
 		$criteria->compare('sms',$this->sms);
+                
+                if (!Yii::app()->getModule('user')->user()->role != 'Admin' || !Yii::app()->getModule('user')->user()->role != 'Superadmin') {
+                    $criteria->addCondition('device.id ' . Device::getAccessIDSQLStr());
+                }
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
