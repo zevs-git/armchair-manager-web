@@ -21,6 +21,8 @@ $this->breadcrumbs=array(
         'type' => 'condensed bordered striped', //striped bordered and/or condensed
 	'attributes'=>array(
 		//'id',
+                array('name'=>'departament.name',
+                      'visible'=>Yii::app()->user->checkAccess('Superadmin')),
 		'country',
 		'region',
 		'city',
@@ -30,7 +32,7 @@ $this->breadcrumbs=array(
 		'obj',
 		'face',
 		'phone',
-		'comment',
+		'comment'
 	),
 )); ?>
 

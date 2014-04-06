@@ -35,11 +35,11 @@ class Object extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('country, region, city, street, house, type_id, obj, face, phone, comment', 'length', 'max'=>255),
+			array('country, region, city, street, house, type_id, obj, face, phone, comment,departament_id', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
                         array('city, obj', 'required'),
-			array('id, country, region, city, street, house, type.descr, obj, face, phone, comment,object_type,departament_id', 'safe', 'on'=>'search'),
+			array('id, country, region, city, street, house, type.descr, obj, face, phone, comment,object_type,departament_id,departament_name', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -52,11 +52,12 @@ class Object extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
                     'type' => array(self::BELONGS_TO, 'ObjectType', 'type_id'),
-                    'departanent' => array(self::BELONGS_TO, 'Departanent', 'departanent_id'),
+                    'departament' => array(self::BELONGS_TO, 'Departament', 'departament_id'),
                     
 		);
 	}
         public $object_type;
+        public $departament_name;
 
 	/**
 	 * @return array customized attribute labels (name=>label)
@@ -75,6 +76,8 @@ class Object extends CActiveRecord
 			'face' => 'Контактное лицо',
 			'phone' => 'Телефон',
 			'comment' => 'Примечание',
+                        'departament_id'=>'Департамент',
+                        'departament_name'=>'Департамент'
 		);
 	}
 
@@ -107,12 +110,15 @@ class Object extends CActiveRecord
 		$criteria->compare('face',$this->face,true);
 		$criteria->compare('phone',$this->phone,true);
 		$criteria->compare('comment',$this->comment,true);
+                $criteria->compare('departament_id',$this->departament_id,true);
                 
-                $criteria->with = array('type');
+                $criteria->with = array('type','departament');
                 $criteria->compare('type.id',$this->object_type,false);
+                $criteria->compare('departament.id',$this->departament_name,false);
                 
-                if (Yii::app()->user->getId() == "pulkovo") {
-                    $criteria->condition = 'id in (1,2)';
+               
+                if (!Yii::app()->user->checkAccess('Superadmin')) {
+                    $criteria->addCondition('departament_id = ' . Yii::app()->getModule('user')->user()->departament_id);
                 }
 
 		return new CActiveDataProvider($this, array(
@@ -120,8 +126,12 @@ class Object extends CActiveRecord
                     'sort' => array(
                         'attributes' => array(
                             'object_type' => array(
-                                'asc' => 'type.descr',
+                                'asc' => 'type.descr ASC',
                                 'desc' => 'type.descr DESC',
+                            ),
+                            'departament_name' => array(
+                                'asc' => 'departament.name ASC',
+                                'desc' => 'departament.name DESC',
                             ),
                             '*',
                         ),

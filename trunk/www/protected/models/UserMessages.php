@@ -97,7 +97,7 @@ class UserMessages extends CActiveRecord
 		$criteria->compare('email',$this->email);
 		$criteria->compare('sms',$this->sms);
                 
-                if (!Yii::app()->getModule('user')->user()->role != 'Admin' || !Yii::app()->getModule('user')->user()->role != 'Superadmin') {
+                if (!Yii::app()->user->checkAccess('Superadmin')) {
                     $criteria->addCondition('device.id ' . Device::getAccessIDSQLStr());
                 }
 
