@@ -10,8 +10,8 @@ $this->widget('bootstrap.widgets.TbTabs', array(
     //'stacked' => false,
     'tabs' => array(
         array('id' => 'Detail', 'label' => 'Статус','url'=>'dasad', 'content' =>''),
-        array('id' => 'DeviceLog', 'label' => 'Лог', 'content' => '','active' => true),
-        array('id' => 'DeviceConfig', 'label' => 'Управление', 'content' =>''),
+        array('id' => 'DeviceLog', 'label' => 'Лог', 'content' => '','active' => true,'visible'=>Yii::app()->user->checkAccess('DeviceStatus.DeviceLog')),
+        array('id' => 'DeviceConfig', 'label' => 'Управление', 'content' =>'','visible'=>Yii::app()->user->checkAccess('DeviceStatus.DeviceConfig')),
     ),
     'events'=>array('shown'=>'js:loadContent'),
 ));

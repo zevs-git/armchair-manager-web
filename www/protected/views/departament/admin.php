@@ -1,37 +1,37 @@
 <?php
-$this->breadcrumbs=array(
-	'Departaments'=>array('index'),
-	'Manage',
+$this->breadcrumbs = array(
+    'Департаменты' => array('admin'),
+    'Управление',
 );
 
-$this->menu=array(
-	array('label'=>'List Departament', 'url'=>array('index')),
-	array('label'=>'Create Departament', 'url'=>array('create'), 'linkOptions'=>array(
-		'ajax' => array(
-			'url'=>$this->createUrl('create'),
-			'success'=>'js:function(r){$("#DialogCRUDForm").html(r).dialog("option", "title", "Create Departament").dialog("open"); return false;}',
-		),
-	)),
+$this->menu = array(
+    array('label' => 'List Departament', 'url' => array('index')),
+    array('label' => 'Create Departament', 'url' => array('create'), 'linkOptions' => array(
+            'ajax' => array(
+                'url' => $this->createUrl('create'),
+                'success' => 'js:function(r){$("#DialogCRUDForm").html(r).dialog("option", "title", "Создать департамент").dialog("open"); return false;}',
+            ),
+        )),
 );
 
-$this->beginWidget('zii.widgets.jui.CJuiDialog',array(
-        'id'=>'DialogCRUDForm',
-        'options'=>array(
-			'autoOpen'=>false,
-			'modal'=>true,
-			'width'=>'auto',
-			'height'=>'auto',
-			'resizable'=>'false',
-		),
-	));
+$this->beginWidget('zii.widgets.jui.CJuiDialog', array(
+    'id' => 'DialogCRUDForm',
+    'options' => array(
+        'autoOpen' => false,
+        'modal' => true,
+        'width' => 'auto',
+        'height' => 'auto',
+        'resizable' => 'false',
+    ),
+));
 $this->endWidget();
 
-$updateDialog =<<<'EOT'
+$updateDialog = <<<'EOT'
 function() {
 	var url = $(this).attr('href');
     $.get(url, function(r){
         $("#update").html(r).dialog("open");
-		$("#DialogCRUDForm").html(r).dialog("option", "title", "Update Departament").dialog("open");
+		$("#DialogCRUDForm").html(r).dialog("option", "title", "Редактировать департамент").dialog("open");
     });
     return false;
 }
@@ -54,11 +54,13 @@ $('.search-form form').submit(function(){
 <h3>Управление департаментами</h3>
 
 
-<?php echo CHtml::link('Расширенный поиск','#',array('class'=>'search-button')); ?>
+<?php echo CHtml::link('Расширенный поиск', '#', array('class' => 'search-button')); ?>
 <div class="search-form" style="display:none">
-<?php $this->renderPartial('_search',array(
-	'model'=>$model,
-)); ?>
+    <?php
+    $this->renderPartial('_search', array(
+        'model' => $model,
+    ));
+    ?>
 </div><!-- search-form -->
 <div class="btn-toolbar">
     <?php
@@ -69,29 +71,60 @@ $('.search-form form').submit(function(){
         'buttonType' => 'ajaxLink',
         'url' => $this->createUrl('create'),
         'ajaxOptions' => array(
-			'url'=>$this->createUrl('create'),
-			'success'=>'js:function(r){$("#DialogCRUDForm").html(r).dialog("option", "title", "Create Departament").dialog("open"); return false;}',
-		),
+            'url' => $this->createUrl('create'),
+            'success' => 'js:function(r){$("#DialogCRUDForm").html(r).dialog("option", "title", "Новый деапртамент").dialog("open"); return false;}',
+        ),
     ));
     ?>
 </div>
-<?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'departament-grid',
-	'ajaxUpdate'=>false,
-        'itemsCssClass' => 'table table-striped table-bordered',
-	'dataProvider'=>$model->search(),
-	'filter'=>$model,
-	'columns'=>array(
-		'id',
-		'name',
-		'comment',
-		array(
-			'class'=>'CButtonColumn',
-			'buttons' => array(
-				'update' => array(
-					'click'=>$updateDialog
-				),
-			), 
-		),
-	),
-)); ?>
+<?php
+$this->widget('zii.widgets.grid.CGridView', array(
+    'id' => 'departament-grid',
+    'ajaxUpdate' => false,
+    'itemsCssClass' => 'table table-striped table-bordered',
+    'dataProvider' => $model->search(),
+    'filter' => $model,
+    'columns' => array(
+        'id',
+        'name',
+        'comment',
+        array(
+            'class' => 'bootstrap.widgets.TbButtonColumn',
+            'template' => '{update}{delete}{store}',
+            'htmlOptions' => array('style' => 'min-width: 170px; text-align: center;'),
+            'buttons' => array(
+                'update' => array(
+                    //'label' => 'Настройки устройтва',
+                    'click' => $updateDialog,
+                    'options' => array(
+                        'class' => 'btn btn-small update',
+                    ),
+                ),
+                'delete' => array(
+                    'options' => array(
+                        'class' => 'btn btn-small delete',
+                    ),
+                ),
+                'store' => array(
+                    'label' => 'Склад',
+                    'url' => 'Yii::app()->createUrl("departament/store", array("id"=>$data->id))',
+                    'click' => 'function(){
+                                    var url = $(this).attr("href");
+                                    document.location = url;
+                                    return false;
+				}',
+                    'options' => array(
+                        'class' => 'btn btn-primary btn-small  store',
+                    ),
+                ),
+                'users' => array(
+                    'label' => 'Пользователи',
+                    'options' => array(
+                        'class' => 'btn btn-small users',
+                    ),
+                ),
+            ),
+        ),
+    ),
+));
+?>

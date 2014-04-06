@@ -210,7 +210,9 @@ class ObjectController extends Controller {
      * @param integer $id the ID of the model to be deleted
      */
     public function actionDelete($id) {
-        if ($id == 0) {
+        $obj = $this->loadModel($id);
+        //Нельзя удалить склад
+        if ($obj->type_id == 14) {
             return false;
         }
         $devices = Device::model()->findAll("object_id = $id");
@@ -223,7 +225,7 @@ class ObjectController extends Controller {
             $staff->object_id = 0;
             $staff->save();
         }
-        $this->loadModel($id)->delete();
+        $obj->delete();
 
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if (!isset($_GET['ajax']))

@@ -46,7 +46,7 @@
         <div class="row" <?=(!$model->isNewRecord)?'style="display:none"':''?> >
                     <div>
                         <?php echo $form->labelEx($model,'departament',array('class'=>'span2')); ?>
-                        <?php echo $form->dropDownList($model,'role',CHtml::listData(Departament::model()->findAll() ,'id','name')); ?>
+                        <?php echo $form->dropDownList($model,'departament',CHtml::listData(Departament::model()->findAll() ,'id','name')); ?>
                     </div>
 	</div>
 

@@ -3,7 +3,11 @@
 /* @var $model Object */
 /* @var $form CActiveForm */
 ?>
-
+<style>
+    div.form > form .row {
+        margin-bottom: 10px;
+    }
+</style>
 <div class="form">
 <?php Yii::app()->clientScript->registerCoreScript('jquery.ui'); ?>
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
