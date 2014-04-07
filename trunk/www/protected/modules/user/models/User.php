@@ -63,7 +63,7 @@ class User extends CActiveRecord
                         array('create_at', 'default', 'value' => date('Y-m-d H:i:s'), 'setOnEmpty' => true, 'on' => 'insert'),
                         array('lastvisit_at', 'default', 'value' => '0000-00-00 00:00:00', 'setOnEmpty' => true, 'on' => 'insert'),
 			array('username, email, superuser, status', 'required'),
-			array('superuser, status', 'numerical', 'integerOnly'=>true),
+			array('superuser, status,departament_id', 'numerical', 'integerOnly'=>true),
 			array('id, username, password, email, activkey, create_at, lastvisit_at, superuser, status, role,departament_id', 'safe', 'on'=>'search'),
 		):((Yii::app()->user->id==$this->id)?array(
 			array('username, email', 'required'),
@@ -237,6 +237,7 @@ class User extends CActiveRecord
         $criteria->compare('superuser',$this->superuser);
         $criteria->compare('status',$this->status);
         $criteria->compare('role',$this->role);
+        $criteria->compare('departamnet_id',$this->departamnet_id);
         
         
         /*if (!Yii::app()->user->checkAccess('Superadmin')) {
