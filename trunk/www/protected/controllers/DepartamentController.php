@@ -55,7 +55,7 @@ class DepartamentController extends RController {
     public function actionStore($id) {
         $obj = Object::model()->find("departament_id = $id and type_id = 14");
         if ($obj) {
-            $this->redirect(yii::app()->createUrl("object/$obj->id"));
+            $this->redirect(yii::app()->createUrl("object/device/$obj->id"));
         } else {
             throw new ExceptionClass('Не удалось найти склад данного департамента');
         }
