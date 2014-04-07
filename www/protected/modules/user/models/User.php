@@ -237,7 +237,7 @@ class User extends CActiveRecord
         $criteria->compare('superuser',$this->superuser);
         $criteria->compare('status',$this->status);
         $criteria->compare('role',$this->role);
-        $criteria->compare('departamnet_id',$this->departamnet_id);
+        $criteria->compare('departamnet_id',$this->departament_id);
         
         
         /*if (!Yii::app()->user->checkAccess('Superadmin')) {
