@@ -43,7 +43,7 @@
         <?php echo $form->labelEx($model, 'object_id',array('class'=>'span4')); ?>
         <?php echo $form->error($model, 'object_id'); ?>
         
-	<?php $list = CHtml::listData(Object::model()->findAll(), 'id', 'obj'); ?>
+	<?php $list = CHtml::listData(Object::model()->findAll((Yii::app()->user->checkAccess('Superadmin'))?'':'departament_id = ' . Yii::app()->getModule('user')->user()->departament_id ), 'id', 'obj'); ?>
         <?php echo $form->dropDownList($model, 'object_id', $list, array('class' => 'span4')); ?>
     </div>
         <?php if ($model->isNewRecord):?>

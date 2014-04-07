@@ -1,6 +1,6 @@
 <?php
 
-class StaffController extends Controller
+class StaffController extends RController
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -11,13 +11,11 @@ class StaffController extends Controller
 	/**
 	 * @return array action filters
 	 */
-	public function filters()
-	{
-		return array(
-			'accessControl', // perform access control for CRUD operations
-			'postOnly + delete', // we only allow deletion via POST request
-		);
-	}
+	public function filters() {
+            return array(
+                'rights', 
+              );
+        }
 
 	/**
 	 * Specifies the access control rules.
@@ -153,6 +151,8 @@ class StaffController extends Controller
 		$model=Staff::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
+                if ($model->departament_id != Yii::app()->getModule('user')->user()->departament_id && !Yii::app()->user->checkAccess('Superadmin'))
+            throw new CHttpException(404, 'У Вас нет прав на доступ к этому объекту.');
 		return $model;
 	}
 

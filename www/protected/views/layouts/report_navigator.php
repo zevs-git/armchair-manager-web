@@ -87,7 +87,7 @@
         <?php
         $this->beginWidget('zii.widgets.CPortlet', array(
             'title' => "Параметры отчета <a style='float:right' id='hide-btn' class='btn btn-small' href='#'><i class='icon-minus-sign'></i> </a>",
-            'htmlOptions'=>array('id'=>'params_data','style'=>'cursor: pointer;'),
+            'htmlOptions'=>array('id'=>'params_data','style'=>'cursor: pointer;','class'=>'portlet'),
         ));
         ?>
         <div id="parameters">
@@ -149,7 +149,7 @@
             <?//php echo CHtml::dropDownList('country', 'country', $list, array('class' => 'span4', 'id' => 'country', 'empty' => 'Выберите страну')); ?>
             <span class="span1" id="region-label">Регион:</span>
             <?php
-            $crit = (Yii::app()->user->getId() == "pulkovo") ? "id in (1,2)" : NULL;
+            $crit = (Yii::app()->user->checkAccess('Superadmin'))?'':'departament_id = ' . Yii::app()->getModule('user')->user()->departament_id;
             $list = array_unique(CHtml::listData(Object::model()->findAll($crit), 'region', 'region'));
             ?>
             <?php echo CHtml::dropDownList('region', 'region', $list, array('class' => 'span4', 'id' => 'region', 'empty' => 'Выберите регион')); ?>
@@ -157,7 +157,7 @@
             <br />
             <span class="span1" id="city-label">Город:</span>
             <?php
-            $crit = "1 = 1";
+            $crit = (Yii::app()->user->checkAccess('Superadmin'))?"1 = 1":'departament_id = ' . Yii::app()->getModule('user')->user()->departament_id;
             $crit .= !empty($_REQUEST['region'])?(" AND region = '" . $_REQUEST['region'] . "'"):NULL;
             $list = array_unique(CHtml::listData(Object::model()->findAll($crit), 'city', 'city'));
             ?>
@@ -166,7 +166,7 @@
             <br />
             <span class="span1" id="object_id-label">Объект:</span>
             <?php
-            $crit = "1 = 1";
+            $crit = (Yii::app()->user->checkAccess('Superadmin'))?"1 = 1":'departament_id = ' . Yii::app()->getModule('user')->user()->departament_id;
             $crit .= !empty($_REQUEST['region'])?(" AND region = '" . $_REQUEST['region'] . "'"):NULL;
             $crit .= !empty($_REQUEST['city'])?(" AND city = '" . $_REQUEST['city'] . "'"):NULL;
             $list = CHtml::listData(Object::model()->findAll($crit), 'id', 'obj');

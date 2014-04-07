@@ -50,7 +50,7 @@ class User extends CActiveRecord
 	{
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.CConsoleApplication
-		return ((get_class(Yii::app())=='CConsoleApplication' || (get_class(Yii::app())!='CConsoleApplication' && Yii::app()->getModule('user')->isAdmin()))?array(
+		return ((get_class(Yii::app())=='CConsoleApplication' || (get_class(Yii::app())!='CConsoleApplication' && (Yii::app()->user->checkAccess('Company_admin'))))?array(
 			array('username', 'length', 'max'=>20, 'min' => 3,'message' => UserModule::t("Incorrect username (length between 3 and 20 characters).")),
 			array('password', 'length', 'max'=>128, 'min' => 4,'message' => UserModule::t("Incorrect password (minimal length 4 symbols).")),
 			array('email', 'email'),
@@ -197,6 +197,15 @@ class User extends CActiveRecord
                 
                 return array();
         }
+        
+        public static function getRolesListSQLStr() {
+            $res = array();
+            $roles = self::getRolesList();
+            foreach($roles as $role) {
+                $res[] =  "'" . $role['name'] . "'";
+            }
+            return " in (" . implode(",", $res) . ") ";
+        }
         public function gerRoleDescr() {
             $roles = self::getRolesList();
             foreach ($roles as $role) {
@@ -228,6 +237,14 @@ class User extends CActiveRecord
         $criteria->compare('superuser',$this->superuser);
         $criteria->compare('status',$this->status);
         $criteria->compare('role',$this->role);
+        
+        
+        /*if (!Yii::app()->user->checkAccess('Superadmin')) {
+            $criteria->addCondition('departament_id = ' . Yii::app()->getModule('user')->user()->departament_id);
+        }*/
+        
+        
+        $criteria->addCondition('role ' . User::getRolesListSQLStr());
 
         return new CActiveDataProvider(get_class($this), array(
             'criteria'=>$criteria,

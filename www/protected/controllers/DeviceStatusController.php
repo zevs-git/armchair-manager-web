@@ -17,23 +17,6 @@ class DeviceStatusController extends RController {
     }
 
     /**
-     * Specifies the access control rules.
-     * This method is used by the 'accessControl' filter.
-     * @return array access control rules
-     */
-    /*public function accessRules() {
-        return array(
-            array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('admin', 'delete', 'index', 'view', 'grid', 'Summary'),
-                'users' => array('admin', 'pulkovo'),
-            ),
-            array('deny', // deny all users
-                'users' => array('*'),
-            ),
-        );
-    }*/
-
-    /**
      * Displays a particular model.
      * @param integer $id the ID of the model to be displayed
      */
@@ -346,13 +329,25 @@ class DeviceStatusController extends RController {
                  $result['messages_count'] = 0;
             }
             
-            $last_mes = new UserMessages();
-            $last_mes = UserMessages::model()->find('`user_id` = 1 AND `read` = 0 ORDER BY `dt` DESC');
+            $sql = 'SELECT d.id as device_id, lcm.descr as descr, um.dt '
+                    . 'FROM user_messages um, `object` obj, `device` d , log_command_msg lcm '
+                    . 'WHERE um.msg_code = lcm.id '
+                    . 'and um.`read` = 1 '
+                    . "and um.device_id = d.id "
+                    . "and d.object_id = obj.id ";
             
-            if ($last_mes) {
-                $result['last_message'] = "<font color=red>" . date('H:i:s',strtotime($last_mes->dt)) . " [" . $last_mes->device_id . "] " . $last_mes->message->descr . "</font>";
+            if (!Yii::app()->user->checkAccess('Superadmin')) {
+                $sql .= ' and obj.departament_id = ' . Yii::app()->getModule('user')->user()->departament_id;
+            }
+            $sql .= " ORDER BY `dt` DESC LIMIT 1";
+            
+            $res = Yii::app()->db->createCommand($sql)->queryRow();
+            
+            
+            if (isset($res['device_id'])) {
+                 $result['last_message'] = "<font color=red>" . date('H:i:s',strtotime($res['dt'])) . " [" . $res['device_id'] . "] " . $res['descr'] . "</font>";
             } else {
-                $result['last_message'] = 'Нет новых уведомлений';
+                 $result['last_message'] = 'Нет новых уведомлений';
             }
             
 

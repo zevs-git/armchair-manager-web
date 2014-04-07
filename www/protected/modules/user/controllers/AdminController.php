@@ -1,6 +1,6 @@
 <?php
 
-class AdminController extends Controller
+class AdminController extends RController
 {
 	public $defaultAction = 'admin';
 	public $layout='//layouts/settings';
@@ -10,18 +10,17 @@ class AdminController extends Controller
 	/**
 	 * @return array action filters
 	 */
-	public function filters()
-	{
-		return CMap::mergeArray(parent::filters(),array(
-			'accessControl', // perform access control for CRUD operations
-		));
-	}
+        public function filters() {
+            return array(
+                'rights', 
+              );
+        }
 	/**
 	 * Specifies the access control rules.
 	 * This method is used by the 'accessControl' filter.
 	 * @return array access control rules
 	 */
-	public function accessRules()
+	/*public function accessRules()
 	{
 		return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -32,7 +31,7 @@ class AdminController extends Controller
 				'users'=>array('*'),
 			),
 		);
-	}
+	}*/
 	/**
 	 * Manages all models.
 	 */
@@ -192,6 +191,10 @@ class AdminController extends Controller
 				$this->_model=User::model()->notsafe()->findbyPk($_GET['id']);
 			if($this->_model===null)
 				throw new CHttpException(404,'The requested page does not exist.');
+                        if(!Yii::app()->user->checkAccess('Superadmin') && $this->_model->departament_id != Yii::app()->getModule('user')->user()->departament_id)
+				throw new CHttpException(404,'У Вас нет прав на просмотр инфомации о пользователе другого департамента.');
+                        if(!Yii::app()->user->checkAccess('Company_admin') && $this->_model->id != Yii::app()->getModule('user')->user()->id)
+				throw new CHttpException(404,'У Вас нет прав на просмотр инфомации других пользователях.');
 		}
 		return $this->_model;
 	}

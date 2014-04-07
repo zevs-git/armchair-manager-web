@@ -1,6 +1,6 @@
 <?php
 
-class DepartamentController extends Controller {
+class DepartamentController extends RController {
 
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -13,8 +13,8 @@ class DepartamentController extends Controller {
      */
     public function filters() {
         return array(
-            'accessControl', // perform access control for CRUD operations
-        );
+            'rights', 
+          );
     }
 
     /**
