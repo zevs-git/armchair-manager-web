@@ -18,6 +18,17 @@
 	<p class="note">Обязательные поля отмечены символом <span class="required">*</span>.</p>
 
 	<?php echo $form->errorSummary($model); ?>
+        
+        <div class="row">
+            <?php if (Yii::app()->user->checkAccess('Superadmin')): ?> 
+                <?php echo $form->labelEx($model,'departament_id'); ?>
+                <?php $list = CHtml::listData(Departament::model()->findAll(), 'id', 'name'); ?>
+                <?php echo $form->dropDownList($model, 'departament_id', $list,array('class'=>'span2')); ?>
+            <?php else:?>
+                <?php echo $form->hiddenField($model,'departament_id',array('class'=>'span4','maxlength'=>20,'value'=>Yii::app()->getModule('user')->user()->departament_id)); ?>
+            <?php endif;?>
+            <?php echo $form->error($model,'departament_id'); ?>
+	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'FIO'); ?>
@@ -26,6 +37,7 @@
 	</div>
 
 	<div class="row">
+            <?php echo $form->labelEx($model,'staff_type_id'); ?>
             <?php $list = array('0'=>'Инкассатор','1'=>'Техник'); ?>
             <?php echo $form->dropDownList($model, 'staff_type_id', $list, array('class' => 'span2')); ?>
 	</div>

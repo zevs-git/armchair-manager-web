@@ -1,6 +1,6 @@
 <?php
 
-class DeviceController extends Controller {
+class DeviceController extends RController {
 
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -13,8 +13,8 @@ class DeviceController extends Controller {
      */
     public function filters() {
         return array(
-            'accessControl', // perform access control for CRUD operations
-        );
+            'rights', 
+          );
     }
 
     /**
@@ -183,6 +183,8 @@ class DeviceController extends Controller {
         $model = Device::model()->findByPk($id);
         if ($model === null)
             throw new CHttpException(404, 'The requested page does not exist.');
+        if ($model->object->departament_id != Yii::app()->getModule('user')->user()->departament_id && !Yii::app()->user->checkAccess('Superadmin'))
+            throw new CHttpException(404, 'У Вас нет прав на доступ к этому устройтву.');
         return $model;
     }
 

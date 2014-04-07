@@ -141,15 +141,20 @@ class Device extends CActiveRecord {
 
         $criteria = new CDbCriteria;
 
+        $criteria->with = array('object');
         $criteria->compare('id', $this->id);
         $criteria->compare('IMEI', $this->IMEI, true);
         $criteria->compare('type_val', $this->type_id, true);
         $criteria->compare('soft_version', $this->soft_version);
-        $criteria->compare('object_id', $object_id, true);
+        $criteria->compare('object_id', $object_id, false);
         $criteria->compare('settings_id', $this->settings_id);
         $criteria->compare('comment', $this->comment);
         //$criteria->compare('object.obj', $this->object->obj);
 
+        if (!Yii::app()->user->checkAccess('Superadmin')) {
+            $criteria->addCondition('object.departament_id = ' . Yii::app()->getModule('user')->user()->departament_id);
+        }
+        
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));

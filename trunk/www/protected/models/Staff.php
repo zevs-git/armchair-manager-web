@@ -11,6 +11,7 @@
  * @property string $phone
  * @property string $comment
  * @property integer $object_id
+ * @property int    $departament_id
  */
 class Staff extends CActiveRecord
 {
@@ -30,13 +31,13 @@ class Staff extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('staff_type_id, object_id', 'numerical', 'integerOnly'=>true),
+			array('staff_type_id, object_id, departament_id', 'numerical', 'integerOnly'=>true),
 			array('FIO, comment', 'length', 'max'=>255),
 			array('phone', 'length', 'max'=>20),
                         array('key', 'length', 'max'=>8,'min'=>8),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, FIO, staff_type_id, key, phone, comment, object_id, type_descr', 'safe', 'on'=>'search'),
+			array('id, FIO, staff_type_id, key, phone, comment, object_id, type_descr, departament_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -49,9 +50,11 @@ class Staff extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
                     'type' => array(self::BELONGS_TO, 'StaffType', 'staff_type_id'),
+                    'departament' => array(self::BELONGS_TO, 'Departament', 'departament_id'),
 		);
 	}
         public $type_descr;
+        public $departament_name;
 
 	/**
 	 * @return array customized attribute labels (name=>label)
@@ -66,7 +69,9 @@ class Staff extends CActiveRecord
 			'phone' => 'Телефон',
 			'comment' => 'Примечание',
 			'object_id' => 'Объект',
-                        'type_descr'=>'Тип персонала'
+                        'type_descr'=>'Тип персонала',
+                        'departament_id'=>'Деапртамент',
+                        'departament_name'=>'Департамент'
 		);
 	}
 
@@ -87,7 +92,7 @@ class Staff extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
-                $criteria->with = array('type');
+                $criteria->with = array('type','departament');
 		$criteria->compare('t.id',$this->id);
 		$criteria->compare('FIO',$this->FIO,true);
 		$criteria->compare('staff_type_id',$this->staff_type_id);
@@ -96,6 +101,11 @@ class Staff extends CActiveRecord
 		$criteria->compare('comment',$this->comment,true);
 		$criteria->compare('object_id',$this->object_id);
                 $criteria->compare('type.descr', $this->type_descr,true);
+                $criteria->compare('departament_id',$this->departament_id,true);
+                
+                if (!Yii::app()->user->checkAccess('Superadmin')) {
+                    $criteria->addCondition('departament_id = ' . Yii::app()->getModule('user')->user()->departament_id);
+                }
 
                 
 		return new CActiveDataProvider($this, array(
@@ -105,6 +115,10 @@ class Staff extends CActiveRecord
                             'type_descr' => array(
                                 'asc' => 'type.descr',
                                 'desc' => 'type.descr DESC',
+                            ),
+                            'departament_name' => array(
+                                'asc' => 'departament.name ASC',
+                                'desc' => 'departament.name DESC',
                             ),
                             '*',
                         ),

@@ -1,6 +1,6 @@
 <?php
 
-class ObjectController extends Controller {
+class ObjectController extends RController {
 
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -13,34 +13,8 @@ class ObjectController extends Controller {
      */
     public function filters() {
         return array(
-            'accessControl', // perform access control for CRUD operations
-            'postOnly + delete', // we only allow deletion via POST request
-        );
-    }
-
-    /**
-     * Specifies the access control rules.
-     * This method is used by the 'accessControl' filter.
-     * @return array access control rules
-     */
-    public function accessRules() {
-        return array(
-            array('allow', // allow all users to perform 'index' and 'view' actions
-                'actions' => array('index', 'view'),
-                'users' => array('*'),
-            ),
-            array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update'),
-                'users' => array('@'),
-            ),
-            array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('admin', 'delete'),
-                'users' => array('admin'),
-            ),
-            array('allow', // deny all users
-                'users' => array('*'),
-            ),
-        );
+            'rights', 
+          );
     }
 
     /**
@@ -138,7 +112,7 @@ class ObjectController extends Controller {
 
     public function actionDeleteDevice($object_id, $device_id) {
         $device = Device::model()->findByPk($device_id);
-        $device->object_id = 0;
+        $device->object_id = Object::model()->find('departament_id = :dep_id AND type_id = 14',array(':dep_id'=>Yii::app()->getModule('user')->user()->departament_id))->id?:0;
         if ($device->saveSettings()) {
             echo 'success';
         } else {
@@ -167,7 +141,9 @@ class ObjectController extends Controller {
 
         if (isset($_POST['Object'])) {
             $model->attributes = $_POST['Object'];
-            if ($model->save()) {
+            if ($model->type_id == 14) {
+                $model->addError('type_id','Вы не можете создать объект с типом "Склад".');
+            }elseif ($model->save()) {
                 $baseTarif = ObjectTariff::model()->findByPk(0);
                 $newTarif = new ObjectTariff();
                 $newTarif->attributes = $baseTarif->attributes;
@@ -267,6 +243,8 @@ class ObjectController extends Controller {
         $model = Object::model()->findByPk($id);
         if ($model === null)
             throw new CHttpException(404, 'The requested page does not exist.');
+        if ($model->departament_id != Yii::app()->getModule('user')->user()->departament_id && !Yii::app()->user->checkAccess('Superadmin'))
+            throw new CHttpException(404, 'У Вас нет прав на доступ к этому объекту.');
         return $model;
     }
 

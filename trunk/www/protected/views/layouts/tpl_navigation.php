@@ -61,7 +61,7 @@
                                         'items' => array(
                                             array('label' => 'Объекты', 'url' => array('//Object'),
                                                 'active' => (get_class($this) == 'ObjectController'),
-                                            'visible'=>Yii::app()->user->checkAccess('Object.Admin'),
+                                            'visible'=>Yii::app()->user->checkAccess('Object.Index'),
                                             ),
                                             array('label' => 'Устройства', 'url' => array('//Device'),
                                                 'active' => (get_class($this) == 'DeviceController'),
@@ -81,13 +81,13 @@
                                         'active' => (in_array(get_class($this), array('settingsTemplate', 'AdminController'))),
                                         'items' => array(
                                             array('label' => 'Шаблоны настроек', 'url' => array('//settingsTemplate/admin'), 'active' => (get_class($this) == 'settingsTemplate'),
-                                                'visible' => Yii::app()->user->checkAccess('SettingsTemplate.*')
+                                                'visible' => Yii::app()->user->checkAccess('SettingsTemplate')
                                             ),
                                             array('label' => 'Пользователи', 'url' => array('//user/admin'), 'active' => (get_class($this) == 'AdminController'),
-                                                'visible' => Yii::app()->user->checkAccess('User.Admin.*')
+                                                'visible' => Yii::app()->user->checkAccess('User.Admin.Admin')
                                             ),
                                             array('label' => 'Профиль', 'url' => array('//user/profile'), 'active' => (get_class($this) == 'ProfileController'),
-                                                'visible' => Yii::app()->user->checkAccess('User.Profile.*')
+                                                'visible' => Yii::app()->user->checkAccess('User.Profile.Profile')
                                             ),
                                         ),
                                     ),

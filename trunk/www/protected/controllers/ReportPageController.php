@@ -1,10 +1,16 @@
 <?php
 
-class ReportPageController extends Controller {
+class ReportPageController extends RController {
 
     public $layout = '//layouts/report_navigator';
     public $searchBy;
     public $showRep;
+    
+    public function filters() {
+        return array(
+            'rights', 
+          );
+    }
 
     public function actionStatusReport() {
         if ($this->checkInput()) {
@@ -214,17 +220,16 @@ class ReportPageController extends Controller {
         ));
     }
     
-    public function ActiongetListData() {
+    public function actionGetListData() {
         $dataType = @$_REQUEST['datatype'];
         //$country  = @$_REQUEST['country'];
         $region   = @$_REQUEST['region'];
         $city     = @$_REQUEST['city'];
         
-        $crit = NULL;
-        
-        $crit .=  "country = 'Россия'";
-        $crit .=  ($region)?"and region = '$region'":$region;
-        $crit .=  ($city)?"and city = '$city'":$city;
+        $crit = (Yii::app()->user->checkAccess('Superadmin'))?"1 = 1 ":'departament_id = ' . Yii::app()->getModule('user')->user()->departament_id;
+        $crit .=  " and country = 'Россия'";
+        $crit .=  ($region)?" and region = '$region'":$region;
+        $crit .=  ($city)? " and city = '$city'":$city;
        
         
         switch($dataType) {

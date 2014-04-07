@@ -7,7 +7,7 @@
 /* @var $this DeviceStatusController */
 /* @var $model DeviceStatus */
 
-$updateTimeout = 10000;
+$updateTimeout = 100000000;
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
 	$('.search-form').toggle();
@@ -216,7 +216,7 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(// the dialog
                 }});
             updateSummary();
         }, <?=$updateTimeout?>);
-        $('#grid-container').load('/index.php/DeviceStatus/grid');
+        //$('#grid-container').load('/index.php/DeviceStatus/grid');
     });
     
     function openMessages() {

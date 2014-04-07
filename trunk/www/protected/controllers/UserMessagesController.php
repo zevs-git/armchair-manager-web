@@ -1,6 +1,6 @@
 <?php
 
-class UserMessagesController extends Controller
+class UserMessagesController extends RController
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -11,12 +11,11 @@ class UserMessagesController extends Controller
 	/**
 	 * @return array action filters
 	 */
-	public function filters()
-	{
-		return array(
-			'accessControl', // perform access control for CRUD operations
-		);
-	}
+	public function filters() {
+            return array(
+                'rights', 
+              );
+        }
 
 	/**
 	 * Specifies the access control rules.

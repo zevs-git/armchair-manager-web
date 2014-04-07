@@ -44,11 +44,14 @@
 	</div>
         
         <div class="row">
-		<?php echo $form->labelEx($model,'departament_id',array('class'=>'span2',)); ?>
-            
+            <?php if (Yii::app()->user->checkAccess('Superadmin')): ?> 
+                <?php echo $form->labelEx($model,'departament_id',array('class'=>'span2',)); ?>
                 <?php $list = CHtml::listData(Departament::model()->findAll(), 'id', 'name'); ?>
                 <?php echo $form->dropDownList($model, 'departament_id', $list); ?>
-		<?php echo $form->error($model,'departament_id'); ?>
+            <?php else:?>
+                <?php echo $form->hiddenField($model,'departament_id',array('class'=>'span4','maxlength'=>20,'value'=>Yii::app()->getModule('user')->user()->departament_id)); ?>
+            <?php endif;?>
+            <?php echo $form->error($model,'departament_id'); ?>
 	</div>
         
 	<div class="row">
@@ -76,11 +79,10 @@
 	</div>
 
 	<div class="row">
-            <?php echo $form->labelEx($model, 'type.descr',array('class'=>'span2')); ?>
-            <?php echo $form->error($model, 'type_id'); ?>
-        
+            <?php echo $form->labelEx($model, 'type.descr',array('class'=>'span2')); ?>        
             <?php $list = CHtml::listData(ObjectType::model()->findAll(), 'id', 'descr'); ?>
             <?php echo $form->dropDownList($model, 'type_id', $list); ?>
+            <?php echo $form->error($model, 'type_id',array('class'=>'alert alert-block alert-error')); ?>
         </div>
 
 	<div class="row">
