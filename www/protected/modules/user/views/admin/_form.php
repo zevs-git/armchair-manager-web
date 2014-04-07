@@ -46,7 +46,7 @@
 
     <div class="row" <?= (!$model->isNewRecord) ? 'style="display:none"' : '' ?> >
         <div class="row">
-            <?php if (!Yii::app()->user->checkAccess('Superadmin')): ?> 
+            <?php if (Yii::app()->user->checkAccess('Superadmin')): ?> 
                 <?php echo $form->labelEx($model, 'departament_id', array('class' => 'span2',)); ?>
                 <?php $list = CHtml::listData(Departament::model()->findAll(), 'id', 'name'); ?>
                 <?php echo $form->dropDownList($model, 'departament_id', $list); ?>
