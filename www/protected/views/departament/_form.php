@@ -14,11 +14,36 @@
 		<?php echo $form->textField($model,'name',array('size'=>50,'maxlength'=>50)); ?>
 		<?php echo $form->error($model,'name'); ?>
 	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'comment'); ?>
-		<?php echo $form->textField($model,'comment',array('size'=>60,'maxlength'=>255)); ?>
-		<?php echo $form->error($model,'comment'); ?>
+        
+        <div class="row">
+		<?php echo $form->labelEx($model,'city'); ?>
+		<?php echo $form->textField($model,'city',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->error($model,'city'); ?>
+	</div>
+        <div class="row">
+		<?php echo $form->labelEx($model,'region'); ?>
+		<?php echo $form->textField($model,'region',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->error($model,'region'); ?>
+	</div>
+        <div class="row">
+		<?php echo $form->labelEx($model,'fname'); ?>
+		<?php echo $form->textField($model,'fname',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->error($model,'fname'); ?>
+	</div>
+        <div class="row">
+		<?php echo $form->labelEx($model,'lname'); ?>
+		<?php echo $form->textField($model,'lname',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->error($model,'lname'); ?>
+	</div>
+        <div class="row">
+		<?php echo $form->labelEx($model,'email'); ?>
+		<?php echo $form->textField($model,'email',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->error($model,'email'); ?>
+	</div>
+        <div class="row">
+		<?php echo $form->labelEx($model,'phone'); ?>
+		<?php echo $form->textField($model,'phone',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->error($model,'phone'); ?>
 	</div>
 
 	<?php if (!Yii::app()->request->isAjaxRequest): ?>

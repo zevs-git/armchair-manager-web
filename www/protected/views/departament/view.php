@@ -1,25 +1,32 @@
 <?php
 $this->breadcrumbs=array(
-	'Departaments'=>array('index'),
+	'Дилеры'=>array('index'),
 	$model->name,
-);
-
-$this->menu=array(
-	array('label'=>'List Departament', 'url'=>array('index')),
-	array('label'=>'Create Departament', 'url'=>array('create')),
-	array('label'=>'Update Departament', 'url'=>array('update', 'id'=>$model->id)),
-	array('label'=>'Delete Departament', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Manage Departament', 'url'=>array('admin')),
 );
 ?>
 
-<h1>View Departament #<?php echo $model->id; ?></h1>
+<?php $this->beginWidget('zii.widgets.CPortlet', array(
+    'title' => "Прамаетры дилера",
+));?>
 
-<?php $this->widget('zii.widgets.CDetailView', array(
+<h3>Дилер: "<?php echo $model->name; ?>"</h3>
+<?php $this->renderPartial('form_start',array('model'=>$model))?>
+<?php echo CHtml::link('[Редактировать]', $this->createUrl("/$this->id/update/$model->id"));?>
+<br>
+<?php $this->widget('bootstrap.widgets.TbDetailView', array(
 	'data'=>$model,
+        'type' => 'condensed bordered striped', //striped bordered and/or condensed
 	'attributes'=>array(
 		'id',
 		'name',
-		'comment',
+		'country',
+                'region',
+                'city',
+                'fname',
+            'mname',
+            'phone',
+            'email',
+            'comment',
 	),
 )); ?>
+<?php $this->endWidget()?>

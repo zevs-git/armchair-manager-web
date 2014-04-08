@@ -11,11 +11,11 @@ class DepartamentController extends RController {
     /**
      * @return array action filters
      */
-    public function filters() {
+    /*public function filters() {
         return array(
             'rights', 
           );
-    }
+    }*/
 
     /**
      * Specifies the access control rules.
@@ -175,6 +175,42 @@ class DepartamentController extends RController {
 
         $this->render('admin', array(
             'model' => $model,
+        ));
+    }
+    
+    public function actionDevices($id) {
+        $device = new Device('searchByDepId', $id);
+        $device->unsetAttributes();  // clear any default values
+        if (isset($_GET['Device'])) 
+            $device->attributes = $_GET['Device'];
+
+        $this->render('devices', array(
+            'model' => $this->loadModel($id),
+            'devices' => $device
+        ));
+    }
+    
+    public function actionStaff($id) {
+        $staff = new Staff('searchByDepId', $id);
+        $staff->unsetAttributes();  // clear any default values
+        if (isset($_GET['Staff'])) 
+            $staff->attributes = $_GET['Staff'];
+
+        $this->render('staff', array(
+            'model' => $this->loadModel($id),
+            'staff' => $staff
+        ));
+    }
+    
+    public function actionUser($id) {
+        $users = new User('searchByDepId', $id);
+        $users->unsetAttributes();  // clear any default values
+        if (isset($_GET['User'])) 
+            $users->attributes = $_GET['User'];
+
+        $this->render('users', array(
+            'model' => $this->loadModel($id),
+            'users' => $users
         ));
     }
 

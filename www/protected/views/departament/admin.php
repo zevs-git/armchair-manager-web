@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs = array(
-    'Департаменты' => array('admin'),
+    'Дилеры' => array('admin'),
     'Управление',
 );
 
@@ -9,7 +9,7 @@ $this->menu = array(
     array('label' => 'Create Departament', 'url' => array('create'), 'linkOptions' => array(
             'ajax' => array(
                 'url' => $this->createUrl('create'),
-                'success' => 'js:function(r){$("#DialogCRUDForm").html(r).dialog("option", "title", "Создать департамент").dialog("open"); return false;}',
+                'success' => 'js:function(r){$("#DialogCRUDForm").html(r).dialog("option", "title", "Создать дилера").dialog("open"); return false;}',
             ),
         )),
 );
@@ -65,7 +65,7 @@ $('.search-form form').submit(function(){
 <div class="btn-toolbar">
     <?php
     $this->widget('bootstrap.widgets.TbButton', array(
-        'label' => 'Новый департамент',
+        'label' => 'Новый дилер',
         'icon' => 'plus-sign',
         'type' => 'primary',
         'buttonType' => 'ajaxLink',
@@ -86,18 +86,23 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'filter' => $model,
     'columns' => array(
         'id',
-        'name',
-        'comment',
+		'name',
+                'region',
+                'city',
+            'phone',
+            'email',
+            'comment',
         array(
             'class' => 'bootstrap.widgets.TbButtonColumn',
-            'template' => '{update}{delete}{store}',
+            'template' => '{view}{delete}{store}',
             'htmlOptions' => array('style' => 'min-width: 170px; text-align: center;'),
             'buttons' => array(
-                'update' => array(
-                    //'label' => 'Настройки устройтва',
-                    'click' => $updateDialog,
+                'view' => array(
+                    'label' => 'Настройки дилера',
+                    'icon' => 'icon-pencil',
+                    //'click' => $updateDialog,
                     'options' => array(
-                        'class' => 'btn btn-small update',
+                        'class' => 'btn btn-small view',
                     ),
                 ),
                 'delete' => array(
