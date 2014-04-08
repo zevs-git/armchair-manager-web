@@ -71,7 +71,7 @@
                                                 'active' => (get_class($this) == 'StaffController'),
                                             'visible'=>Yii::app()->user->checkAccess('Staff.Admin'),
                                             ),
-                                            array('label' => 'Департаменты', 'url' => array('//Departament'),
+                                            array('label' => 'Дилеры', 'url' => array('//Departament'),
                                                 'active' => (get_class($this) == 'DepartamentController'),
                                             'visible'=>Yii::app()->user->checkAccess('Departament.Admin'),
                                             ),

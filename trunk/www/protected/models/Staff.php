@@ -125,6 +125,45 @@ class Staff extends CActiveRecord
                     ),
             ));
 	}
+        
+        public function searchByDepId($dep_id)
+	{
+		// @todo Please modify the following code to remove attributes that should not be searched.
+
+		$criteria=new CDbCriteria;
+                $criteria->with = array('type','departament');
+		$criteria->compare('t.id',$this->id);
+		$criteria->compare('FIO',$this->FIO,true);
+		$criteria->compare('staff_type_id',$this->staff_type_id);
+		$criteria->compare('t.key',$this->key,true);
+		$criteria->compare('phone',$this->phone,true);
+		$criteria->compare('comment',$this->comment,true);
+		$criteria->compare('object_id',$this->object_id);
+                $criteria->compare('type.descr', $this->type_descr,true);
+                $criteria->compare('departament_id',$dep_id,true);
+                
+                if (!Yii::app()->user->checkAccess('Superadmin')) {
+                    $criteria->addCondition('departament_id = ' . Yii::app()->getModule('user')->user()->departament_id);
+                }
+
+                
+		return new CActiveDataProvider($this, array(
+                'criteria' => $criteria,
+                    'sort' => array(
+                        'attributes' => array(
+                            'type_descr' => array(
+                                'asc' => 'type.descr',
+                                'desc' => 'type.descr DESC',
+                            ),
+                            'departament_name' => array(
+                                'asc' => 'departament.name ASC',
+                                'desc' => 'departament.name DESC',
+                            ),
+                            '*',
+                        ),
+                    ),
+            ));
+	}
 
 	/**
 	 * Returns the static model of the specified AR class.

@@ -7,6 +7,13 @@
  * @property integer $id
  * @property string $name
  * @property string $comment
+ * @property string $city
+ * @property string $country
+ * @property string $region
+ * @property string $fname
+ * @property string $lanme
+ * @property string $email
+ * @property string $phone
  */
 class Departament extends CActiveRecord
 {
@@ -30,7 +37,7 @@ class Departament extends CActiveRecord
 			array('comment', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, comment', 'safe', 'on'=>'search'),
+			array('id, name, comment,city,region,country,fname,lname,email,phone', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,6 +61,12 @@ class Departament extends CActiveRecord
 			'id' => 'Ид',
 			'name' => 'Название',
 			'comment' => 'Комментарий',
+                        'city' => 'Город',
+                        'country' => 'Страна',
+                        'region' => 'Регион',
+                        'fname' => 'Имя',
+                        'lname' => 'Фамилия',
+                        'phone' => 'Телефон',
 		);
 	}
 
@@ -78,6 +91,13 @@ class Departament extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('comment',$this->comment,true);
+                $criteria->compare('city',$this->city,true);
+                $criteria->compare('country',$this->country,true);
+                $criteria->compare('region',$this->region,true);
+                $criteria->compare('fname',$this->fname,true);
+                $criteria->compare('lname',$this->lname,true);
+                $criteria->compare('phone',$this->phone,true);
+                $criteria->compare('email',$this->email,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

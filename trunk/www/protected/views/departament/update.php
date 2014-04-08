@@ -1,22 +1,20 @@
-<?php if (!Yii::app()->request->isAjaxRequest): ?>
-
+<?php
+/* @var $this DepartmentController */
+/* @var $model Department */
+?>
 <?php
 $this->breadcrumbs=array(
-	'Departaments'=>array('index'),
-	$model->name=>array('view','id'=>$model->id),
-	'Update',
-);
-
-$this->menu=array(
-	array('label'=>'List Departament', 'url'=>array('index')),
-	array('label'=>'Create Departament', 'url'=>array('create')),
-	array('label'=>'View Departament', 'url'=>array('view', 'id'=>$model->id)),
-	array('label'=>'Manage Departament', 'url'=>array('admin')),
+	'Дилеры'=>array('index'),
+	$model->id,
 );
 ?>
 
-<h1>Update Departament <?php echo $model->id; ?></h1>
+<?php $this->beginWidget('zii.widgets.CPortlet', array(
+    'title' => "Праметры дилера",
+));?>
+<h3>Дилер: "<?php echo $model->name; ?>"</h3>
+<?php $this->renderPartial('form_start',array('model'=>$model))?>
 
-<?php endif; ?>
+<?php $this->renderPartial('_form', array('model'=>$model)); ?>
 
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php $this->endWidget()?>

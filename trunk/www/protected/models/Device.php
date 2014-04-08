@@ -159,6 +159,39 @@ class Device extends CActiveRecord {
             'criteria' => $criteria,
         ));
     }
+    public function searchByDepId($dep_id) {
+        // @todo Please modify the following code to remove attributes that should not be searched.
+        
+        $criteria = new CDbCriteria;
+        $criteria->with = array('object', 'deviceType');
+        $criteria->compare('t.id', $this->id);
+        $criteria->compare('IMEI', $this->IMEI, true);
+        $criteria->compare('type_val', $this->type_id, true);
+
+        $criteria->compare('soft_version', $this->soft_version);
+        //$criteria->compare('object', $this->object, true);
+        $criteria->compare('settings_id', $this->settings_id);
+        $criteria->compare('t.comment', $this->comment, true);
+        $criteria->compare('object.obj', $this->object_obj, true);
+        $criteria->compare('object.departament_id', $dep_id);
+        
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+            'sort' => array(
+                'attributes' => array(
+                    'object_obj' => array(
+                        'asc' => 'object.obj',
+                        'desc' => 'object.obj DESC',
+                    ),
+                    '*',
+                ),
+            ),
+        ));
+        
+        
+
+    }
+    
 
     /* @var $tmpl_var SettingsTmplDetail */
 
