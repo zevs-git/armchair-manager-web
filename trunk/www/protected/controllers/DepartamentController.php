@@ -74,13 +74,16 @@ class DepartamentController extends RController {
 
         if (isset($_POST['Departament'])) {
             $model->attributes = $_POST['Departament'];
+            $model->country = "Россия";
             if ($model->save()) {
                 $obj = new Object();
                 $obj->departament_id = $model->id;
                 $obj->obj = "Склад '" . $model->name . "'";
                 $obj->country = "Россия";
-                $obj->city = "Склад";
-                $obj->region = "Склад";
+                $obj->city = $model->city;
+                $obj->face = $model->lname . " " . $model->fname;
+                $obj->phone = $model->phone;
+                $obj->region = $model->region;
                 $obj->type_id = 14;
                 $obj->save();
                 $baseTarif = ObjectTariff::model()->findByPk(0);
