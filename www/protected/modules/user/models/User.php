@@ -13,7 +13,7 @@ class User extends CActiveRecord
 	 * The followings are the available columns in table 'users':
 	 * @var integer $id
 	 * @var string $username
-	 * @var string $password
+	 * @var string = $model->id;
 	 * @var string $email
 	 * @var string $activkey
 	 * @var integer $createtime

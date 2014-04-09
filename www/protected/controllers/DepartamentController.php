@@ -11,11 +11,11 @@ class DepartamentController extends RController {
     /**
      * @return array action filters
      */
-    /*public function filters() {
-        return array(
-            'rights', 
-          );
-    }*/
+    /* public function filters() {
+      return array(
+      'rights',
+      );
+      } */
 
     /**
      * Specifies the access control rules.
@@ -75,7 +75,7 @@ class DepartamentController extends RController {
         if (isset($_POST['Departament'])) {
             $model->attributes = $_POST['Departament'];
             $model->country = "Россия";
-            if ($model->save()) {
+            if ($model->validate()) {
                 $obj = new Object();
                 $obj->departament_id = $model->id;
                 $obj->obj = "Склад '" . $model->name . "'";
@@ -85,17 +85,49 @@ class DepartamentController extends RController {
                 $obj->phone = $model->phone;
                 $obj->region = $model->region;
                 $obj->type_id = 14;
-                $obj->save();
+                /* if ($obj->validate()) {
+                  foreach ($obj->errors as $er) {
+                  echo $er[0];
+                  }
+                  } */
+
+
                 $baseTarif = ObjectTariff::model()->findByPk(0);
                 $newTarif = new ObjectTariff();
                 $newTarif->attributes = $baseTarif->attributes;
-                $newTarif->object_id = $obj->id;
-                $newTarif->save();
-                if (Yii::app()->request->isAjaxRequest) {
-                    echo 'success';
-                    Yii::app()->end();
+                    
+                $user = new User();
+                $user->email = $model->email;
+
+                $user->username = $this->get_in_translate_to_en($model->name);
+                $user->password = $this->get_in_translate_to_en($model->name);
+
+                $obj_s = $obj->validate();
+                $user_s = $user->validate();
+
+                if (!$obj_s) {
+                    $model->addErrors($obj->errors);
+                }
+                if (!$user_s) {
+                    $model->addErrors($user->errors);
+                }
+
+                if (!$obj_s || !$user_s || !$model->save()) {
+                    ;
                 } else {
-                    $this->redirect(array('view', 'id' => $model->id));
+                    $obj->departament_id = $model->id;
+                    $obj->save();
+                    $newTarif->object_id = $obj->id;
+                    $newTarif->save();
+                    $user->departament_id = $model->id;
+                    $user->save();
+
+                    if (Yii::app()->request->isAjaxRequest) {
+                        echo 'success';
+                        Yii::app()->end();
+                    } else {
+                        $this->redirect(array('view', 'id' => $model->id));
+                    }
                 }
             }
         }
@@ -180,11 +212,11 @@ class DepartamentController extends RController {
             'model' => $model,
         ));
     }
-    
+
     public function actionDevices($id) {
         $device = new Device('searchByDepId', $id);
         $device->unsetAttributes();  // clear any default values
-        if (isset($_GET['Device'])) 
+        if (isset($_GET['Device']))
             $device->attributes = $_GET['Device'];
 
         $this->render('devices', array(
@@ -192,11 +224,11 @@ class DepartamentController extends RController {
             'devices' => $device
         ));
     }
-    
+
     public function actionStaff($id) {
         $staff = new Staff('searchByDepId', $id);
         $staff->unsetAttributes();  // clear any default values
-        if (isset($_GET['Staff'])) 
+        if (isset($_GET['Staff']))
             $staff->attributes = $_GET['Staff'];
 
         $this->render('staff', array(
@@ -204,11 +236,11 @@ class DepartamentController extends RController {
             'staff' => $staff
         ));
     }
-    
+
     public function actionUser($id) {
         $users = new User('searchByDepId', $id);
         $users->unsetAttributes();  // clear any default values
-        if (isset($_GET['User'])) 
+        if (isset($_GET['User']))
             $users->attributes = $_GET['User'];
 
         $this->render('users', array(
@@ -238,6 +270,36 @@ class DepartamentController extends RController {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
+    }
+
+    public function get_in_translate_to_en($string, $gost = false) {
+        if ($gost) {
+            $replace = array("А" => "A", "а" => "a", "Б" => "B", "б" => "b", "В" => "V", "в" => "v", "Г" => "G", "г" => "g", "Д" => "D", "д" => "d",
+                "Е" => "E", "е" => "e", "Ё" => "E", "ё" => "e", "Ж" => "Zh", "ж" => "zh", "З" => "Z", "з" => "z", "И" => "I", "и" => "i",
+                "Й" => "I", "й" => "i", "К" => "K", "к" => "k", "Л" => "L", "л" => "l", "М" => "M", "м" => "m", "Н" => "N", "н" => "n", "О" => "O", "о" => "o",
+                "П" => "P", "п" => "p", "Р" => "R", "р" => "r", "С" => "S", "с" => "s", "Т" => "T", "т" => "t", "У" => "U", "у" => "u", "Ф" => "F", "ф" => "f",
+                "Х" => "Kh", "х" => "kh", "Ц" => "Tc", "ц" => "tc", "Ч" => "Ch", "ч" => "ch", "Ш" => "Sh", "ш" => "sh", "Щ" => "Shch", "щ" => "shch",
+                "Ы" => "Y", "ы" => "y", "Э" => "E", "э" => "e", "Ю" => "Iu", "ю" => "iu", "Я" => "Ia", "я" => "ia", "ъ" => "", "ь" => "",
+                " " => "_", '"' => "", "'" => "");
+        } else {
+            $arStrES = array("ае", "уе", "ое", "ые", "ие", "эе", "яе", "юе", "ёе", "ее", "ье", "ъе", "ый", "ий");
+            $arStrOS = array("аё", "уё", "оё", "ыё", "иё", "эё", "яё", "юё", "ёё", "её", "ьё", "ъё", "ый", "ий");
+            $arStrRS = array("а$", "у$", "о$", "ы$", "и$", "э$", "я$", "ю$", "ё$", "е$", "ь$", "ъ$", "@", "@");
+
+            $replace = array("А" => "A", "а" => "a", "Б" => "B", "б" => "b", "В" => "V", "в" => "v", "Г" => "G", "г" => "g", "Д" => "D", "д" => "d",
+                "Е" => "Ye", "е" => "e", "Ё" => "Ye", "ё" => "e", "Ж" => "Zh", "ж" => "zh", "З" => "Z", "з" => "z", "И" => "I", "и" => "i",
+                "Й" => "Y", "й" => "y", "К" => "K", "к" => "k", "Л" => "L", "л" => "l", "М" => "M", "м" => "m", "Н" => "N", "н" => "n",
+                "О" => "O", "о" => "o", "П" => "P", "п" => "p", "Р" => "R", "р" => "r", "С" => "S", "с" => "s", "Т" => "T", "т" => "t",
+                "У" => "U", "у" => "u", "Ф" => "F", "ф" => "f", "Х" => "Kh", "х" => "kh", "Ц" => "Ts", "ц" => "ts", "Ч" => "Ch", "ч" => "ch",
+                "Ш" => "Sh", "ш" => "sh", "Щ" => "Shch", "щ" => "shch", "Ъ" => "", "ъ" => "", "Ы" => "Y", "ы" => "y", "Ь" => "", "ь" => "",
+                "Э" => "E", "э" => "e", "Ю" => "Yu", "ю" => "yu", "Я" => "Ya", "я" => "ya", "@" => "y", "$" => "ye",
+                " " => "_", '"' => "", "'" => "");
+
+            $string = str_replace($arStrES, $arStrRS, $string);
+            $string = str_replace($arStrOS, $arStrRS, $string);
+        }
+
+        return iconv("UTF-8", "UTF-8//IGNORE", strtr($string, $replace));
     }
 
 }
