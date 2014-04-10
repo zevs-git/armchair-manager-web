@@ -100,10 +100,19 @@ class DepartamentController extends RController {
                 $user->email = $model->email;
 
                 $user->username = $this->get_in_translate_to_en($model->name);
-                $user->password = $this->get_in_translate_to_en($model->name);
+                $user->password = UserModule::encrypting($this->get_in_translate_to_en($model->name));
+                $user->status = 1;
+                
+                $profile=new Profile;
+                $profile->user_id = 0;
+                
+                $profile->firstname = $model->fname;
+                $profile->lastname = $model->lname;
+                $profile->phone = $model->phone;
 
                 $obj_s = $obj->validate();
                 $user_s = $user->validate();
+                $prof_s = $profile->validate();
 
                 if (!$obj_s) {
                     $model->addErrors($obj->errors);
@@ -111,16 +120,22 @@ class DepartamentController extends RController {
                 if (!$user_s) {
                     $model->addErrors($user->errors);
                 }
+                if (!$prof_s) {
+                    $model->addErrors($profile->errors);
+                }
 
-                if (!$obj_s || !$user_s || !$model->save()) {
-                    ;
-                } else {
+                if ($obj_s && $user_s && $prof_s && $model->save()) {
                     $obj->departament_id = $model->id;
                     $obj->save();
                     $newTarif->object_id = $obj->id;
                     $newTarif->save();
                     $user->departament_id = $model->id;
+                    $user->role = "Company_admin";
                     $user->save();
+                    $authorizer = Yii::app()->getModule("rights")->authorizer;
+                    $authorizer->authManager->assign($user->role, $user->id);
+                    $profile->user_id =  $user->id;
+                    $profile->save();
 
                     if (Yii::app()->request->isAjaxRequest) {
                         echo 'success';
@@ -179,7 +194,21 @@ class DepartamentController extends RController {
         $objs = Object::model()->findAll("departament_id = $id");
         foreach ($objs as $obj) {
             $obj->departament_id = 0;
+            $tarif = ObjectTariff::model()->find("object_id = $obj->id");
+            if ($tarif) $tarif->delete();
+            $devices = Device::model()->findAll("object_id = $obj->id");
+            foreach ($devices as $device) {
+                $device->object_id = 0;
+                $device->saveSettings();
+            }
             $obj->delete();
+        }
+        
+        $users = User::model()->findAll("departament_id = $id");
+        foreach ($users as $user) {
+            $pofile =  Profile::model()->findByPk($user->id);
+            $pofile->delete();
+            $user->delete();
         }
         if (Yii::app()->request->isPostRequest) {
             // we only allow deletion via POST request
