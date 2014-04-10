@@ -68,12 +68,12 @@ $('.search-form form').submit(function(){
         'label' => 'Новый дилер',
         'icon' => 'plus-sign',
         'type' => 'primary',
-        'buttonType' => 'ajaxLink',
+        //'buttonType' => 'ajaxLink',
         'url' => $this->createUrl('create'),
-        'ajaxOptions' => array(
+        /*'ajaxOptions' => array(
             'url' => $this->createUrl('create'),
             'success' => 'js:function(r){$("#DialogCRUDForm").html(r).dialog("option", "title", "Новый деапртамент").dialog("open"); return false;}',
-        ),
+        ),*/
     ));
     ?>
 </div>

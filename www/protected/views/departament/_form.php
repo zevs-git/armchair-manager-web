@@ -1,7 +1,14 @@
+<style>
+    div.form > form .row {
+        margin-bottom: 10px;
+    }
+</style>
+
 <div class="form">
 
-<?php $form=$this->beginWidget('CActiveForm', array(
+<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	'id'=>'departament-form',
+         'type' => 'inline',
 	'enableAjaxValidation'=>false,
 )); ?>
 
@@ -10,14 +17,13 @@
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'name'); ?>
-		<?php echo $form->textField($model,'name',array('size'=>50,'maxlength'=>50)); ?>
-		<?php echo $form->error($model,'name'); ?>
+		<?php echo $form->labelEx($model,'name',array('class'=>'span4')); ?>
+		<?php echo $form->textField($model,'name',array('class'=>'span4','size'=>50,'maxlength'=>50)); ?>
 	</div>
         
 
         <div class="row">
-		<?php echo $form->labelEx($model,'city',array('class'=>'span2')); ?>
+		<?php echo $form->labelEx($model,'city',array('class'=>'span4')); ?>
                 <?php
                 $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
                         'model'=>$model,
@@ -32,42 +38,39 @@
                         ),
                 ));
                 ?>
-		<?php echo $form->error($model,'city'); ?>
 	</div>
         <div class="row">
-		<?php echo $form->labelEx($model,'region'); ?>
-		<?php echo $form->textField($model,'region',array('size'=>60,'id'=>'region','readonly'=>true,'maxlength'=>255)); ?>
-		<?php echo $form->error($model,'region'); ?>
+		<?php echo $form->labelEx($model,'region',array('class'=>'span4')); ?>
+		<?php echo $form->textField($model,'region',array('class'=>'span4','size'=>60,'id'=>'region','readonly'=>true,'maxlength'=>255)); ?>
 	</div>
         <div class="row">
-		<?php echo $form->labelEx($model,'fname'); ?>
-		<?php echo $form->textField($model,'fname',array('size'=>60,'maxlength'=>255)); ?>
-		<?php echo $form->error($model,'fname'); ?>
+		<?php echo $form->labelEx($model,'fname',array('class'=>'span4')); ?>
+		<?php echo $form->textField($model,'fname',array('class'=>'span4','size'=>60,'maxlength'=>255)); ?>
 	</div>
         <div class="row">
-		<?php echo $form->labelEx($model,'lname'); ?>
-		<?php echo $form->textField($model,'lname',array('size'=>60,'maxlength'=>255)); ?>
-		<?php echo $form->error($model,'lname'); ?>
+		<?php echo $form->labelEx($model,'lname',array('class'=>'span4')); ?>
+		<?php echo $form->textField($model,'lname',array('class'=>'span4','size'=>60,'maxlength'=>255)); ?>
 	</div>
         <div class="row">
-		<?php echo $form->labelEx($model,'email'); ?>
-		<?php echo $form->textField($model,'email',array('size'=>60,'maxlength'=>255)); ?>
-		<?php echo $form->error($model,'email'); ?>
+		<?php echo $form->labelEx($model,'email',array('class'=>'span4')); ?>
+		<?php echo $form->textField($model,'email',array('class'=>'span4','size'=>60,'maxlength'=>255)); ?>
 	</div>
         <div class="row">
-		<?php echo $form->labelEx($model,'phone'); ?>
-		<?php echo $form->textField($model,'phone',array('size'=>60,'maxlength'=>255)); ?>
-		<?php echo $form->error($model,'phone'); ?>
+		<?php echo $form->labelEx($model,'phone',array('class'=>'span4')); ?>
+		<?php echo $form->textField($model,'phone',array('class'=>'span4','size'=>60,'maxlength'=>255)); ?>
 	</div>
         <div class="row">
-		<?php echo $form->labelEx($model,'comment'); ?>
-		<?php echo $form->textField($model,'comment',array('size'=>60,'maxlength'=>255)); ?>
-		<?php echo $form->error($model,'comment'); ?>
+		<?php echo $form->labelEx($model,'comment',array('class'=>'span4')); ?>
+		<?php echo $form->textField($model,'comment',array('class'=>'span4','size'=>60,'maxlength'=>255)); ?>
 	</div>
 
 	<?php if (!Yii::app()->request->isAjaxRequest): ?>
-	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Создать' : 'Сохранить'); ?>
+	<div class="form-actions">
+		<?php $this->widget('bootstrap.widgets.TbButton', array(
+			'buttonType'=>'submit',
+			'type'=>'primary',
+			'label'=>$model->isNewRecord ? 'Создать' : 'Сохранить',
+		)); ?>
 	</div>
 	
 	<?php else: ?>
