@@ -2,8 +2,8 @@
 
 <?php
 $this->breadcrumbs=array(
-	'Departaments'=>array('index'),
-	'Create',
+	'Дилеры'=>array('index'),
+	'Новый дилер',
 );
 
 $this->menu=array(
@@ -12,7 +12,7 @@ $this->menu=array(
 );
 ?>
 
-<h1>Create Departament</h1>
+<h1>Новый дилер</h1>
 
 <?php endif; ?>
 
