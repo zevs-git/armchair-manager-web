@@ -18,7 +18,7 @@ $this->beginWidget('zii.widgets.CPortlet', array(
 </div>
 
 <div class="to-print">
-    <h3 align="center">Характеристика работы кресел</h3>
+    <h3 align="center">Отчет по массажу</h3>
     <h4 align="center"><?=$this->searchBy?></h4>
     <h4 align="center">за период с <?=$_REQUEST['date_from']?> по <?=$_REQUEST['date_to']?></h4>
 <?php
