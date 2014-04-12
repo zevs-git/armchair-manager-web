@@ -240,9 +240,9 @@ class User extends CActiveRecord
         $criteria->compare('departamnet_id',$this->departament_id);
         
         
-        /*if (!Yii::app()->user->checkAccess('Superadmin')) {
+        if (!Yii::app()->user->checkAccess('Superadmin')) {
             $criteria->addCondition('departament_id = ' . Yii::app()->getModule('user')->user()->departament_id);
-        }*/
+        }
         
         
         $criteria->addCondition('role ' . User::getRolesListSQLStr());
