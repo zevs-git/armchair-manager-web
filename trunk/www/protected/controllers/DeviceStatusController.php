@@ -158,6 +158,13 @@ class DeviceStatusController extends RController {
         $model->unsetAttributes();  // clear any default values
         if (isset($_GET['DeviceStatus']))
             $model->attributes = $_GET['DeviceStatus'];
+        
+            if (!empty($_REQUEST['DeviceStatus_sort'])){
+                Yii::app()->getModule('user')->user()->sort_by = $_REQUEST['DeviceStatus_sort'];
+                Yii::app()->getModule('user')->user()->save();
+            } else {
+                $_GET['DeviceStatus_sort'] = Yii::app()->getModule('user')->user()->sort_by;
+            }
 
         $this->render('admin', array(
             'model' => $model,
