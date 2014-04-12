@@ -217,20 +217,21 @@ class ReportPageController extends RController {
             ));
             
             
-            
-            $obj = NULL;
-            $data = array();
-            
-            foreach ($dataProvider->getData() as $data_row) {
-                if (!isset($obj) || $obj != $data_row['obj_id']) {
-                    $obj = $data_row['obj_id'];
-                    $data[$obj] = array();
-                    $data[$obj]['device'] = array();
-                    $data[$obj]['time'] = array();
+            if ($_REQUEST['rep_type']) {
+                $obj = NULL;
+                $data = array();
+
+                foreach ($dataProvider->getData() as $data_row) {
+                    if (!isset($obj) || $obj != $data_row['obj_id']) {
+                        $obj = $data_row['obj_id'];
+                        $data[$obj] = array();
+                        $data[$obj]['device'] = array();
+                        $data[$obj]['time'] = array();
+                    }
+                    $data[$obj]['device'][] = $data_row['name'] . " [" . $data_row['device_id'] . "]";
+                    $data[$obj]['obj_name'][] = $data_row['obj'];
+                    $data[$obj]['time'][] = (int)$data_row['sec'];
                 }
-                $data[$obj]['device'][] = $data_row['name'] . " [" . $data_row['device_id'] . "]";
-                $data[$obj]['obj_name'][] = $data_row['obj'];
-                $data[$obj]['time'][] = (int)$data_row['sec'];
             }
             
         }
