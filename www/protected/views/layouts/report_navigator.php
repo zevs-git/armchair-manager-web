@@ -71,6 +71,9 @@
         $('#city').change(selectOp);
         $('#object_id').change(selectOp);
         //$('#hide-btn').click(hideParams);
+        $('#type').change(showBTN);
+        $('#sort_by_time').change(showBTN);
+        
         
         $('#params_data .portlet-decoration').click(hideParams);
         
@@ -82,7 +85,7 @@
 
 </script>
 <div class="row-fluid">
-    <div class="span12">
+    <div class="span22">
 
         <?php
         $this->beginWidget('zii.widgets.CPortlet', array(
@@ -100,7 +103,7 @@
             ));
             ?>
             <br />
-            <span class="span1">Период с:</span>
+            <span class="span2">Период с:</span>
             <?php
             $this->widget('application.extensions.CJuiDateTimePicker.CJuiDateTimePicker', array(
                 'language' => 'ru',
@@ -146,33 +149,48 @@
             /*$crit = (Yii::app()->user->getId() == "pulkovo") ? "id in (1,2)" : NULL;
             $list = array_unique(CHtml::listData(Object::model()->findAll($crit), 'country', 'country'));*/
             ?>
-            <?//php echo CHtml::dropDownList('country', 'country', $list, array('class' => 'span4', 'id' => 'country', 'empty' => 'Выберите страну')); ?>
-            <span class="span1" id="region-label">Регион:</span>
+            <?//php echo CHtml::dropDownList('country', 'country', $list, array('class' => 'span3', 'id' => 'country', 'empty' => 'Выберите страну')); ?>
+            <span class="span2" id="region-label">Регион:</span>
             <?php
             $crit = (Yii::app()->user->checkAccess('Superadmin'))?'':'departament_id = ' . Yii::app()->getModule('user')->user()->departament_id;
             $list = array_unique(CHtml::listData(Object::model()->findAll($crit), 'region', 'region'));
             ?>
-            <?php echo CHtml::dropDownList('region', 'region', $list, array('class' => 'span4', 'id' => 'region', 'empty' => 'Выберите регион')); ?>
+            <?php echo CHtml::dropDownList('region', 'region', $list, array('class' => 'span3', 'id' => 'region', 'empty' => 'Выберите регион')); ?>
             <br />
             <br />
-            <span class="span1" id="city-label">Город:</span>
+            <span class="span2" id="city-label">Город:</span>
             <?php
             $crit = (Yii::app()->user->checkAccess('Superadmin'))?"1 = 1":'departament_id = ' . Yii::app()->getModule('user')->user()->departament_id;
             $crit .= !empty($_REQUEST['region'])?(" AND region = '" . $_REQUEST['region'] . "'"):NULL;
             $list = array_unique(CHtml::listData(Object::model()->findAll($crit), 'city', 'city'));
             ?>
-            <?php echo CHtml::dropDownList('city', 'city', $list, array('class' => 'span4', 'id' => 'city', 'empty' => 'Выберите город')); ?>
+            <?php echo CHtml::dropDownList('city', 'city', $list, array('class' => 'span3', 'id' => 'city', 'empty' => 'Выберите город')); ?>
             <br />
             <br />
-            <span class="span1" id="object_id-label">Объект:</span>
+            <span class="span2" id="object_id-label">Объект:</span>
             <?php
             $crit = (Yii::app()->user->checkAccess('Superadmin'))?"1 = 1":'departament_id = ' . Yii::app()->getModule('user')->user()->departament_id;
             $crit .= !empty($_REQUEST['region'])?(" AND region = '" . $_REQUEST['region'] . "'"):NULL;
             $crit .= !empty($_REQUEST['city'])?(" AND city = '" . $_REQUEST['city'] . "'"):NULL;
             $list = CHtml::listData(Object::model()->findAll($crit), 'id', 'obj');
             ?>
+            
             <?php
-            echo CHtml::dropDownList('object_id', 'id', $list, array('class' => 'span4', 'id' => 'object_id', 'empty' => 'Выберите объект'));
+            echo CHtml::dropDownList('object_id', 'id', $list, array('class' => 'span3', 'id' => 'object_id', 'empty' => 'Выберите объект'));
+
+            ?>
+            <?php if ($this->action->id == 'MassageReport'):?>
+            <br />
+            <br />
+            <span class="span2" id="type-label">Тип отчета:</span>
+            <?php echo CHtml::dropDownList('rep_type', 'rep_type', array('0'=>'Таблица','1'=>'График'), array('class' => 'span3', 'id' => 'type',)); ?>
+            <br />
+            <br />
+            <span class="span2" id="type-label">Сортировать по времени:</span>
+            <?php echo CHtml::checkBox('sort_by_time',!empty($_REQUEST['sort_by_time']),array('id' => 'sort_by_time',)); ?>
+            
+            <?php endif; ?>
+            <?php
             if (isset($_REQUEST['country'])) {
                 echo "<script>$('#country').val('" . $_REQUEST['country'] . "') </script>";
             }
@@ -184,6 +202,9 @@
             }
             if (isset($_REQUEST['object_id'])) {
                 echo "<script>$('#object_id').val('" . $_REQUEST['object_id'] . "') </script>";
+            }
+            if (isset($_REQUEST['rep_type'])) {
+                echo "<script>$('#type').val('" . $_REQUEST['rep_type'] . "') </script>";
             }
             if ($this->showRep) {
                 echo "<script>hideParams();</script>";

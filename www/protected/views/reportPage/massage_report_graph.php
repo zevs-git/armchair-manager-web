@@ -37,7 +37,7 @@ $this->beginWidget('zii.widgets.CPortlet', array(
   )); */
 foreach  ($data as $obj_data) {
     //$obj = array_shift(array_slice($obj_data,0,1));
-    //print_r($obj_data);
+    //print_r($obj_data) . "<br>";
     ?><h4 align="center">Объект "<?php echo $obj_data['obj_name'][0]?>"</h4><?php
     $this->Widget('ext.Highcharts.HighchartsWidget', array(
         'options' => array(
@@ -47,39 +47,22 @@ foreach  ($data as $obj_data) {
             'xAxis' => array(
                 "categories" => $obj_data['device'],
             ),
-            'plotOptions' => array(
+            /*'plotOptions' => array(
                 'series' => array(
                     'stacking' => 'percent'
                 )
-            ),
+            ),*/
             'tooltip' => array(
-                'pointFormat' => '<span style="color:{series.color}">{series.name}</span>: <b>{point.percentage:.0f}%</b><br/>',
+                //'pointFormat' => '<span style="color:{series.color}">{series.name}</span>: <b>{toHHMMSS(point.y)}</b><br/>',
+                'formatter' => 'js:function() { return valFormat(this)}'
             //'shared'=>true
             ),
             'series' => array(
                 array(
                     'type' => 'bar',
-                    'name' => 'Ошибки', //title of data
-                    'data' => $obj_data['e'],
-                    'color' => 'red',
-                ),
-                array(
-                    'type' => 'bar',
-                    'name' => 'Не в сети', //title of data
-                    'data' => $obj_data['c'],
-                    'color' => 'grey',
-                ),
-                array(
-                    'type' => 'bar',
-                    'name' => 'Масаж', //title of data
-                    'data' => $obj_data['m'], //data resource according to datebase column
+                    'name' => 'Время массажа', //title of data
+                    'data' => $obj_data['time'],
                     'color' => '#8bbc21',
-                ),
-                array(
-                    'color' => '#2f7ed8',
-                    'type' => 'bar',
-                    'name' => 'Простой', //title of data
-                    'data' => $obj_data['p'],
                 ),
             )
         )
@@ -93,9 +76,30 @@ foreach  ($data as $obj_data) {
 $(document).ready(function() {
     setTimeout(function() { $.each($("tspan"), function(i,val) {
         if(val.innerHTML == 'Highcharts.com') val.style.display = 'none';
-        if(val.innerHTML == 'Values') val.innerHTML = '%';
+        if(val.innerHTML == 'Values') val.innerHTML = 'Время массажа';
         }
     );
     },1000);
 });
+function valFormat(el){ 
+    var time = toHHMMSS(el.y);
+    return '<span style="color:{series.color}">' + el.series.name +'</span>: <b>'+ toHHMMSS(el.y) + '</b><br/>'; 
+}
+function toHHMMSS(seconds) {
+    var h, m, s, result='';
+    // HOURs
+    h = Math.floor(seconds/3600);
+    seconds -= h*3600;
+    if(h){
+        result = h<10 ? '0'+h+':' : h+':';
+    }
+    // MINUTEs
+    m = Math.floor(seconds/60);
+    seconds -= m*60;
+    result += m<10 ? '0'+m+':' : m+':';
+    // SECONDs
+    s=seconds%60;
+    result += s<10 ? '0'+s : s;
+    return result;
+}
 </script>

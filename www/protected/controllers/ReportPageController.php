@@ -198,7 +198,7 @@ class ReportPageController extends RController {
     public function actionMassageReport() {
         if ($this->checkInput()) {
 
-            $sql = "SELECT obj.obj,m.device_id,d.comment AS name,SEC_TO_TIME(SUM(m.time)) AS time 
+            $sql = "SELECT obj.id as obj_id, obj.obj,m.device_id,d.comment AS name,SEC_TO_TIME(SUM(m.time)) AS time, SUM(m.time) AS sec 
                     FROM massage m , device d, object obj
                     WHERE m.device_id = d.id
                     AND d.object_id = obj.id
@@ -207,17 +207,43 @@ class ReportPageController extends RController {
                     //(!empty($_REQUEST['country']) ? " AND obj.country = '" . $_REQUEST['country'] . "'" : "") .
                     (!empty($_REQUEST['region']) ? " AND obj.region = '" . $_REQUEST['region'] . "'" : "") .
                     (!empty($_REQUEST['city']) ? " AND obj.city = '" . $_REQUEST['city'] . "'" : "") .
-                    " GROUP BY obj.obj,m.device_id,d.comment";
+                    " GROUP BY obj.id, obj.obj,m.device_id,d.comment";
+            if (!empty($_REQUEST['sort_by_time'])) $sql .= " ORDER BY sec DESC";
             $dataProvider = new CSqlDataProvider($sql, array(
                 //'totalItemCount'=>$count,
                 'pagination' => array(
                     'pageSize' => 100,
                 ),
             ));
+            
+            
+            
+            $obj = NULL;
+            $data = array();
+            
+            foreach ($dataProvider->getData() as $data_row) {
+                if (!isset($obj) || $obj != $data_row['obj_id']) {
+                    $obj = $data_row['obj_id'];
+                    $data[$obj] = array();
+                    $data[$obj]['device'] = array();
+                    $data[$obj]['time'] = array();
+                }
+                $data[$obj]['device'][] = $data_row['name'] . " [" . $data_row['device_id'] . "]";
+                $data[$obj]['obj_name'][] = $data_row['obj'];
+                $data[$obj]['time'][] = (int)$data_row['sec'];
+            }
+            
         }
-        $this->render('massage_report', array(
-            'data' => $dataProvider,
-        ));
+        
+        if ($_REQUEST['rep_type']) {
+            $this->render('massage_report_graph', array(
+                'data' => $data,
+            ));
+        } else {
+            $this->render('massage_report', array(
+                'data' => $dataProvider,
+            ));
+        }
     }
     
     public function actionGetListData() {
