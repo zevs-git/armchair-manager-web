@@ -196,18 +196,20 @@ class Device extends CActiveRecord {
     /* @var $tmpl_var SettingsTmplDetail */
 
     public function saveFromTamplate() {
-        $this->saveSettings();
-        return TRUE;
+        
+        return $this->saveSettings();
     }
 
     /* @var $set_var SettingsDeviceDetail */
 
     public function saveSettings() {
         $this->settings_id = 0;
-        $this->save();
-
-        self::UpdateSettingsCommand($this->id);
-        return TRUE;
+        if ($this->save()) {
+            self::UpdateSettingsCommand($this->id);
+            return TRUE;
+        } else {
+            return false;
+        }
     }
     public static function UpdateSettingsCommand($device_id) {
         $state = DeviceStatus::model()->findBYPk($device_id);
