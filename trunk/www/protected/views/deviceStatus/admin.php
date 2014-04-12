@@ -74,7 +74,7 @@ $this->beginWidget('zii.widgets.CPortlet', array(
                   'htmlOptions' => array('style' => 'width: 50px;'),
                   'headerHtmlOptions' => array('style' => 'width: 45px;'),
                 ), 
-            array('name' => 'cashbox_state',
+            array('name' => 'gsm_state_id',
                 'htmlOptions' => array('style' => 'width: 200px; text-align: center;'),
                 'headerHtmlOptions' => array('style' => 'width: 200px; text-align: center;'),
                 'header' => 'Состояние',
