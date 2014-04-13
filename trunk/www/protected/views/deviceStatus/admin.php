@@ -142,8 +142,8 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(// the dialog
         'title' => 'Уведомления',
         'autoOpen' => FALSE,
         'modal' => false,
-        'width' => 600,
-        'height' => 550,
+        'width' => 1000,
+        'height' => 600,
         'show' => array(
             'effect' => 'fade',
             'duration' => 250,
@@ -156,6 +156,34 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(// the dialog
 ));
 ?>
 <div id="id_view-messages">
+</div>
+
+<?php $this->endWidget(); ?>
+
+<?php
+/**
+ * Окно выбора пользователя
+ */
+$this->beginWidget('zii.widgets.jui.CJuiDialog', array(// the dialog
+    'id' => 'modal-users',
+    'options' => array(
+        'title' => 'Выберите пользователя',
+        'autoOpen' => FALSE,
+        'modal' => false,
+        'width' => 600,
+        'height' => 600,
+        'show' => array(
+            'effect' => 'fade',
+            'duration' => 250,
+        ),
+        'hide' => array(
+            'effect' => 'fade',
+            'duration' => 500,
+        ),
+    ),
+));
+?>
+<div id="id_view-users">
 </div>
 
 <?php $this->endWidget(); ?>
@@ -220,14 +248,7 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(// the dialog
     });
     
     function openMessages() {
-        $("#modal-messages").dialog("open");
-        $.ajax({
-                url: '/DeviceStatus/ReadMessages',
-                type: 'POST',
-                dataType: 'html',
-                cache: false,
-        });
-            
+        $("#modal-messages").dialog("open");            
         $.ajax({
                 url: '/DeviceStatus/Messages',
                 type: 'POST',

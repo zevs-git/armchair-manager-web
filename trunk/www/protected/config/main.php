@@ -70,7 +70,7 @@ return array(
             ),
         ),
         'db' => array(
-            'connectionString' => 'mysql:host=chair.teletracking.ru;dbname=collector',
+            'connectionString' => 'mysql:host=78.46.66.247;dbname=collector',
             'emulatePrepare' => true,
             'username' => 'collector',
             'password' => 'W5mxr50P475t50s',

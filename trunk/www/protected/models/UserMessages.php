@@ -12,6 +12,7 @@
  * @property integer $read
  * @property integer $email
  * @property integer $sms
+ * @property integer $state_id
  */
 class UserMessages extends CActiveRecord
 {
@@ -49,6 +50,7 @@ class UserMessages extends CActiveRecord
 		return array(
                     'message' => array(self::BELONGS_TO, 'logCommandMsg', 'msg_code'),
                     'device'  => array(self::BELONGS_TO, 'Device', 'device_id'),
+                    'state'   => array(self::BELONGS_TO, 'UserMassageState', 'state_id'),
 		);
 	}
 
@@ -61,11 +63,12 @@ class UserMessages extends CActiveRecord
 			'id' => 'ID',
 			'user_id' => 'User',
 			'dt' => 'Дата/время',
-			'device_id' => 'Устройство',
+			'device_id' => 'Место установки',
 			'msg_code' => 'Сообщение',
 			'read' => 'Read',
 			'email' => 'Email',
 			'sms' => 'Sms',
+                        'device.object.obj' => 'Объект',
 		);
 	}
 
@@ -122,12 +125,34 @@ class UserMessages extends CActiveRecord
 		return parent::model($className);
 	}
         
+        public function getrowState() {
+             if ($this->state_id == 2)
+               $tooltip = "В работе у пользователя " 
+                    . Profile::model()->findByPk($this->user_id)->getAttribute('firstname')
+                    . ' ' 
+                    . Profile::model()->findByPk($this->user_id)->getAttribute('lastname');
+            elseif ($this->state_id == 3) {
+                 $tooltip = "Отработано пользователем " 
+                    . Profile::model()->findByPk($this->user_id)->getAttribute('firstname')
+                    . ' ' 
+                    . Profile::model()->findByPk($this->user_id)->getAttribute('lastname');
+            }
+            else {
+                 $tooltip = $this->state->descr;
+            }
+            return "<span rel='tooltip' title='$tooltip'>" . $this->state->descr . "</span>";
+        }
+        
         public function getrowClass() {
-            if (!$this->read) {
-                $class = 'warning';
-            } else {
-                $class = '';
-            }        
+            switch ($this->state_id) {
+                case 1:  $class = 'warning';
+                    break;
+                case 2:  $class = 'info';
+                    break;
+                case 3:  $class = 'success';
+                    break;
+                default :  $class = '';
+            }
         return $class;
     }
 }
