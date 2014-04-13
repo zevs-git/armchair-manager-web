@@ -320,7 +320,7 @@ class DeviceStatusController extends RController {
             
             $sql = 'SELECT COUNT(*) as res '
                     . 'FROM user_messages um, `object` obj, `device` d '
-                    . 'WHERE um.`read` = 0 '
+                    . 'WHERE um.`state_id` = 1 '
                     . "and um.device_id = d.id "
                     . "and d.object_id = obj.id ";
             
