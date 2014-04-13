@@ -7,11 +7,11 @@ class SettingsController extends RController {
     public $device;
     public $data;
 
-    public function filters() {
+    /*public function filters() {
         return array(
             'rights', 
           );
-    }
+    }*/
     
     public function actionIndex() {
         echo "Для запроса файла настроек укажите IMEI устройтва";

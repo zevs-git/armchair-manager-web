@@ -128,6 +128,7 @@ class ReportPageController extends RController {
                     " AND ir.staff_id = s.id
                             AND summ_cash + summ_coin > 0
                             order by obj.obj,d.comment, ir.dt";
+            echo $sql;
 
             $dataProvider = new CSqlDataProvider($sql, array(
                 //'totalItemCount'=>$count,
