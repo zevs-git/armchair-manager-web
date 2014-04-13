@@ -1,7 +1,7 @@
 <?php
 
 $this->widget('zii.widgets.grid.CGridView', array(
-    'id' => 'staff-grid',
+    'id' => 'messages-grid',
     'itemsCssClass' => 'table table-striped table-bordered',
     'htmlOptions' => array('class' => 'no-summay', 'style' => 'text-align: center;font-size: 12px; margin: -30px; margin-top: -50px;'),
     'dataProvider' => $model->search($id),
@@ -12,6 +12,10 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'htmlOptions' => array('style' => 'padding: 0px;')
         ),
         array(
+            'name' => 'device.object.obj',
+            'htmlOptions' => array('style' => 'padding: 0px;')
+        ),
+        array(
             'name' => 'device_id',
             'value' => '"[" . $data->device_id . "] " . $data->device->comment',
             'htmlOptions' => array('style' => 'padding: 0px;')
@@ -19,33 +23,92 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array('name' => 'message.descr',
             'htmlOptions' => array('style' => 'padding: 0px;')
         ),
-        /*array(
+        array(
+            'name' => 'state.descr',
+            'type' => 'raw',
+            'value'=>'$data->rowState',
+            'htmlOptions' => array('style' => 'padding: 0px;')
+        ),
+        array(
             'class' => 'bootstrap.widgets.TbButtonColumn',
-            'template' => '{ok}{delete}',
+            'template' => '{ok}{to_work}{to_user}{delete}',
             'htmlOptions' => array('style' => 'padding: 0px; text-align: center;'),
             'buttons' => array(
                 'ok' => array(
+                    'label' => 'Отработано',
                     'icon' => 'icon-ok',
+                    'url' => 'Yii::app()->createUrl("UserMessages",array("Success"=>$data->id))',
                     'options' => array(
-                        //'url' => 'Yii::app()->createUrl("object/view", array("id"=>$data->id))',
-                        'class' => 'btn btn-mini icon-ok',
+                        'ajax' => array(
+                                'type' => 'POST',
+                                'url' => "js:$(this).attr('href')",
+                                //'update' => '#id_view',
+                                //'beforeSend' => 'function() { $("#loader").show(); }',
+                                'complete' => "function() {
+                                    $.fn.yiiGridView.update('messages-grid', {
+                                        complete: function() {
+                                    }});
+                                }",
+                        ),
+                        'class' => 'btn btn-mini btn-success',
+                    ),
+                ),
+                'to_work' => array(
+                    'label' => 'Взять в работу',
+                    'icon' => 'icon-plus',
+                    'url' => 'Yii::app()->createUrl("UserMessages",array("Accept"=>$data->id))',
+                    'options' => array(
+                        'ajax' => array(
+                                'type' => 'POST',
+                                'url' => "js:$(this).attr('href')",
+                                //'update' => '#id_view',
+                                //'beforeSend' => 'function() { $("#loader").show(); }',
+                                'complete' => "function() {
+                                    $.fn.yiiGridView.update('messages-grid', {
+                                        complete: function() {
+                                    }});
+                                }",
+                        ),
+                        'class' => 'btn btn-mini btn-primary',
+                    ),
+                ),
+                'to_user' => array(
+                    'label' => 'Передать в работу пользователю...',
+                    'icon' => 'icon-random',
+                    'url' => 'Yii::app()->createUrl("UserMessages",array("Users"=>$data->id))',
+                    'options' => array(
+                        'ajax' => array(
+                                'type' => 'POST',
+                                'url' => "js:$(this).attr('href')",
+                                'update' => '#id_view-users',
+                                'beforeSend' => 'function() { $("#modal-users").dialog("open"); }',
+                                'complete' => "function() {
+                                }",
+                        ),
+                        'class' => 'btn btn-mini btn-primary',
                     ),
                 ),
                 'delete' => array(
-                    'label' => 'Настройки устройтва',
-                    'url' => 'Yii::app()->createUrl("SettingsDeviceDetail",array("admin"=>$data->id))',
+                    'label' => 'Удалить',
+                    'url' => 'Yii::app()->createUrl("UserMessages",array("Delete"=>$data->id))',
                     'icon' => 'icon-remove',
-                    'click' => 'function(){
-						var url = $(this).attr("href");
-                                                document.location = url;
-						return false;
-					}',
                     'options' => array(
-                        'class' => 'btn btn-mini icon-remove',
+                        'ajax' => array(
+                                'type' => 'POST',
+                                'url' => "js:$(this).attr('href')",
+                                //'update' => '#id_view',
+                                //'beforeSend' => 'function() { $("#loader").show(); }',
+                                'complete' => "function() {
+                                    $.fn.yiiGridView.update('messages-grid', {
+                                        complete: function() {
+                                    }});
+                                }",
+                        ),
+                        'class' => 'btn btn-mini btn-danger',
                     ),
                 ),
             ),
-        ),*/
+        ),
     ),
 ));
 ?>

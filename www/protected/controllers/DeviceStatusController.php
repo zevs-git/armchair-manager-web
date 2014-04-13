@@ -399,6 +399,7 @@ class DeviceStatusController extends RController {
 			'model'=>$model,
 		));
     }
+    
     public function actionReadMessages() {
                 $sql = 'UPDATE user_messages um SET um.`read` = 1 WHERE um.user_id = 1 AND um.`read` = 0';
                 Yii::app()->db->createCommand($sql)->execute();
