@@ -1,7 +1,7 @@
 <?php
 
 $this->widget('zii.widgets.grid.CGridView', array(
-    'id' => 'user-grid' . rand(10000000000, 999999999999999),
+    'id' => 'user-grid',
     'dataProvider' => $users->searchByDepId($model->id),
     'itemsCssClass' => 'table table-striped table-bordered',
     'filter' => $users,
