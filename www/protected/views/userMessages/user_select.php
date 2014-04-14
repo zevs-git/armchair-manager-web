@@ -1,7 +1,7 @@
 <?php
 
 $this->widget('zii.widgets.grid.CGridView', array(
-    'id' => 'user-grid',
+    'id' => 'user-grid' . rand(10000000000, 999999999999999),
     'dataProvider' => $users->searchByDepId($model->id),
     'itemsCssClass' => 'table table-striped table-bordered',
     'filter' => $users,
@@ -25,14 +25,15 @@ $this->widget('zii.widgets.grid.CGridView', array(
                         'ajax' => array(
                                 'type' => 'POST',
                                 'url' => "js:$(this).attr('href')",
+                                'beforeSend' => "function() { $('#modal-users').dialog('close');}",
                                 'complete' => "function() {
-                                    $('#modal-users').dialog('close');
                                     $.fn.yiiGridView.update('messages-grid', {
                                         complete: function() {
                                     }});
                                 }",
                         ),
                         "class" => "btn btn-mini btn-success",
+                        "id"=>rand(10000000000, 999999999999),
                     )
                 ),
             )
