@@ -163,8 +163,6 @@ class Email extends CApplicationComponent {
 		}
 		$headers[] = "Content-Type: {$this->type}; charset=".$this->contentType;
 		$headers[] = "MIME-Version: 1.0";
-                
-                echo "Content-Type: {$this->type}; charset=".$this->contentType;
 		
 		return $headers;
 	}
