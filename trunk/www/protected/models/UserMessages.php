@@ -69,6 +69,7 @@ class UserMessages extends CActiveRecord
 			'email' => 'Email',
 			'sms' => 'Sms',
                         'device.object.obj' => 'Объект',
+                        'state.descr' => 'Статус',
 		);
 	}
 

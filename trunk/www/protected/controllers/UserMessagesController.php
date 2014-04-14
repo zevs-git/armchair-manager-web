@@ -62,6 +62,7 @@ class UserMessagesController extends RController {
         $model->state_id = 3;
         $model->user_id = Yii::app()->user->id;
         if ($model->save()) {
+            $this->SendMessages($model);
             echo "succes";
         }
     }
@@ -72,15 +73,18 @@ class UserMessagesController extends RController {
         $model->state_id = 2;
         $model->user_id = Yii::app()->user->id;
         if ($model->save()) {
+            $this->SendMessages($model);
             echo "succes";
         }
     }
-    
+    //передать задачу пользователю
     public function ActionAcceptToUser($id) {
-        $model = $this->loadModel($_REQUEST['task_id']);
+        $task_id = $_REQUEST['task_id'];
+        $model = $this->loadModel($task_id);
         $model->state_id = 2;
         $model->user_id = $id;
         if ($model->save()) {
+            $this->SendMessages($model);
             echo "succes";
         }
     }
@@ -118,6 +122,37 @@ class UserMessagesController extends RController {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
+    }
+    /**
+     * 
+     * @param int $id
+     * @var UserMessages $message
+     */
+    private function SendMessages($model) {
+        //Сформировать тексты сообщений
+        if ($model->state_id == 2) {
+            $SMStext = "New task." . $model->device->object->obj .
+                    "/" . (!empty($model->device->comment)?$model->device->comment:$model->device->id) .
+                    ":" . $model->message->descr;
+            
+            $EmailText = 'Получено новое задание. MagicRest'
+                . '<br>Город: ' . $model->device->object->city
+                . "<br>Объект: " . $model->device->object->obj
+                . "<br>Кресло: [" . $model->device_id . "] " . $model->device->comment
+                . "<br>Текст ошибки: " . $model->message->descr
+                . "<br>http://chair.teletracking.ru/";
+            
+            $subject = 'Получено новое задание.'
+                . ' Город: ' . $model->device->object->city
+                . ". Объект: " . $model->device->object->obj
+                . ". Кресло: [" . $model->device_id . "] " . $model->device->comment;
+            
+            $sender = new MsgSender();
+            $prifile = Profile::model()->findByPk($model->user_id);
+            if ($prifile && $prifile->getAttribute('sendMail')) $sender->SendEmail($model->user_id, $subject, $EmailText);
+            if ($prifile && $prifile->getAttribute('sendSMS'))  $sender->SendSms($model->user_id, $SMStext);
+        }
+        
     }
 
 }
