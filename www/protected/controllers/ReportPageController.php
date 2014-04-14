@@ -116,7 +116,7 @@ class ReportPageController extends RController {
     public function actionIncassatorReport() {
         if ($this->checkInput()) {
 
-            $sql = "SELECT obj.obj,d.comment AS name,ir.dt,s.FIO,ir.count_cash,ir.summ_cash,ir.count_coin,ir.summ_coin, summ_cash + summ_coin as all_summ
+            $sql = "SELECT obj.obj,d.comment AS name, DATE_FORMAT(ir.dt,\"%d.%m.%Y %H:%i:%s\" ) as dt ,s.FIO,ir.count_cash,ir.summ_cash,ir.count_coin,ir.summ_coin, summ_cash + summ_coin as all_summ
                             FROM incassator_report ir, device d, staff s, object obj
                             WHERE ir.device_id = d.id
                             AND d.object_id = obj.id
@@ -128,7 +128,6 @@ class ReportPageController extends RController {
                     " AND ir.staff_id = s.id
                             AND summ_cash + summ_coin > 0
                             order by obj.obj,d.comment, ir.dt";
-            echo $sql;
 
             $dataProvider = new CSqlDataProvider($sql, array(
                 //'totalItemCount'=>$count,
@@ -145,7 +144,7 @@ class ReportPageController extends RController {
     public function actionStaffReport() {
         if ($this->checkInput()) {
 
-            $sql = "SELECT o.obj,d.comment, ik.dt,s.FIO, st.descr as type
+            $sql = "SELECT o.obj,d.comment, DATE_FORMAT(ik.dt,\"%d.%m.%Y %H:%i:%s\" ) as dt,s.FIO, st.descr as type
                     FROM ident_key ik,staff s,object o, device d, staff_type st
                     WHERE ik.`key` = CONV(s.`key`,16,10)
                     AND ik.device_id = d.id
@@ -172,7 +171,7 @@ class ReportPageController extends RController {
 
     public function actionSumaryReport() {
         if ($this->checkInput()) {
-            $sql = "SELECT obj.obj,d.id,d.comment AS name, CAST(c.dt AS DATE) AS dt, SUM(c.value) AS sum,
+            $sql = "SELECT obj.obj,d.id,d.comment AS name, DATE_FORMAT(c.dt,\"%d.%m.%Y\") AS dt, SUM(c.value) AS sum,
                         CASE WHEN DAYOFWEEK(c.dt) IN (7,1) THEN \"weekend\" ELSE \"\" END AS class
                         FROM cash c, device d, object obj
                         WHERE c.device_id = d.id
@@ -182,7 +181,7 @@ class ReportPageController extends RController {
                     //(!empty($_REQUEST['country']) ? " AND obj.country = '" . $_REQUEST['country'] . "'" : "") .
                     (!empty($_REQUEST['region']) ? " AND obj.region = '" . $_REQUEST['region'] . "'" : "") .
                     (!empty($_REQUEST['city']) ? " AND obj.city = '" . $_REQUEST['city'] . "'" : "") .
-                    " GROUP BY obj.obj,d.id,CAST(c.dt AS DATE)
+                    " GROUP BY obj.obj,d.id,DATE_FORMAT(c.dt,\"%d.%m.%Y\") 
                          order by obj.obj,d.id,c.dt";
             $dataProvider = new CSqlDataProvider($sql, array(
                 //'totalItemCount'=>$count,
