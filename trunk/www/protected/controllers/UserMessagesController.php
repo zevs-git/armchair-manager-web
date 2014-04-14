@@ -57,7 +57,7 @@ class UserMessagesController extends RController {
     }
 
     //Задача отработана
-    public function ActionSuccess($id) {
+    public function actionSuccess($id) {
         $model = $this->loadModel($id);
         $model->state_id = 3;
         $model->user_id = Yii::app()->user->id;
@@ -68,7 +68,7 @@ class UserMessagesController extends RController {
     }
 
     //Задача в рабте
-    public function ActionAccept($id) {
+    public function actionAccept($id) {
         $model = $this->loadModel($id);
         $model->state_id = 2;
         $model->user_id = Yii::app()->user->id;
@@ -78,7 +78,7 @@ class UserMessagesController extends RController {
         }
     }
     //передать задачу пользователю
-    public function ActionAcceptToUser($id) {
+    public function actionAcceptToUser($id) {
         $task_id = $_REQUEST['task_id'];
         $model = $this->loadModel($task_id);
         $model->state_id = 2;
@@ -89,7 +89,7 @@ class UserMessagesController extends RController {
         }
     }
     
-    public function ActionDelete($id) {
+    public function actionDelete($id) {
         $model = $this->loadModel($id);
         if ($model->delete()) {
             echo "succes";
