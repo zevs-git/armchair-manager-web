@@ -339,7 +339,7 @@ class DeviceStatusController extends RController {
             $sql = 'SELECT d.id as device_id, lcm.descr as descr, um.dt '
                     . 'FROM user_messages um, `object` obj, `device` d , log_command_msg lcm '
                     . 'WHERE um.msg_code = lcm.id '
-                    . 'and um.`read` = 1 '
+                    . 'and um.`state_id` = 1 '
                     . "and um.device_id = d.id "
                     . "and d.object_id = obj.id ";
             
