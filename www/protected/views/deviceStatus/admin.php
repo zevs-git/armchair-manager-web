@@ -1,14 +1,14 @@
 <style>IMG {
-    width: available;
-    width: available;
-    
-    }</style>
-<?php
-/* @var $this DeviceStatusController */
-/* @var $model DeviceStatus */
+        width: available;
+        width: available;
 
-$updateTimeout = 100000000;
-Yii::app()->clientScript->registerScript('search', "
+    }</style>
+    <?php
+    /* @var $this DeviceStatusController */
+    /* @var $model DeviceStatus */
+
+    $updateTimeout = 100000000;
+    Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
 	$('.search-form').toggle();
 	return false;
@@ -20,13 +20,13 @@ $('.search-form form').submit(function(){
 	return false;
 });
 ");
-?>
-<?php
+    ?>
+    <?php
 //$model->dbCriteria->order='dt DESC';
-$this->beginWidget('zii.widgets.CPortlet', array(
-    'htmlOptions' => array('style' => 'min-width: 1000px; margin-top: 25px; margin-bottom: 50px; border: none;', 'class' => 'portlet')
-));
-?>
+    $this->beginWidget('zii.widgets.CPortlet', array(
+        'htmlOptions' => array('style' => 'min-width: 1000px; margin-top: 25px; margin-bottom: 50px; border: none;', 'class' => 'portlet')
+    ));
+    ?>
 <div id="grid-container">
     <?php
     $this->widget('bootstrap.widgets.TbGridView', array(
@@ -34,46 +34,46 @@ $this->beginWidget('zii.widgets.CPortlet', array(
         'dataProvider' => $model->search(),
         //'filter' => $model,
         'itemsCssClass' => 'table table-bordered grad-head table-fixed-header',
-        'htmlOptions' => array('class'=>'no-summay','style' => 'text-align: center;min-width: 900px;table-layout:fixed'),
-        'rowCssClassExpression'=>'$data->rowClass',
+        'htmlOptions' => array('class' => 'no-summay', 'style' => 'text-align: center;min-width: 900px;table-layout:fixed'),
+        'rowCssClassExpression' => '$data->rowClass',
         'columns' => array(
             array('name' => 'object.city',
                 'htmlOptions' => array('style' => 'width: 130px;'),
                 'type' => 'raw',
                 'value' => '"<span  rel=\'tooltip\' title=\'" . $data->device->comment . "\'>" . $data->device->object->city . "</span>"',
-                'headerHtmlOptions'=> array('style' => 'width: 125px;')),
+                'headerHtmlOptions' => array('style' => 'width: 125px;')),
             array('name' => 'object.obj',
                 'htmlOptions' => array('style' => 'width: 130px;'),
                 'type' => 'raw',
                 'value' => '"<span  rel=\'tooltip\' title=\'" . $data->device->comment . "\'>" . $data->device->object->obj . "</span>"',
-                'headerHtmlOptions'=> array('style' => 'width: 125px;')),
+                'headerHtmlOptions' => array('style' => 'width: 125px;')),
             array('name' => 'dt',
                 'htmlOptions' => array('style' => 'width: 130px; font-size:12px'),
                 'value' => 'date_format(date_create($data->dt), "d.m.Y H:i")',
-                'headerHtmlOptions'=> array('style' => 'width: 130px;')),
+                'headerHtmlOptions' => array('style' => 'width: 130px;')),
             array('name' => 'cash_string',
                 'header' => 'Купюры',
                 'htmlOptions' => array('style' => 'align: center; width: 200px;'),
                 'type' => 'raw',
-                'visible'=>Yii::app()->user->checkAccess('Watcher'),
+                'visible' => Yii::app()->user->checkAccess('Watcher'),
                 'headerHtmlOptions' => array('style' => 'align: center; width: 195px;')),
             array('name' => 'coin_string',
                 'header' => 'Монеты',
                 'htmlOptions' => array('style' => 'align: center; width: 200px;'),
                 'type' => 'raw',
-                'visible'=>Yii::app()->user->checkAccess('Watcher'),
+                'visible' => Yii::app()->user->checkAccess('Watcher'),
                 'headerHtmlOptions' => array('style' => 'align: center; width: 195px;')),
             array('name' => 'all_summ',
                 'htmlOptions' => array('style' => 'width: 70px; text-align: center;font-size:12px'),
                 'headerHtmlOptions' => array('style' => 'width: 65px; text-align: center;font-size:12px'),
                 'type' => 'raw',
-                'visible'=>Yii::app()->user->checkAccess('Watcher'),
-                'value'=>'"<b style=\'color:green\'>" . (($data->deviceCashReport->summ)?$data->deviceCashReport->summ:0) . " руб.</b>"'
-                ),
-            array('name'=>'balance',
-                  'htmlOptions' => array('style' => 'width: 50px;'),
-                  'headerHtmlOptions' => array('style' => 'width: 45px;'),
-                ), 
+                'visible' => Yii::app()->user->checkAccess('Watcher'),
+                'value' => '"<b style=\'color:green\'>" . (($data->deviceCashReport->summ)?$data->deviceCashReport->summ:0) . " руб.</b>"'
+            ),
+            array('name' => 'balance',
+                'htmlOptions' => array('style' => 'width: 50px;'),
+                'headerHtmlOptions' => array('style' => 'width: 45px;'),
+            ),
             array('name' => 'gsm_state_id',
                 'htmlOptions' => array('style' => 'width: 200px; text-align: center;'),
                 'headerHtmlOptions' => array('style' => 'width: 200px; text-align: center;'),
@@ -87,18 +87,18 @@ $this->beginWidget('zii.widgets.CPortlet', array(
                     array(
                         'label' => 'Статус устройства',
                         'url' => '$data->device_id',
-                        'icon'=> 'icon-zoom-in',
+                        'icon' => 'icon-zoom-in',
                         'options' => array(
                             'class' => 'btn btn-mini',
                             'onclick' => 'return openDetail(this);',
-                            /*'ajax' => array(
-                                'type' => 'POST',
-                                // ajax post will use 'url' specified above 
-                                'url' => "js:$(this).attr('href')",
-                                'update' => '#id_view',
-                                'beforeSend' => 'function() { $("#loader").show(); }',
-                                'complete' => 'function() { $("#loader").hide(); $("#modal").dialog("open");}',
-                            ),*/
+                        /* 'ajax' => array(
+                          'type' => 'POST',
+                          // ajax post will use 'url' specified above
+                          'url' => "js:$(this).attr('href')",
+                          'update' => '#id_view',
+                          'beforeSend' => 'function() { $("#loader").show(); }',
+                          'complete' => 'function() { $("#loader").hide(); $("#modal").dialog("open");}',
+                          ), */
                         ),
                     ),
                 ),
@@ -129,8 +129,10 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(// the dialog
 ));
 ?>
 <div id="id_view"> 
-    <?php   $id = -100; include 'view.php';   ?>    
-    
+    <?php $id = -100;
+    include 'view.php';
+    ?>    
+
 </div>
 
 <?php $this->endWidget(); ?>
@@ -189,7 +191,7 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(// the dialog
 <?php $this->endWidget(); ?>
 
 <div class="row-fluid fixed-summ">
-    
+
     <div class="span3 ">
         <div class="stat-block">
             <ul>
@@ -202,10 +204,10 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(// the dialog
     <div class="span3 ">
         <div class="stat-block">
             <ul>
-                <?php if(!(Yii::app()->getModule('user')->user()->role == 'Tehnik' || Yii::app()->getModule('user')->user()->role == 'Operator')): ?>
-                <li class="stat-count" ><span id="cash_summ"><?php echo $Balance; ?> RUB</span><span style="width:500px">Сумма в купюрниках/наполненность</span></li>
-                <li class="stat-percent"><span id="cash_summ_p" class="text-success stat-percent"></span></li>
-                <?php endif; ?>
+<?php if (!(Yii::app()->getModule('user')->user()->role == 'Tehnik' || Yii::app()->getModule('user')->user()->role == 'Operator')): ?>
+                    <li class="stat-count" ><span id="cash_summ"><?php echo $Balance; ?> RUB</span><span style="width:500px">Сумма в купюрниках/наполненность</span></li>
+                    <li class="stat-percent"><span id="cash_summ_p" class="text-success stat-percent"></span></li>
+<?php endif; ?>
             </ul>
         </div>
     </div>
@@ -220,10 +222,10 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(// the dialog
     <div class="span3 ">
         <div class="stat-block">
             <a href="#" onclick="openMessages();">
-            <ul>
-                <li class="stat-count" ><span>Уведомления</span><span id="last_message" style="width:500px"></span></li>
-                <li class="stat-percent"><span id="messages_count" class="text-error stat-percent"></span></li>
-            </ul>
+                <ul>
+                    <li class="stat-count" ><span>Уведомления</span><span id="last_message" style="width:500px"></span></li>
+                    <li class="stat-percent"><span id="messages_count" class="text-error stat-percent"></span></li>
+                </ul>
             </a>
         </div>
     </div>
@@ -243,26 +245,25 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(// the dialog
                     $('img').tooltip();
                 }});
             updateSummary();
-        }, <?=$updateTimeout?>);
+        }, <?= $updateTimeout ?>);
         //$('#grid-container').load('/index.php/DeviceStatus/grid');
     });
-    
     function openMessages() {
-        $("#modal-messages").dialog("open");            
+        $("#modal-messages").dialog("open");
         $.ajax({
-                url: '/DeviceStatus/Messages',
-                type: 'POST',
-                dataType: 'html',
-                cache: false,
-                success: function(html)
-                {
-                    jQuery('#id_view-messages').html(html);
-                    //$("#loader").hide();
-                },
-                error: function() {
-                    jQuery('#id_view-messages').html('Не удалось загрузить уведомления');
-                }
-            });
+            url: '/DeviceStatus/Messages',
+            type: 'POST',
+            dataType: 'html',
+            cache: false,
+            success: function(html)
+            {
+                jQuery('#id_view-messages').html(html);
+                //$("#loader").hide();
+            },
+            error: function() {
+                jQuery('#id_view-messages').html('Не удалось загрузить уведомления');
+            }
+        });
         return false;
     }
 
@@ -280,16 +281,33 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(// the dialog
                 $('#cash_summ').html(data.cash_summ);
                 $('#messages_count').html(data.messages_count);
                 $('#last_message').html(data.last_message);
-                
                 $('#cash_summ_p').html(data.cash_summ_p);
             }
         });
     }
     function openDetail(but) {
-        device_id = but.getAttribute("href"); 
+        device_id = but.getAttribute("href");
         jQuery('#DetailTabs li.active').removeClass('active');
-        $("#modal").dialog("open"); 
+        $("#modal").dialog("open");
         jQuery('a[href="#Detail"]').tab('show');
+        return false;
+    }
+
+    function selectUser(url) {
+        $.ajax({
+            url: url,
+            type: 'POST',
+            cache: false,
+            beforeSend: function(xhr) {
+                $('#modal-users').dialog('close');
+            },
+            complete: function(data) {
+                $.fn.yiiGridView.update('messages-grid', {
+                    complete: function() {
+                    }});
+            }
+        });
+        
         return false;
     }
 </script>
