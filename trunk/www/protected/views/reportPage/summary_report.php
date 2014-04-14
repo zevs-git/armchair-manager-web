@@ -55,7 +55,10 @@ $this->widget('ext.groupgridview.GroupGridView', array(
             'htmlOptions'=>array('class'=>'"{$data[\'class\']}"'),
             ),
         array('name'=>'sum',
-            'header'=>'Сумма выручки'),
+            'header'=>'Сумма выручки',
+            'evaluateHtmlOptions'=>true,
+            'htmlOptions'=>array('class'=>'"{$data[\'class\']}"'),
+            ),
     ),
 ));
 ?>
