@@ -48,6 +48,16 @@ $this->widget('ext.groupgridview.GroupGridView', array(
     'itemsCssClass' => 'table table-striped table-bordered',
     'dataProvider' => $data,
     'mergeColumns' => array('obj','name'),
+    'extraRowColumns' => array('name'),
+      'extraRowPos' => 'below',
+      'extraRowTotals' => function($data, $row, &$totals) {
+          if(!isset($totals['count'])) $totals['count'] = 0;
+          $totals['count']++;
+          
+          if(!isset($totals['sum_all_summ'])) $totals['sum_all_summ'] = 0;
+          $totals['sum_all_summ'] += $data['all_summ'];
+      },
+    'extraRowExpression' => '"<span class=\"subtotal\"><b>Количество инкассаций - ".$totals["count"].", Общая сумма - ".$totals["sum_all_summ"]." RUB</b></span>"',
     'columns' => array(
         array('name'=>'obj',
             'header'=>'Объект'),
@@ -57,11 +67,11 @@ $this->widget('ext.groupgridview.GroupGridView', array(
             'header'=>'Дата'),
         array('name'=>'FIO',
             'header'=>'ФИО инкассатора'),
-        array('name'=>'count_cash',
+        array('name'=>'count_coin',
             'header'=>'Количество купюр'),
         array('name'=>'summ_cash',
             'header'=>'Сумма купюр'),
-        array('name'=>'count_coin',
+        array('name'=>'count_cash',
             'header'=>'Количество монет'),
         array('name'=>'summ_coin',
             'header'=>'Сумма монет'),
