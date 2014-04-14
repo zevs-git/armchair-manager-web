@@ -22,18 +22,18 @@ $this->widget('zii.widgets.grid.CGridView', array(
                     'label' => "выбрать",
                     'url' => 'Yii::app()->createUrl("UserMessages",array("AcceptToUser"=>$data->id)) . "?task_id=' . $task_id . ' "',
                     'options' => array(
-                        'ajax' => array(
+                        "onclick"=>"selectUser($(this).attr('href')); return false;",
+                        /*'ajax' => array(
                                 'type' => 'POST',
                                 'url' => "js:$(this).attr('href')",
                                 'beforeSend' => "function() { $('#modal-users').dialog('close');}",
                                 'complete' => "function() {
-                                    $.fn.yiiGridView.update('messages-grid', {
-                                        complete: function() {
-                                    }});
+                                    alert('yes');
+                                    //$.fn.yiiGridView.update('messages-grid');
+                                    $('#user-btn').unbind();
                                 }",
-                        ),
-                        "class" => "btn btn-mini btn-success",
-                        "id"=>rand(10000000000, 999999999999),
+                        ),*/
+                        "class" => "btn btn-mini btn-success user",
                     )
                 ),
             )
