@@ -26,6 +26,7 @@ $this->pageTitle=Yii::app()->name . ' - Вход';
     .form {
         text-align: left;
         margin: 20px;
+        margin-top: 0;
     }
     label {
         vertical-align: sub;
@@ -60,6 +61,13 @@ $this->pageTitle=Yii::app()->name . ' - Вход';
         float: right;
         position: relative;
         left: 35px;
+    }
+    .row input[type=text], .row input[type=password]  {
+        width: 95%;
+        background-color: #F0F0F0;
+        -webkit-border-radius: 13px;
+        -moz-border-radius: 13px;
+        border-radius: 13px;
     }
     
 </style>
