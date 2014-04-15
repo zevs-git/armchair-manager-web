@@ -21,7 +21,7 @@ class MsgSender {
                         <message>
                             <from>MagicRest</from>
                             <text>' . $text . '</text>
-                            <recipient>380995190195</recipient>
+                            <recipient>' . $phone .'</recipient>
                         </message>
                     </request>';
 
