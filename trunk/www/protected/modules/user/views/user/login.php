@@ -19,6 +19,11 @@ $this->pageTitle=Yii::app()->name . ' - Вход';
         font-size: 13px;
         margin: 0;
         color: grey;
+        margin-top: -11px;
+    }
+    .header-img {
+        margin-top: 10px;
+        margin-bottom: 5px;
     }
     div.rememberMe {
         margin-bottom: 15px;
@@ -34,7 +39,7 @@ $this->pageTitle=Yii::app()->name . ' - Вход';
         font-weight: 700;
     }
     .red-line {
-        background-color: #bd362f;
+        background-color: #DF3D34;
         height: 31px;
         width: 415px;
         margin-left: -35px;
@@ -63,11 +68,12 @@ $this->pageTitle=Yii::app()->name . ' - Вход';
         left: 35px;
     }
     .row input[type=text], .row input[type=password]  {
-        width: 95%;
+        width: 92%;
         background-color: #F0F0F0;
         -webkit-border-radius: 13px;
         -moz-border-radius: 13px;
         border-radius: 13px;
+        padding: 3px 12px;
     }
     
 </style>
