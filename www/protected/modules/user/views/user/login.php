@@ -36,7 +36,7 @@ $this->pageTitle=Yii::app()->name . ' - Вход';
     .red-line {
         background-color: #bd362f;
         height: 31px;
-        width: 416px;
+        width: 415px;
         margin-left: -35px;
         padding: 5px;
     }
@@ -88,7 +88,7 @@ $this->pageTitle=Yii::app()->name . ' - Вход';
     <div class="red-line">
         <span>Введите ваши учетные данные для входа:</span>
     </div>
-    <div>
+    <div style="text-align: left;">
         <div id="triangle-topright-right"> </div>
         <div id="triangle-topright-left"> </div>
     </div>
