@@ -48,7 +48,7 @@ $this->widget('ext.groupgridview.GroupGridView', array(
     'itemsCssClass' => 'table table-striped table-bordered',
     'dataProvider' => $data,
     'mergeColumns' => array('obj','name'),
-    'extraRowColumns' => array('name'),
+    'extraRowColumns' => array('obj'),
       'extraRowPos' => 'below',
       'extraRowTotals' => function($data, $row, &$totals) {
           if(!isset($totals['count'])) $totals['count'] = 0;
