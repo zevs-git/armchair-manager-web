@@ -132,14 +132,14 @@ class UserMessagesController extends RController {
         //Сформировать тексты сообщений
         if ($model->state_id == 2) {
             $SMStext = "Объект: " . $model->device->object->obj .
-                    ". Кресло: " . (!empty($model->device->comment)?$model->device->comment:$model->device->id) .
-                    ". Событие:" . $model->message->descr;
+                    "\r\nКресло: " . (!empty($model->device->comment)?$model->device->comment:$model->device->id) .
+                    "\r\nСобытие:" . $model->message->descr;
             
             $EmailText = 'Получено новое задание. MagicRest'
                 . '<br>Город: ' . $model->device->object->city
                 . "<br>Объект: " . $model->device->object->obj
                 . "<br>Кресло: [" . $model->device_id . "] " . $model->device->comment
-                . "<br>Текст ошибки: " . $model->message->descr
+                . "<br>Событие: " . $model->message->descr
                 . "<br>http://chair.teletracking.ru/";
             
             $subject = 'Получено новое задание.'
