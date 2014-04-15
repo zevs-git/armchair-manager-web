@@ -44,6 +44,24 @@ $this->pageTitle=Yii::app()->name . ' - Вход';
         font-size: 17px;
         vertical-align: -webkit-baseline-middle;
     }
+    #triangle-topright-left {
+        width: 0;
+        height: 0;
+        border-top: 30px solid #812823;
+        border-left: 30px solid transparent;
+        margin: 0;
+        margin-left: -35px;
+    }
+    #triangle-topright-right {
+        width: 0;
+        height: 0;
+        border-top: 30px solid #812823;
+        border-right:  30px solid transparent;
+        float: right;
+        position: relative;
+        left: 35px;
+    }
+    
 </style>
 <div class="row-fluid">
 	
@@ -61,6 +79,10 @@ $this->pageTitle=Yii::app()->name . ' - Вход';
     </div>
     <div class="red-line">
         <span>Введите ваши учетные данные для входа:</span>
+    </div>
+    <div>
+        <div id="triangle-topright-right"> </div>
+        <div id="triangle-topright-left"> </div>
     </div>
     <div class="form">
     <?php $form=$this->beginWidget('CActiveForm', array(
