@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs = array(
-    'Устройcтва' => array('index'),
+    'Устройства' => array('index'),
     'Управление',
 );
 

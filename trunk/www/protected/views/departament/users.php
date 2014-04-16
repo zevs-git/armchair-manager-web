@@ -35,11 +35,17 @@ $this->beginWidget('zii.widgets.CPortlet', array(
 			'value' => 'CHtml::link(UHtml::markSearch($data,"username"),array("admin/view","id"=>$data->id))',
 		),
 		array(
-			'name'=>'email',
-			'type'=>'raw',
-			'value'=>'CHtml::link(UHtml::markSearch($data,"email"), "mailto:".$data->email)',
+			'name'=>'profile.lastname',
 		),
-		'create_at',
+                array(
+			'name'=>'profile.firstname',
+		),
+                array(
+			'name'=>'profile.staff_state',
+                        'value'=>'User::itemAlias("StaffState",$data->profile->staff_state)',
+                        'filter'=> User::itemAlias("StaffState"),
+                    
+		),
 		'lastvisit_at',
 		array(
 			'name'=>'role',
