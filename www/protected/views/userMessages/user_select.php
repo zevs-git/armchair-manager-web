@@ -10,6 +10,12 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'name' => 'username',
         ),
         array(
+            'name' => 'profile.lastname',
+        ),
+        array(
+            'name' => 'profile.firstname',
+        ),
+        array(
             'name' => 'role',
             'value' => '$data->gerRoleDescr()',
             'filter' => CHtml::listData(User::getRolesList(), 'name', 'descr'),
@@ -22,17 +28,17 @@ $this->widget('zii.widgets.grid.CGridView', array(
                     'label' => "выбрать",
                     'url' => 'Yii::app()->createUrl("UserMessages",array("AcceptToUser"=>$data->id)) . "?task_id=' . $task_id . ' "',
                     'options' => array(
-                        "onclick"=>"selectUser($(this).attr('href')); return false;",
-                        /*'ajax' => array(
-                                'type' => 'POST',
-                                'url' => "js:$(this).attr('href')",
-                                'beforeSend' => "function() { $('#modal-users').dialog('close');}",
-                                'complete' => "function() {
-                                    alert('yes');
-                                    //$.fn.yiiGridView.update('messages-grid');
-                                    $('#user-btn').unbind();
-                                }",
-                        ),*/
+                        "onclick" => "selectUser($(this).attr('href')); return false;",
+                        /* 'ajax' => array(
+                          'type' => 'POST',
+                          'url' => "js:$(this).attr('href')",
+                          'beforeSend' => "function() { $('#modal-users').dialog('close');}",
+                          'complete' => "function() {
+                          alert('yes');
+                          //$.fn.yiiGridView.update('messages-grid');
+                          $('#user-btn').unbind();
+                          }",
+                          ), */
                         "class" => "btn btn-mini btn-success user",
                     )
                 ),

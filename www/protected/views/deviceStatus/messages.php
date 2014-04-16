@@ -85,7 +85,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
                                 'complete' => "function() {
                                 }",
                         ),
-                        'class' => 'btn btn-mini btn-primary',
+                        'class' => 'btn btn-mini btn-info',
                     ),
                 ),
                 'delete' => array(

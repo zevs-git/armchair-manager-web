@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs=array(
-	'Устрйоства'=>array('index'),
+	'Устройства'=>array('index'),
 	$model->id=>array('view','id'=>$model->id),
 	'Реадактировать',
 );
