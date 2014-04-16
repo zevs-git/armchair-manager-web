@@ -85,7 +85,7 @@ class UserMessages extends CActiveRecord {
         // @todo Please modify the following code to remove attributes that should not be searched.
 
         $criteria = new CDbCriteria;
-        $criteria->with = array('device');
+        $criteria->with = array('device','state');
         $criteria->compare('id', $this->id);
         $criteria->compare('user_id', $this->user_id);
         $criteria->compare('dt', $this->dt, true);
@@ -102,7 +102,7 @@ class UserMessages extends CActiveRecord {
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
             'sort' => array(
-                'defaultOrder' => 'dt DESC'),
+                'defaultOrder' => 'state_id ASC, dt DESC'),
             'pagination' => array(
                 'pageSize' => 15,
             ),
@@ -120,6 +120,7 @@ class UserMessages extends CActiveRecord {
     }
 
     public function getrowState() {
+        $profile = Profile::model()->findByPk($this->user_id);
         $profile = Profile::model()->findByPk($this->user_id);
         if ($this->state_id == 2 && $profile)
             $tooltip = "В работе у пользователя "
