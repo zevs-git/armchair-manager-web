@@ -109,7 +109,9 @@ class User extends CActiveRecord
 			'superuser' => UserModule::t("Superuser"),
 			'status' => UserModule::t("Status"),
                         'departament' => 'Дилер',
-                        'departament_id' => 'Дилер'
+                        'departament_id' => 'Дилер',
+                        'departament.name' => 'Дилер',
+                        'profile.staff_state'=>'Статус персонала'
 		);
 	}
 	
@@ -129,7 +131,7 @@ class User extends CActiveRecord
                 'condition'=>'superuser=1',
             ),
             'notsafe'=>array(
-            	'select' => 'id, username, password, email, activkey, create_at, lastvisit_at, superuser, status,role,departament_id',
+            	'select' => 'id, username, password, email, activkey, create_at, lastvisit_at, superuser, status,role,departament_id, `departament`.`id`',
             ),
         );
     }
@@ -138,6 +140,8 @@ class User extends CActiveRecord
     {
         return CMap::mergeArray(Yii::app()->getModule('user')->defaultScope,array(
             'alias'=>'user',
+            'with'=>array("departament" => array(
+                    'on'=>"departament.id = user.departament_id")),
             'select' => 'user.id, user.username, user.email, user.create_at, user.lastvisit_at, user.superuser, user.status, user.role, user.departament_id,user.sort_by',
         ));
     }
@@ -153,6 +157,11 @@ class User extends CActiveRecord
 				'0' => UserModule::t('No'),
 				'1' => UserModule::t('Yes'),
 			),
+                        'StaffState'=>array(
+                                '0' => 'Нет',
+                                '1' => 'Техник',
+                                '2' => 'Инкассатор',
+                        )
 		);
 		if (isset($code))
 			return isset($_items[$type][$code]) ? $_items[$type][$code] : false;
@@ -228,7 +237,7 @@ class User extends CActiveRecord
         // should not be searched.
 
         $criteria=new CDbCriteria;
-        
+         $criteria->with = array('departament');
         $criteria->compare('id',$this->id);
         $criteria->compare('username',$this->username,true);
         $criteria->compare('password',$this->password);

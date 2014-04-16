@@ -52,11 +52,17 @@ $('.search-form form').submit(function(){
 			'type'=>'raw',
 			'value' => 'CHtml::link(UHtml::markSearch($data,"username"),array("admin/view","id"=>$data->id))',
 		),
-		array(
+                array(
+			'name'=>'profile.lastname',
+		),
+                array(
+			'name'=>'profile.firstname',
+		),
+		/*array(
 			'name'=>'email',
 			'type'=>'raw',
 			'value'=>'CHtml::link(UHtml::markSearch($data,"email"), "mailto:".$data->email)',
-		),
+		),*/
 		'create_at',
 		'lastvisit_at',
 		array(
@@ -64,11 +70,14 @@ $('.search-form form').submit(function(){
                         'value'=>'$data->gerRoleDescr()',
 			'filter'=> CHtml::listData(User::getRolesList(),'name','descr'),
 		),
-		array(
+                array(
+			'name'=>'departament.name',
+		),
+		/*array(
 			'name'=>'status',
 			'value'=>'User::itemAlias("UserStatus",$data->status)',
 			'filter' => User::itemAlias("UserStatus"),
-		),
+		),*/
 		array(
 			'class'=>'CButtonColumn',
 		),
