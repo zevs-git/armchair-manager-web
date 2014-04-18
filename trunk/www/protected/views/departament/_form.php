@@ -43,6 +43,18 @@
 		<?php echo $form->labelEx($model,'region',array('class'=>'span4')); ?>
 		<?php echo $form->textField($model,'region',array('class'=>'span4','size'=>60,'id'=>'region','readonly'=>true,'maxlength'=>255)); ?>
 	</div>
+
+        <div class="row">
+		<?php echo $form->labelEx($model,'comment',array('class'=>'span4')); ?>
+		<?php echo $form->textField($model,'comment',array('class'=>'span4','size'=>60,'maxlength'=>255)); ?>
+	</div>
+        
+        <div class="form-actions">
+            <h4>Учетная запись администратора</h4>
+        <div class="row">
+		<?php echo $form->labelEx($model,'username',array('class'=>'span4')); ?>
+		<?php echo $form->textField($model,'username',array('class'=>'span4','size'=>60,'maxlength'=>255)); ?>
+	</div>
         <div class="row">
 		<?php echo $form->labelEx($model,'fname',array('class'=>'span4')); ?>
 		<?php echo $form->textField($model,'fname',array('class'=>'span4','size'=>60,'maxlength'=>255)); ?>
@@ -59,9 +71,6 @@
 		<?php echo $form->labelEx($model,'phone',array('class'=>'span4')); ?>
 		<?php echo $form->textField($model,'phone',array('class'=>'span4','size'=>60,'maxlength'=>255)); ?>
 	</div>
-        <div class="row">
-		<?php echo $form->labelEx($model,'comment',array('class'=>'span4')); ?>
-		<?php echo $form->textField($model,'comment',array('class'=>'span4','size'=>60,'maxlength'=>255)); ?>
 	</div>
 
 	<?php if (!Yii::app()->request->isAjaxRequest): ?>
