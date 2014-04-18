@@ -131,7 +131,7 @@ class UserMessagesController extends RController {
     private function SendMessages($model) {
         //Сформировать тексты сообщений
         if ($model->state_id == 2) {
-            $SMStext = "Объект: " . $model->device->object->obj .
+            $SMStext = "Задание.\r\nОбъект: " . $model->device->object->obj .
                     "\r\nКресло: " . (!empty($model->device->comment)?$model->device->comment:$model->device->id) .
                     "\r\nСобытие:" . $model->message->descr;
             

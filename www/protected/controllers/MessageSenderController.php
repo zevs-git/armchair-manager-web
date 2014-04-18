@@ -14,9 +14,9 @@ class MessageSenderController extends Controller {
         foreach ($messages as $mes) {
             $usres = User::model()->findAll("departament_id = " . $mes->device->object->departament_id);
             foreach ($usres as $user) {
-                $SMStext = "" . $mes->device->object->obj .
-                        "/" . (!empty($mes->device->comment) ? $mes->device->comment : $mes->device->id) .
-                        ":" . $mes->message->descr;
+                $SMStext = "Уведомление.\r\n Объект: " . $mes->device->object->obj .
+                    "\r\nКресло: " . (!empty($mes->device->comment)?$mes->device->comment:$mes->device->id) .
+                    "\r\nСобытие:" . $mes->message->descr;
 
                 $EmailText = 'Получено новое уведолмление. MagicRest'
                         . '<br>Город: ' . $mes->device->object->city
