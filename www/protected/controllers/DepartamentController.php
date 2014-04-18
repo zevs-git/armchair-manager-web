@@ -99,8 +99,8 @@ class DepartamentController extends RController {
                 $user = new User();
                 $user->email = $model->email;
 
-                $user->username = $this->get_in_translate_to_en($model->name);
-                $user->password = UserModule::encrypting($this->get_in_translate_to_en($model->name));
+                $user->username = $model->username;
+                $pass = $user->GeneretePass();
                 $user->status = 1;
                 
                 $profile=new Profile;
@@ -131,17 +131,22 @@ class DepartamentController extends RController {
                     $newTarif->save();
                     $user->departament_id = $model->id;
                     $user->role = "Company_admin";
-                    $user->save();
-                    $authorizer = Yii::app()->getModule("rights")->authorizer;
-                    $authorizer->authManager->assign($user->role, $user->id);
+                    if (!$user->save()) {
+                        throw new Exception("fail user");
+                    }
                     $profile->user_id =  $user->id;
                     $profile->save();
-
+                    $authorizer = Yii::app()->getModule("rights")->authorizer;
+                    $authorizer->authManager->assign($user->role, $user->id);
+                    
+                    $sender = new MsgSender();
+                    $sender->SendEmail($user->id, "Uchetnaya zapis na MagicRest", "Username: '$user->username'; password: '$pass'; http://chair.teletracking.ru/");
                     if (Yii::app()->request->isAjaxRequest) {
                         echo 'success';
                         Yii::app()->end();
                     } else {
-                        $this->redirect(array('view', 'id' => $model->id));
+                        $this->render('view', array('model' => $model));
+                        Yii::app()->end();
                     }
                 }
             }
