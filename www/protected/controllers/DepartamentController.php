@@ -11,11 +11,11 @@ class DepartamentController extends RController {
     /**
      * @return array action filters
      */
-    /* public function filters() {
-      return array(
-      'rights',
-      );
-      } */
+    public function filters() {
+        return array(
+            'rights',
+        );
+    }
 
     /**
      * Specifies the access control rules.
@@ -95,17 +95,17 @@ class DepartamentController extends RController {
                 $baseTarif = ObjectTariff::model()->findByPk(0);
                 $newTarif = new ObjectTariff();
                 $newTarif->attributes = $baseTarif->attributes;
-                    
+
                 $user = new User();
                 $user->email = $model->email;
 
                 $user->username = $model->username;
                 $pass = $user->GeneretePass();
                 $user->status = 1;
-                
-                $profile=new Profile;
+
+                $profile = new Profile;
                 $profile->user_id = 0;
-                
+
                 $profile->firstname = $model->fname;
                 $profile->lastname = $model->lname;
                 $profile->phone = $model->phone;
@@ -134,11 +134,11 @@ class DepartamentController extends RController {
                     if (!$user->save()) {
                         throw new Exception("fail user");
                     }
-                    $profile->user_id =  $user->id;
+                    $profile->user_id = $user->id;
                     $profile->save();
                     $authorizer = Yii::app()->getModule("rights")->authorizer;
                     $authorizer->authManager->assign($user->role, $user->id);
-                    
+
                     $sender = new MsgSender();
                     $sender->SendEmail($user->id, "Uchetnaya zapis na MagicRest", "Username: '$user->username'; password: '$pass'; http://chair.teletracking.ru/");
                     if (Yii::app()->request->isAjaxRequest) {
@@ -200,7 +200,8 @@ class DepartamentController extends RController {
         foreach ($objs as $obj) {
             $obj->departament_id = 0;
             $tarif = ObjectTariff::model()->find("object_id = $obj->id");
-            if ($tarif) $tarif->delete();
+            if ($tarif)
+                $tarif->delete();
             $devices = Device::model()->findAll("object_id = $obj->id");
             foreach ($devices as $device) {
                 $device->object_id = 0;
@@ -208,10 +209,10 @@ class DepartamentController extends RController {
             }
             $obj->delete();
         }
-        
+
         $users = User::model()->findAll("departament_id = $id");
         foreach ($users as $user) {
-            $pofile =  Profile::model()->findByPk($user->id);
+            $pofile = Profile::model()->findByPk($user->id);
             $pofile->delete();
             $user->delete();
         }
