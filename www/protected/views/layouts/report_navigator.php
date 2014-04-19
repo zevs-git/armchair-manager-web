@@ -58,7 +58,7 @@
         }
     }
     function showBTN() {
-        if (($('#region').val() || $('#city').val() || $('#object_id').val())) {
+        if (($('#region').val() || $('#city').val() || $('#object_id').val() || $('#staff').val())) {
             $('#sub_btn').show();
         } else {
             $('#sub_btn').hide();
@@ -72,6 +72,7 @@
         $('#object_id').change(selectOp);
         //$('#hide-btn').click(hideParams);
         $('#type').change(showBTN);
+        $('#staff').change(showBTN);
         $('#sort_by_time').change(showBTN);
         
         
@@ -179,6 +180,19 @@
             echo CHtml::dropDownList('object_id', 'id', $list, array('class' => 'span3', 'id' => 'object_id', 'empty' => 'Выберите объект'));
 
             ?>
+            
+            <?php if ($this->action->id == 'StaffReport'):?>
+            <br />
+            <br />
+            <span class="span2" id="type-label">ФИО:</span>
+            <?php 
+                $crit = (Yii::app()->user->checkAccess('Superadmin'))?"1 = 1":'departament_id = ' . Yii::app()->getModule('user')->user()->departament_id;
+                $list = CHtml::listData(Staff::model()->findAll($crit), 'id', 'FIO');
+            
+                echo CHtml::dropDownList('staff_id', 'staff_id', $list, array('class' => 'span3', 'id' => 'staff','empty' => 'Выберите персонал')); ?>
+            
+            <?php endif; ?>
+            
             <?php if ($this->action->id == 'MassageReport'):?>
             <br />
             <br />
@@ -190,6 +204,7 @@
             <?php echo CHtml::checkBox('sort_by_time',!empty($_REQUEST['sort_by_time']),array('id' => 'sort_by_time',)); ?>
             
             <?php endif; ?>
+            
             <?php
             if (isset($_REQUEST['country'])) {
                 echo "<script>$('#country').val('" . $_REQUEST['country'] . "') </script>";
