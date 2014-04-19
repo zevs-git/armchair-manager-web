@@ -41,8 +41,15 @@ $this->beginWidget('zii.widgets.CPortlet', array(
             display: none;
         }
     </style>
-    
+
     <?php
+    
+    if (isset($_REQUEST['staff_id']) && $_REQUEST['staff_id'] >= 0) {
+        $showFIO = false;
+    } else {
+        $showFIO = true;
+    }
+
 $this->widget('ext.groupgridview.GroupGridView', array(
     'id' => 'device-grid',
     'itemsCssClass' => 'table table-striped table-bordered',
@@ -52,9 +59,11 @@ $this->widget('ext.groupgridview.GroupGridView', array(
         array('name'=>'obj',
             'header'=>'Объект'),
         array('name'=>'type',
-            'header'=>'Тип'),
+            'header'=>'Тип',
+            'visible'=>$showFIO),
         array('name'=>'FIO',
-            'header'=>'ФИО'),
+            'header'=>'ФИО',
+            'visible'=>$showFIO),
         array('name'=>'dt',
             'header'=>'Дата'),
     ),

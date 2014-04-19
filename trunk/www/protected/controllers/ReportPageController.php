@@ -89,7 +89,7 @@ class ReportPageController extends RController {
                 Yii::app()->session->add('report_' . $key, $value);
             }
         }
-        if (is_numeric($_REQUEST['object_id']) || !empty($_REQUEST['city']) || !empty($_REQUEST['region'])) {
+        if (is_numeric($_REQUEST['object_id']) || !empty($_REQUEST['city']) || !empty($_REQUEST['region']) || !empty($_REQUEST['staff_id'])) {
             if (is_numeric($_REQUEST['object_id'])) {
                 /*unset($_REQUEST['country']);
                 unset($_REQUEST['city']);
@@ -104,6 +104,10 @@ class ReportPageController extends RController {
                 $this->searchBy = "по региону '" . $_REQUEST['region'] . "'";
             } else {
                 $this->searchBy = "по стране '" . $_REQUEST['country'] . "'";
+            }
+            
+            if (!empty($_REQUEST['staff_id'])) {
+                $this->searchBy = Staff::model()->findByPk($_REQUEST['staff_id'])->FIO;
             }
             $this->showRep = true;
         } else {
@@ -151,6 +155,7 @@ class ReportPageController extends RController {
                     AND d.object_id = o.id
                     AND s.staff_type_id = st.id
                     AND ik.dt >= '" . date("Y-m-d H:i:s", strtotime($_REQUEST['date_from'])) . "' AND ik.dt <= '" . date("Y-m-d H:i:s", strtotime($_REQUEST['date_to'])) . "'" .
+                    (!empty($_REQUEST['staff_id'])?" and s.id = " . $_REQUEST['staff_id']:"") . 
                     (is_numeric($_REQUEST['object_id']) ? " AND o.id = " . $_REQUEST['object_id'] : "") .
                     //(!empty($_REQUEST['country']) ? " AND obj.country = '" . $_REQUEST['country'] . "'" : "") .
                     (!empty($_REQUEST['region']) ? " AND o.region = '" . $_REQUEST['region'] . "'" : "") .
