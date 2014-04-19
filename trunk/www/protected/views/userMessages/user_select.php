@@ -16,6 +16,10 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'name' => 'profile.firstname',
         ),
         array(
+            'name' => 'profile.staff_state',
+            'value'=>'($data->profile->staff_state == 2)?"Инкассатор":($data->profile->staff_state == 1)?"Техник":"Не задан"'
+        ),
+        array(
             'name' => 'role',
             'value' => '$data->gerRoleDescr()',
             'filter' => CHtml::listData(User::getRolesList(), 'name', 'descr'),
