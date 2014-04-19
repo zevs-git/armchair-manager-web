@@ -49,7 +49,7 @@
 		<?php echo $form->textField($model,'comment',array('class'=>'span4','size'=>60,'maxlength'=>255)); ?>
 	</div>
         
-        <div class="form-actions">
+        <div class="form-actions" <?=(!$model->isNewRecord)?"style='display:none'":""?>>
             <h4>Учетная запись администратора</h4>
         <div class="row">
 		<?php echo $form->labelEx($model,'username',array('class'=>'span4')); ?>

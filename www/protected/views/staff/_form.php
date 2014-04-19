@@ -6,7 +6,7 @@
 
 <div class="form">
 
-<?php $form=$this->beginWidget('CActiveForm', array(
+<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	'id'=>'staff-form',
 	// Please note: When you enable ajax validation, make sure the corresponding
 	// controller action is handling ajax validation correctly.
@@ -52,6 +52,17 @@
 		<?php echo $form->labelEx($model,'phone'); ?>
 		<?php echo $form->textField($model,'phone',array('size'=>20,'maxlength'=>20)); ?>
 		<?php echo $form->error($model,'phone'); ?>
+	</div>
+        <div class="row">
+		<?php echo $form->labelEx($model,'email'); ?>
+		<?php echo $form->textField($model,'email',array('size'=>20,'maxlength'=>20)); ?>
+		<?php echo $form->error($model,'email'); ?>
+	</div>
+        
+        <div class="row">
+		<?php echo $form->labelEx($model,'username'); ?>
+		<?php echo $form->textField($model,'username',array('size'=>20,'maxlength'=>20)); ?>
+		<?php echo $form->error($model,'username'); ?>
 	</div>
 
 	<div class="row">

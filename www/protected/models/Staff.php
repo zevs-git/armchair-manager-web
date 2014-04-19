@@ -12,6 +12,8 @@
  * @property string $comment
  * @property integer $object_id
  * @property int    $departament_id
+ * @property string $username
+ * @property string $email
  */
 class Staff extends CActiveRecord
 {
@@ -33,11 +35,13 @@ class Staff extends CActiveRecord
 		return array(
 			array('staff_type_id, object_id, departament_id', 'numerical', 'integerOnly'=>true),
 			array('FIO, comment', 'length', 'max'=>255),
+                        array('username', 'unique'),
+                        array('phone, FIO,staff_type_id,key,email,departament_id', 'required'),
 			array('phone', 'length', 'max'=>20),
                         array('key', 'length', 'max'=>8,'min'=>8),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, FIO, staff_type_id, key, phone, comment, object_id, type_descr, departament_id', 'safe', 'on'=>'search'),
+			array('id, FIO, staff_type_id, key, phone, comment, object_id, type_descr, departament_id, email, username', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -70,8 +74,9 @@ class Staff extends CActiveRecord
 			'comment' => 'Примечание',
 			'object_id' => 'Объект',
                         'type_descr'=>'Тип персонала',
-                        'departament_id'=>'Деапртамент',
-                        'departament_name'=>'Департамент'
+                        'departament_id'=>'Дилер',
+                        'departament_name'=>'Дилер',
+                        'username'=>'Имя пользователя для входа в систему'
 		);
 	}
 

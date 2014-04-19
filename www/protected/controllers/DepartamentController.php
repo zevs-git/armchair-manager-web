@@ -135,6 +135,8 @@ class DepartamentController extends RController {
                         throw new Exception("fail user");
                     }
                     $profile->user_id = $user->id;
+                    $profile->sendMail = 1;
+                    $profile->sendSMS  = 1;
                     $profile->save();
                     $authorizer = Yii::app()->getModule("rights")->authorizer;
                     $authorizer->authManager->assign($user->role, $user->id);
@@ -145,7 +147,7 @@ class DepartamentController extends RController {
                         echo 'success';
                         Yii::app()->end();
                     } else {
-                        $this->render('view', array('model' => $model));
+                        $this->render('view', array('model' => $model,'is_save'=>true,'username'=>$user->username));
                         Yii::app()->end();
                     }
                 }
