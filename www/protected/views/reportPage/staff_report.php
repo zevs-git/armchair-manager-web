@@ -44,7 +44,7 @@ $this->beginWidget('zii.widgets.CPortlet', array(
 
     <?php
     
-    if (isset($_REQUEST['staff_id']) && $_REQUEST['staff_id'] >= 0) {
+    if (!empty($_REQUEST['staff_id'])) {
         $showFIO = false;
     } else {
         $showFIO = true;
