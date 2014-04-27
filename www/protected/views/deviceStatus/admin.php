@@ -7,7 +7,7 @@
     /* @var $this DeviceStatusController */
     /* @var $model DeviceStatus */
 
-    $updateTimeout = 10000;
+    $updateTimeout = 10000000;
     Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
 	$('.search-form').toggle();
@@ -24,7 +24,7 @@ $('.search-form form').submit(function(){
     <?php
 //$model->dbCriteria->order='dt DESC';
     $this->beginWidget('zii.widgets.CPortlet', array(
-        'htmlOptions' => array('style' => 'min-width: 1000px; margin-top: 25px; margin-bottom: 50px; border: none;', 'class' => 'portlet')
+        'htmlOptions' => array('class' => 'portlet monit')
     ));
     ?>
 <div id="grid-container">
@@ -196,7 +196,7 @@ $this->beginWidget('zii.widgets.jui.CJuiDialog', array(// the dialog
         <div class="stat-block">
             <ul>
                 <!-- <li class="stat-graph inlinebar" id="weekly-visit">8,4,6,5,9,10</li> -->
-                <li class="stat-count" ><span id="device_count"></span><span>Подключено устройств</span></li>
+                <li class="stat-count" ><span id="device_count"></span><span style="width:500px">Подключено устройств</span></li>
                 <li class="stat-percent" ><span id="device_connected_p" class="text-success stat-percent"></span></li>
             </ul>
         </div>
