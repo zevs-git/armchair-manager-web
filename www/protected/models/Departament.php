@@ -70,7 +70,7 @@ class Departament extends CActiveRecord
                         'fname' => 'Имя',
                         'lname' => 'Фамилия',
                         'phone' => 'Телефон',
-                        'username'=>'Имя пользователя'
+                        'username'=>'Логин пользователя'
 		);
 	}
 
