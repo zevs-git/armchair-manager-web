@@ -20,7 +20,7 @@ class MsgSender {
                         </auth>
                         <message>
                             <from>MagicRest</from>
-                            <text>' . $text . '</text>
+                            <text>' . $text . "\n" . date("d.m.Y H:i:s") . '</text>
                             <recipient>' . str_replace("+","",$phone) .'</recipient>
                         </message>
                     </request>';
@@ -46,7 +46,7 @@ class MsgSender {
         $email =  Yii::app()->email;
         $email->to = $mail;
         $email->subject = $this->get_in_translate_to_en($subject);
-        $email->message = $this->get_in_translate_to_en($text);
+        $email->message = $this->get_in_translate_to_en($text . "<br/>" . date("d.m.Y H:i:s"));
        
         $s = $email->send();
     }
