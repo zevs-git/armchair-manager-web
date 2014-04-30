@@ -16,6 +16,8 @@
  * @property string $phone
  * @property string $comment
  * @property int    $departament_id
+ * @property string   $time_start
+ * @property string   $time_end
  */
 class Object extends CActiveRecord
 {
@@ -35,11 +37,11 @@ class Object extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('country, region, city, street, house, type_id, obj, face, phone, comment,departament_id', 'length', 'max'=>255),
+			array('country, region, city, street, house, type_id, obj, face, phone, comment,departament_id,time_start,time_end', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
                         array('city, obj', 'required'),
-			array('id, country, region, city, street, house, type.descr, obj, face, phone, comment,object_type,departament_id,departament_name', 'safe', 'on'=>'search'),
+			array('id, country, region, city, street, house, type.descr, obj, face, phone, comment,object_type,departament_id,departament_name,time_start,time_end', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -77,7 +79,9 @@ class Object extends CActiveRecord
 			'phone' => 'Телефон',
 			'comment' => 'Примечание',
                         'departament_id'=>'Департамент',
-                        'departament_name'=>'Департамент'
+                        'departament_name'=>'Департамент',
+                        'time_start'=>'Начало работы по графику',
+                        'time_end'=>'Конец работы по графику'
 		);
 	}
 
