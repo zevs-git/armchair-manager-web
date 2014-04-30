@@ -20,7 +20,7 @@ class MsgSender {
                         </auth>
                         <message>
                             <from>MagicRest</from>
-                            <text>' . $text . "\n" . date("d.m.Y H:i:s") . '</text>
+                            <text>' . $text . '</text>
                             <recipient>' . str_replace("+","",$phone) .'</recipient>
                         </message>
                     </request>';
