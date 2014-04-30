@@ -15,7 +15,7 @@
                     'dateFormat' => 'dd.mm.yy',
                 ),
                 'htmlOptions' => array(
-                    'style' => 'height:20px;'
+                    'style' => 'height:20px;display:none'
                 ),
             ));
  
