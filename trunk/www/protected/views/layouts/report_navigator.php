@@ -22,7 +22,7 @@
 <script>
     function selectOp(id) {
         var active = $(this).attr('name');
-        var ids = ['region', 'city', 'object_id'];
+        var ids = ['country','region', 'city', 'object_id'];
         $('#' + active + '-label').addClass('bold');
         ids.forEach(function(entry) {
             if (ids.indexOf(active) < ids.indexOf(entry)) {
@@ -40,7 +40,7 @@
             url: '<?php echo $this->createAbsoluteUrl('reportPage/getListData') ?>',
             dataType: 'html',
             data: 'datatype=' + type + 
-                        //'&country=' + $('#country').val() +
+                        '&country=' + $('#country').val() +
                         '&region=' + $('#region').val() +
                         '&city=' + $('#city').val(),
             success: function(data) {
@@ -58,7 +58,7 @@
         }
     }
     function showBTN() {
-        if (($('#region').val() || $('#city').val() || $('#object_id').val() || $('#staff').val())) {
+        if (($('#country').val() || $('#region').val() || $('#city').val() || $('#object_id').val() || $('#staff').val())) {
             $('#sub_btn').show();
         } else {
             $('#sub_btn').hide();
@@ -66,7 +66,7 @@
         
     }
     $(document).ready(function() {
-        //$('#country').change(selectOp);
+        $('#country').change(selectOp);
         $('#region').change(selectOp);
         $('#city').change(selectOp);
         $('#object_id').change(selectOp);
@@ -146,11 +146,14 @@
             ?>
             <br />
             <br />
+             <span class="span2" id="region-label">Страна:</span>
             <?php
-            /*$crit = (Yii::app()->user->getId() == "pulkovo") ? "id in (1,2)" : NULL;
-            $list = array_unique(CHtml::listData(Object::model()->findAll($crit), 'country', 'country'));*/
+            $crit = NULL;
+            $list = array_unique(CHtml::listData(Object::model()->findAll($crit), 'country', 'country'));
             ?>
-            <?//php echo CHtml::dropDownList('country', 'country', $list, array('class' => 'span3', 'id' => 'country', 'empty' => 'Выберите страну')); ?>
+            <?php echo CHtml::dropDownList('country', 'country', $list, array('class' => 'span3', 'id' => 'country', 'empty' => 'Выберите страну')); ?>
+            <br />
+            <br />
             <span class="span2" id="region-label">Регион:</span>
             <?php
             $crit = (Yii::app()->user->checkAccess('Superadmin'))?'':'departament_id = ' . Yii::app()->getModule('user')->user()->departament_id;
