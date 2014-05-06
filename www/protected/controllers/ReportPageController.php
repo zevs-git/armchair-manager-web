@@ -148,7 +148,7 @@ class ReportPageController extends RController {
     public function actionStaffReport() {
         if ($this->checkInput()) {
 
-            $sql = "SELECT o.obj,d.comment, DATE_FORMAT(ik.dt,\"%d.%m.%Y %H:%i:%s\" ) as dt,s.FIO, st.descr as type
+            $sql = "SELECT o.obj,d.comment, DATE_FORMAT(ik.dt,\"%d.%m.%Y\" ) as dt,DATE_FORMAT(ik.dt,\"%H:%i:%s\" ) as time, s.FIO, st.descr as type
                     FROM ident_key ik,staff s,object o, device d, staff_type st
                     WHERE ik.`key` = CONV(s.`key`,16,10)
                     AND ik.device_id = d.id
@@ -160,7 +160,7 @@ class ReportPageController extends RController {
                     //(!empty($_REQUEST['country']) ? " AND obj.country = '" . $_REQUEST['country'] . "'" : "") .
                     (!empty($_REQUEST['region']) ? " AND o.region = '" . $_REQUEST['region'] . "'" : "") .
                     (!empty($_REQUEST['city']) ? " AND o.city = '" . $_REQUEST['city'] . "'" : "") .
-                    " order by o.obj,d.comment, ik.dt";
+                    " order by o.obj, ik.dt";
 
             $dataProvider = new CSqlDataProvider($sql, array(
                 //'totalItemCount'=>$count,
