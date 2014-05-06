@@ -54,7 +54,7 @@ $this->widget('ext.groupgridview.GroupGridView', array(
     'id' => 'device-grid',
     'itemsCssClass' => 'table table-striped table-bordered',
     'dataProvider' => $data,
-    'mergeColumns' => array('obj','type','FIO'),
+    'mergeColumns' => array('obj','type','FIO','dt'),
     'columns' => array(
         array('name'=>'obj',
             'header'=>'Объект'),
@@ -66,6 +66,11 @@ $this->widget('ext.groupgridview.GroupGridView', array(
             'visible'=>$showFIO),
         array('name'=>'dt',
             'header'=>'Дата'),
+        array('name'=>'time',
+            'header'=>'Время'),
+        array('name'=>'comment',
+            'header'=>'Устройтво'),
+        
     ),
 ));
 ?>
