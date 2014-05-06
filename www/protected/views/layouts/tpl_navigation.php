@@ -115,7 +115,7 @@
                                                 'active' => ($this->action->id == 'MassageReport'),
                                                 'visible' => Yii::app()->user->checkAccess('ReportPage.MassageReport')
                                             ),
-                                            array('label' => 'Пероснал', 'url' => array('/reportPage/StaffReport'),
+                                            array('label' => 'Персонал', 'url' => array('/reportPage/StaffReport'),
                                                 'active' => ($this->action->id == 'StaffReport'),
                                                 'visible' => Yii::app()->user->checkAccess('ReportPage.StaffReport')
                                             ),
