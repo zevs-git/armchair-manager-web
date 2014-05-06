@@ -1,5 +1,5 @@
 <?php
-
+/* @var UserMessages $model */
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'messages-grid',
     'itemsCssClass' => 'table table-striped table-bordered',
@@ -33,11 +33,13 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'class' => 'bootstrap.widgets.TbButtonColumn',
             'template' => '{ok}{to_work}{to_user}{delete}',
             'htmlOptions' => array('style' => 'padding: 0px; text-align: center;'),
+            //'visible'=> false,//'$data->state_id < 0',
             'buttons' => array(
                 'ok' => array(
                     'label' => 'Отработано',
                     'icon' => 'icon-ok',
                     'url' => 'Yii::app()->createUrl("UserMessages",array("Success"=>$data->id))',
+                    'visible'=>'$data->state_id < 3',
                     'options' => array(
                         'ajax' => array(
                                 'type' => 'POST',
@@ -57,6 +59,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
                     'label' => 'Взять в работу',
                     'icon' => 'icon-plus',
                     'url' => 'Yii::app()->createUrl("UserMessages",array("Accept"=>$data->id))',
+                    'visible'=>'$data->state_id < 3',
                     'options' => array(
                         'ajax' => array(
                                 'type' => 'POST',
@@ -76,6 +79,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
                     'label' => 'Передать в работу пользователю...',
                     'icon' => 'icon-random',
                     'url' => 'Yii::app()->createUrl("UserMessages",array("Users"=>$data->id))',
+                    'visible'=>'$data->state_id < 3',
                     'options' => array(
                         'ajax' => array(
                                 'type' => 'POST',
