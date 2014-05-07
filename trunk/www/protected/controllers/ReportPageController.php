@@ -78,18 +78,18 @@ class ReportPageController extends RController {
         if (!isset($_REQUEST['date_from']) || !isset($_REQUEST['date_to'])) {
             foreach (Yii::app()->session->toArray() as $key => $value) {
                 $key = str_replace('report_', '', $key);
-                if (in_array($key, array('city', 'region', 'object_id', 'date_from', 'date_to'))) {
+                if (in_array($key, array('country','city', 'region', 'object_id', 'date_from', 'date_to'))) {
                     $_REQUEST[$key] = $value;
                 }
             }
         }
 
         foreach ($_REQUEST as $key => $value) {
-            if (in_array($key, array('city', 'region', 'object_id', 'date_from', 'date_to'))) {
+            if (in_array($key, array('country','city', 'region', 'object_id', 'date_from', 'date_to'))) {
                 Yii::app()->session->add('report_' . $key, $value);
             }
         }
-        if (is_numeric($_REQUEST['object_id']) || !empty($_REQUEST['city']) || !empty($_REQUEST['region']) || !empty($_REQUEST['staff_id'])) {
+        if (!empty($_REQUEST['country']) || is_numeric($_REQUEST['object_id']) || !empty($_REQUEST['city']) || !empty($_REQUEST['region']) || !empty($_REQUEST['staff_id'])) {
             if (is_numeric($_REQUEST['object_id'])) {
                 /*unset($_REQUEST['country']);
                 unset($_REQUEST['city']);
@@ -236,6 +236,9 @@ class ReportPageController extends RController {
                     $data[$obj]['device'][] = $data_row['name'] . " [" . $data_row['device_id'] . "]";
                     $data[$obj]['obj_name'][] = $data_row['obj'];
                     $data[$obj]['time'][] = (int)$data_row['sec'];
+                    if ((int)$data_row['sec'] > @$data['max']) {
+                        $data['max'] = (int)$data_row['sec'];
+                    }
                 }
             }
             
