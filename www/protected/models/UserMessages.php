@@ -6,7 +6,7 @@
  * The followings are the available columns in table 'user_messages':
  * @property integer $id
  * @property integer $user_id
- * @property string $dt
+ * @property string  $dt
  * @property integer $device_id
  * @property integer $msg_code
  * @property integer $read

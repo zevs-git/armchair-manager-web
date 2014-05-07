@@ -47,9 +47,13 @@ foreach  ($data as $obj_data) {
             'xAxis' => array(
                 "categories" => $obj_data['device'],
             ),
+            'chart'=>array(
+              'height'=> (count($obj_data['device']) * 50 > 300?count($obj_data['device'])*50:300),
+              ),
             'plotOptions' => array(
                 'series' => array(
-                    'stacking' => 'percent'
+                    'stacking' => 'percent',
+                    'pointWidth'=> 28
                 )
             ),
             'tooltip' => array(
