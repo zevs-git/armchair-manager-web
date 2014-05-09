@@ -184,7 +184,7 @@
 
             ?>
             
-            <?php if ($this->action->id == 'StaffReport'):?>
+            <?php if ( in_array($this->action->id,array('StaffReport','IncassatorReport'))):?>
             <br />
             <br />
             <span class="span2" id="type-label">ФИО:</span>
