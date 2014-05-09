@@ -125,6 +125,7 @@ class ReportPageController extends RController {
                             WHERE ir.device_id = d.id
                             AND d.object_id = obj.id
                             AND ir.dt >= '" . date("Y-m-d H:i:s", strtotime($_REQUEST['date_from'])) . "' AND ir.dt <= '" . date("Y-m-d H:i:s", strtotime($_REQUEST['date_to'])) . "'" .
+                    (!empty($_REQUEST['staff_id'])?" and s.id = " . $_REQUEST['staff_id']:"") . 
                     (is_numeric($_REQUEST['object_id']) ? " AND obj.id = " . $_REQUEST['object_id'] : "") .
                     //(!empty($_REQUEST['country']) ? " AND obj.country = '" . $_REQUEST['country'] . "'" : "") .
                     (!empty($_REQUEST['region']) ? " AND obj.region = '" . $_REQUEST['region'] . "'" : "") .

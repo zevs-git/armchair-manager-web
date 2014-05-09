@@ -22,20 +22,10 @@
         <h4 align="center"><?= $this->searchBy ?></h4>
         <h4 align="center">за период с <?= $_REQUEST['date_from'] ?> по <?= $_REQUEST['date_to'] ?></h4>
         <?php
-        /* echo $dataProvider->getId();
-          $chart_id = $dataProvider->getId();
-          $refresh_button = $this->widget('zii.widgets.jui.CJuiButton', array(
-          'buttonType' => 'button',
-          'name' => 'refresh',
-          'caption' => 'Refresh',
-          'options' => array(
-          ),
-          'onclick' => 'js:function(){
-          url = window.location.href+"?";
-          $.fn.highchartsview.update("' . $chart_id . '", url);
-          }'
-          )); */
-        foreach ($data as $obj_data) {
+        foreach ($data as $key=>$obj_data) {
+            if ($key == 'max') {
+                continue;
+            }
             //$obj = array_shift(array_slice($obj_data,0,1));
             //print_r($obj_data) . "<br>";
             ?><h4 align="center">Объект "<?php echo $obj_data['obj_name'][0] ?>"</h4><?php

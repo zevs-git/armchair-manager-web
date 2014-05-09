@@ -42,6 +42,19 @@ $this->widget('ext.groupgridview.GroupGridView', array(
     'itemsCssClass' => 'table table-striped table-bordered',
     'mergeColumns' => array('obj','name'),
     'dataProvider' => $data,
+    'extraRowColumns' => array('obj'),
+      'extraRowPos' => 'below',
+      'extraRowTotals' => function($data, $row, &$totals) {
+          if(!isset($totals['count'])) $totals['count'] = 0;
+          if (empty($totals['name']) || $totals['name'] != $data['name']) {
+            $totals['count']++;
+          }
+          $totals['name'] = $data['name'];
+          
+          if(!isset($totals['sum_all_summ'])) $totals['sum_all_summ'] = 0;
+          $totals['sum_all_summ'] += $data['sum'];
+      },
+    'extraRowExpression' => '"<span class=\"subtotal\"><b>Количество кресел - ".$totals["count"].", Общая сумма - ".$totals["sum_all_summ"]." RUB</b></span>"',
     'columns' => array(
         array('name'=>'obj',
             'header'=>'Объект'),
