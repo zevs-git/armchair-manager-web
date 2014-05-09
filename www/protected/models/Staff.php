@@ -102,11 +102,11 @@ class Staff extends CActiveRecord
 		$criteria->compare('FIO',$this->FIO,true);
 		$criteria->compare('staff_type_id',$this->staff_type_id);
 		$criteria->compare('t.key',$this->key,true);
-		$criteria->compare('phone',$this->phone,true);
-		$criteria->compare('comment',$this->comment,true);
-		$criteria->compare('object_id',$this->object_id);
+		$criteria->compare('t.phone',$this->phone,true);
+		$criteria->compare('t.comment',$this->comment,true);
+		$criteria->compare('t.object_id',$this->object_id);
                 $criteria->compare('type.descr', $this->type_descr,true);
-                $criteria->compare('departament_id',$this->departament_id,true);
+                $criteria->compare('t.departament_id',$this->departament_id,true);
                 
                 if (!Yii::app()->user->checkAccess('Superadmin')) {
                     $criteria->addCondition('departament_id = ' . Yii::app()->getModule('user')->user()->departament_id);
@@ -141,11 +141,11 @@ class Staff extends CActiveRecord
 		$criteria->compare('FIO',$this->FIO,true);
 		$criteria->compare('staff_type_id',$this->staff_type_id);
 		$criteria->compare('t.key',$this->key,true);
-		$criteria->compare('phone',$this->phone,true);
-		$criteria->compare('comment',$this->comment,true);
-		$criteria->compare('object_id',$this->object_id);
+		$criteria->compare('t.phone',$this->phone,true);
+		$criteria->compare('t.comment',$this->comment,true);
+		$criteria->compare('t.object_id',$this->object_id);
                 $criteria->compare('type.descr', $this->type_descr,true);
-                $criteria->compare('departament_id',$dep_id,true);
+                $criteria->compare('t.departament_id',$dep_id,true);
                 
                 if (!Yii::app()->user->checkAccess('Superadmin')) {
                     $criteria->addCondition('departament_id = ' . Yii::app()->getModule('user')->user()->departament_id);

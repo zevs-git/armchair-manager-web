@@ -238,17 +238,17 @@ class User extends CActiveRecord
 
         $criteria=new CDbCriteria;
          $criteria->with = array('departament');
-        $criteria->compare('id',$this->id);
-        $criteria->compare('username',$this->username,true);
-        $criteria->compare('password',$this->password);
-        $criteria->compare('email',$this->email,true);
-        $criteria->compare('activkey',$this->activkey);
-        $criteria->compare('create_at',$this->create_at);
-        $criteria->compare('lastvisit_at',$this->lastvisit_at);
-        $criteria->compare('superuser',$this->superuser);
-        $criteria->compare('status',$this->status);
-        $criteria->compare('role',$this->role);
-        $criteria->compare('departamnet_id',$this->departament_id);
+        $criteria->compare('user.id',$this->id);
+        $criteria->compare('user.username',$this->username,true);
+        $criteria->compare('user.password',$this->password);
+        $criteria->compare('user.email',$this->email,true);
+        $criteria->compare('user.activkey',$this->activkey);
+        $criteria->compare('user.create_at',$this->create_at);
+        $criteria->compare('user.lastvisit_at',$this->lastvisit_at);
+        $criteria->compare('user.superuser',$this->superuser);
+        $criteria->compare('user.status',$this->status);
+        $criteria->compare('user.role',$this->role);
+        $criteria->compare('user.departamnet_id',$this->departament_id);
         
         
         if (!Yii::app()->user->checkAccess('Superadmin')) {
@@ -273,17 +273,17 @@ class User extends CActiveRecord
 
         $criteria=new CDbCriteria;
         
-        $criteria->compare('id',$this->id);
-        $criteria->compare('username',$this->username,true);
-        $criteria->compare('password',$this->password);
-        $criteria->compare('email',$this->email,true);
-        $criteria->compare('activkey',$this->activkey);
-        $criteria->compare('create_at',$this->create_at);
-        $criteria->compare('lastvisit_at',$this->lastvisit_at);
-        $criteria->compare('superuser',$this->superuser);
-        $criteria->compare('status',$this->status);
-        $criteria->compare('role',$this->role);
-        $criteria->compare('departament_id',$dep_id);
+        $criteria->compare('user.id',$this->id);
+        $criteria->compare('user.username',$this->username,true);
+        $criteria->compare('user.password',$this->password);
+        $criteria->compare('user.email',$this->email,true);
+        $criteria->compare('user.activkey',$this->activkey);
+        $criteria->compare('user.create_at',$this->create_at);
+        $criteria->compare('user.lastvisit_at',$this->lastvisit_at);
+        $criteria->compare('user.superuser',$this->superuser);
+        $criteria->compare('user.status',$this->status);
+        $criteria->compare('user.role',$this->role);
+        $criteria->compare('user.departament_id',$dep_id);
         
         
        

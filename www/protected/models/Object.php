@@ -84,6 +84,7 @@ class Object extends CActiveRecord
                         'time_end'=>'Конец работы по графику'
 		);
 	}
+       
 
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
@@ -104,17 +105,17 @@ class Object extends CActiveRecord
 		$criteria=new CDbCriteria;
                 
 		$criteria->compare('t.id',$this->id);
-		$criteria->compare('country',$this->country,true);
-		$criteria->compare('region',$this->region,true);
-		$criteria->compare('city',$this->city,true);
-		$criteria->compare('street',$this->street,true);
-		$criteria->compare('house',$this->house,true);
-		$criteria->compare('type_id',$this->type_id,true);
-		$criteria->compare('obj',$this->obj,true);
-		$criteria->compare('face',$this->face,true);
-		$criteria->compare('phone',$this->phone,true);
-		$criteria->compare('comment',$this->comment,true);
-                $criteria->compare('departament_id',$this->departament_id,true);
+		$criteria->compare('t.country',$this->country,true);
+		$criteria->compare('t.region',$this->region,true);
+		$criteria->compare('t.city',$this->city,true);
+		$criteria->compare('t.street',$this->street,true);
+		$criteria->compare('t.house',$this->house,true);
+		$criteria->compare('t.type_id',$this->type_id,true);
+		$criteria->compare('t.obj',$this->obj,true);
+		$criteria->compare('t.face',$this->face,true);
+		$criteria->compare('t.phone',$this->phone,true);
+		$criteria->compare('t.comment',$this->comment,true);
+                $criteria->compare('t.departament_id',$this->departament_id,true);
                 
                 $criteria->with = array('type','departament');
                 $criteria->compare('type.id',$this->object_type,false);

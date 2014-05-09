@@ -86,14 +86,14 @@ class UserMessages extends CActiveRecord {
 
         $criteria = new CDbCriteria;
         $criteria->with = array('device','state');
-        $criteria->compare('id', $this->id);
-        $criteria->compare('user_id', $this->user_id);
-        $criteria->compare('dt', $this->dt, true);
-        $criteria->compare('device_id', $this->device_id);
-        $criteria->compare('msg_code', $this->msg_code);
-        $criteria->compare('read', $this->read);
-        $criteria->compare('email', $this->email);
-        $criteria->compare('sms', $this->sms);
+        $criteria->compare('t.id', $this->id);
+        $criteria->compare('t.user_id', $this->user_id);
+        $criteria->compare('t.dt', $this->dt, true);
+        $criteria->compare('t.device_id', $this->device_id);
+        $criteria->compare('t.msg_code', $this->msg_code);
+        $criteria->compare('t.read', $this->read);
+        $criteria->compare('t.email', $this->email);
+        $criteria->compare('t.sms', $this->sms);
 
         if (!Yii::app()->user->checkAccess('Superadmin')) {
             $criteria->addCondition('device.id ' . Device::getAccessIDSQLStr());

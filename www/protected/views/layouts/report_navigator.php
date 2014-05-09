@@ -190,6 +190,7 @@
             <span class="span2" id="type-label">ФИО:</span>
             <?php 
                 $crit = (Yii::app()->user->checkAccess('Superadmin'))?"1 = 1":'departament_id = ' . Yii::app()->getModule('user')->user()->departament_id;
+                if ($this->action->id == 'IncassatorReport') $crit .= " AND staff_type_id = 0";
                 $list = CHtml::listData(Staff::model()->findAll($crit), 'id', 'FIO');
             
                 echo CHtml::dropDownList('staff_id', 'staff_id', $list, array('class' => 'span3', 'id' => 'staff','empty' => 'Выберите персонал')); ?>

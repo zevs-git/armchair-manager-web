@@ -96,6 +96,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
                     'label' => 'Удалить',
                     'url' => 'Yii::app()->createUrl("UserMessages",array("Delete"=>$data->id))',
                     'icon' => 'icon-remove',
+                    'visible'=>'$data->state_id < 3',
                     'options' => array(
                         'ajax' => array(
                                 'type' => 'POST',
