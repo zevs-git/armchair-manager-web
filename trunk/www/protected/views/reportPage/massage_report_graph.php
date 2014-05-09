@@ -4,7 +4,14 @@
         'title' => "Отчет \"Характеристика работы кресел\""
     ));
     ?>
-
+    <style>
+        .chart-wrapper {
+            position: relative;
+            padding-bottom: 40%;
+            width:45%;
+            float:left;
+        }
+    </style>    
     <div class="btn-toolbar">
         <?php
         $this->widget('bootstrap.widgets.TbButton', array(
@@ -22,7 +29,7 @@
         <h4 align="center"><?= $this->searchBy ?></h4>
         <h4 align="center">за период с <?= $_REQUEST['date_from'] ?> по <?= $_REQUEST['date_to'] ?></h4>
         <?php
-        foreach ($data as $key=>$obj_data) {
+        foreach ($data as $key => $obj_data) {
             if ($key == 'max') {
                 continue;
             }
@@ -35,14 +42,21 @@
                         'text' => ''
                     ),
                     'xAxis' => array(
+                        'labels' => array(
+                            'style' => array(
+                                'width' => '200px',
+                                'min-width'=> '200px',
+                            ),
+                            'useHTML' => true,
+                        ),
                         "categories" => $obj_data['device'],
                     ),
                     'yAxis' => array(
                         'min' => '0',
                         'max' => $data['max'],
-                        'labels'=>array(
+                        'labels' => array(
                             'formatter' => 'js:function() { return labelFormat(this)}',
-                            'step'=>2,
+                            'step' => 2,
                         ),
                     //"categories" => $obj_data['device'],
                     ),

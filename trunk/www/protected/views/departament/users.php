@@ -22,17 +22,17 @@ $this->beginWidget('zii.widgets.CPortlet', array(
 	'id'=>'user-grid',
 	'dataProvider'=>$users->searchByDepId($model->id),
         'itemsCssClass' => 'table table-striped table-bordered',
-	'filter'=>$users,
+	//'filter'=>$users,
 	'columns'=>array(
 		array(
 			'name' => 'id',
 			'type'=>'raw',
-			'value' => 'CHtml::link(CHtml::encode($data->id),array("admin/update","id"=>$data->id))',
+			'value' => 'CHtml::link(CHtml::encode($data->id),array("user/admin/update","id"=>$data->id))',
 		),
 		array(
 			'name' => 'username',
 			'type'=>'raw',
-			'value' => 'CHtml::link(UHtml::markSearch($data,"username"),array("admin/view","id"=>$data->id))',
+			'value' => 'CHtml::link(UHtml::markSearch($data,"username"),array("user/admin/view","id"=>$data->id))',
 		),
 		array(
 			'name'=>'profile.lastname',
