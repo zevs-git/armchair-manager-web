@@ -147,7 +147,7 @@ class DepartamentController extends RController {
                         echo 'success';
                         Yii::app()->end();
                     } else {
-                        $this->render('view', array('model' => $model,'is_save'=>true,'username'=>$user->username));
+                        $this->render('view', array('model' => $model,'is_save'=>true,'username'=>$user->username,'pass'=>$pass));
                         Yii::app()->end();
                     }
                 }
