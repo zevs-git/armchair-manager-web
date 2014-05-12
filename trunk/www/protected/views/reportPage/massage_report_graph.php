@@ -58,11 +58,14 @@
                             'formatter' => 'js:function() { return labelFormat(this)}',
                             'step' => 2,
                         ),
+						'title' => array(
+							'text' => ''
+						),
                     //"categories" => $obj_data['device'],
                     ),
                     'plotOptions' => array(
                         'series' => array(
-                            'pointWidth' => 28
+                            'pointWidth' => 14
                         )
                     ),
                     'chart' => array(
