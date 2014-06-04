@@ -3,6 +3,8 @@
         margin-bottom: 10px;
     }
 </style>
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>
+<script src="/js/jquery.geocomplete.min.js"></script>
 
 <div class="form">
 
@@ -23,25 +25,17 @@
         
 
         <div class="row">
+		<label class="span4 required" for="location">Мостоположение<span class="required">*</span></label>
+                <input class="span4" size="60" id="location" name="location" type="text">
+	</div>
+        <div class="row">
 		<?php echo $form->labelEx($model,'city',array('class'=>'span4')); ?>
-                <?php
-                $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
-                        'model'=>$model,
-                        'attribute'=>'city',
-                        'name'=>'city',
-                        'source'=> 'js: autoCompleteTags',
-                        'options'=>array(
-                                'delay'=>100,
-                                'minLength'=>1,
-                                'showAnim'=>'fold',
-                                'select' => 'js:select'
-                        ),
-                ));
-                ?>
+                <?php echo $form->textField($model,'city',array('size'=>60,'maxlength'=>255,'id'=>'city','class'=>'span4')); ?>
+		<?php echo $form->error($model,'city'); ?>
 	</div>
         <div class="row">
 		<?php echo $form->labelEx($model,'region',array('class'=>'span4')); ?>
-		<?php echo $form->textField($model,'region',array('class'=>'span4','size'=>60,'id'=>'region','readonly'=>true,'maxlength'=>255)); ?>
+		<?php echo $form->textField($model,'region',array('class'=>'span4','size'=>60,'id'=>'region','maxlength'=>255)); ?>
 	</div>
 
         <div class="row">
@@ -159,3 +153,85 @@
       });
   });
   </script>
+  <script>
+      $(function(){
+        $("#location").geocomplete({
+          details: "#geoform"
+        }).bind("geocode:result", function(event, result){
+            console.log(result);
+            $('#country').val(geoform.country.value);
+            $('#region').val(geoform.administrative_area_level_1.value);
+            $('#street').val(geoform.route.value);
+            $('#house').val(geoform.street_number.value);
+            $('#city').val(geoform.locality.value);
+        });
+      });
+</script>
+  <form name="geoform" id="geoform" style="display: none">
+      <fieldset>
+        <h3>Address-Details</h3>
+
+        <label>Name</label>
+        <input name="name" type="text" value="">
+
+        <label>POI Name</label>
+        <input name="point_of_interest" type="text" value="">
+
+        <label>Latitude</label>
+        <input name="lat" type="text" value="">
+
+        <label>Longitude</label>
+        <input name="lng" type="text" value="">
+
+        <label>Location</label>
+        <input name="location" type="text" value="">
+
+        <label>Location Type</label>
+        <input name="location_type" type="text" value="">
+
+        <label>Formatted Address</label>
+        <input name="formatted_address" type="text" value="">
+
+        <label>Bounds</label>
+        <input name="bounds" type="text" value="">
+
+        <label>Viewport</label>
+        <input name="viewport" type="text" value="">
+
+        <label>Route</label>
+        <input name="route" type="text" value="">
+
+        <label>Street Number</label>
+        <input name="street_number" type="text" value="">
+
+        <label>Postal Code</label>
+        <input name="postal_code" type="text" value="">
+
+        <label>Locality</label>
+        <input name="locality" type="text" value="">
+
+        <label>Sub Locality</label>
+        <input name="sublocality" type="text" value="">
+
+        <label>Country</label>
+        <input name="country" type="text" value="">
+
+        <label>Country Code</label>
+        <input name="country_short" type="text" value="">
+
+        <label>State</label>
+        <input name="administrative_area_level_1" type="text" value="">
+
+        <label>ID</label>
+        <input name="id" type="text" value="">
+
+        <label>Reference</label>
+        <input name="reference" type="text" value="">
+
+        <label>URL</label>
+        <input name="url" type="text" value="">
+
+        <label>Website</label>
+        <input name="website" type="text" value="">
+      </fieldset>
+    </form>
