@@ -10,6 +10,7 @@ class MessageSenderController extends Controller {
         ini_set('max_execution_time', 60000);
 
         $messages = UserMessages::model()->findAll("state_id = 1 and `read` = 0");
+        
 
         foreach ($messages as $mes) {
             $usres = User::model()->findAll("departament_id = " . $mes->device->object->departament_id);
@@ -24,7 +25,7 @@ class MessageSenderController extends Controller {
                         . "<br>Кресло: [" . $mes->device_id . "] " . $mes->device->comment
                         . "<br>Текст ошибки: " . $mes->message->descr
                         . "<br>http://chair.teletracking.ru/";
-
+                
                 $subject = 'Новое уведомление.'
                         . ' Город: ' . $mes->device->object->city
                         . ". Объект: " . $mes->device->object->obj

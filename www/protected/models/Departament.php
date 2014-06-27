@@ -70,7 +70,8 @@ class Departament extends CActiveRecord
                         'fname' => 'Имя',
                         'lname' => 'Фамилия',
                         'phone' => 'Телефон',
-                        'username'=>'Логин пользователя'
+                        'username'=>'Логин пользователя',
+                        'devicees_count'=>'Количество устройcтв'
 		);
 	}
 
@@ -120,4 +121,8 @@ class Departament extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+        public $devicees_count;
+        public function getdeviceesCount() {
+            return Device::model()->with('object')->count("`object`.departament_id = " . $this->id);
+        }
 }

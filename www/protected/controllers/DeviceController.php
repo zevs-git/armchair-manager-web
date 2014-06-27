@@ -110,7 +110,7 @@ class DeviceController extends RController {
 
         if (isset($_POST['Device'])) {
             $model->attributes = $_POST['Device'];
-            if ($model->save()) {
+            if ($model->saveSettings()) {
                 if (Yii::app()->request->isAjaxRequest) {
                     echo 'success';
                     Yii::app()->end();

@@ -92,6 +92,11 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'phone',
             'email',
             'comment',
+            array(
+                'name'=>'devicees_count',
+                'filter'=>false,
+                'value'=>'$data->deviceesCount'
+            ),
         array(
             'class' => 'bootstrap.widgets.TbButtonColumn',
             'template' => '{view}{delete}{store}',
