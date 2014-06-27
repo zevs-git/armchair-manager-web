@@ -44,6 +44,7 @@ class MsgSender {
             return false;
         }
         $email =  Yii::app()->email;
+        $email->from = 'MRmonitoring@mail.ru';
         $email->to = $mail;
         $email->subject = $this->get_in_translate_to_en($subject);
         $email->message = $this->get_in_translate_to_en($text . "<br/>" . date("d.m.Y H:i:s"));
