@@ -92,7 +92,7 @@ class Staff extends CActiveRecord
 	 * @return CActiveDataProvider the data provider that can return the models
 	 * based on the search/filter conditions.
 	 */
-	public function search()
+	public function search($type = null)
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
@@ -107,11 +107,13 @@ class Staff extends CActiveRecord
 		$criteria->compare('t.object_id',$this->object_id);
                 $criteria->compare('type.descr', $this->type_descr,true);
                 $criteria->compare('t.departament_id',$this->departament_id,true);
+                if (!is_nan(self::getTypeIdByName($type))) {
+                    $criteria->compare('t.staff_type_id',self::getTypeIdByName($type));
+                }
                 
                 if (!Yii::app()->user->checkAccess('Superadmin')) {
                     $criteria->addCondition('departament_id = ' . Yii::app()->getModule('user')->user()->departament_id);
                 }
-
                 
 		return new CActiveDataProvider($this, array(
                 'criteria' => $criteria,
@@ -180,4 +182,16 @@ class Staff extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+        
+        public static function getTypeIdByName($type_name) {
+            switch ($type_name) {
+                case 'incasator': $res = 0;                    
+                    break;
+                case 'tehnik'    : $res = 1;                    
+                    break;
+                default          : $res = null;      
+            }
+            
+            return $res;
+        }
 }
