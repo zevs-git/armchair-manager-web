@@ -270,5 +270,4 @@ class Device extends CActiveRecord {
         
         return $res;
     }
-
 }

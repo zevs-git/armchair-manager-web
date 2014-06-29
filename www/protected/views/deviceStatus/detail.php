@@ -4,7 +4,7 @@ $this->widget('bootstrap.widgets.TbDetailView', array(
     'type' => 'striped bordered condensed',
     'data' => $model,
     'attributes' => array(
-        'device_id',
+        array('name' => 'device_id','type' => 'raw','value'=>$model->device_id_link),
         array('name' => 'name_val', 'type' => 'raw', 'label' => 'Устройство'),
         'device.object.city',
         'device.object.obj',
