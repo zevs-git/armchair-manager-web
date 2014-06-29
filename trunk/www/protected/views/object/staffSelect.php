@@ -7,7 +7,7 @@
 	'id'=>'staff-grid',
         'itemsCssClass' => 'table table-striped table-bordered',
 	//'ajaxUpdate'=>true,
-	'dataProvider'=>$model->search(),
+	'dataProvider'=>$model->search($staff_type),
 	'filter'=>$model,
         //'ajaxUpdate'=>'modal-body',
         //'ajaxUrl' => array('object/GetStaffLis'),

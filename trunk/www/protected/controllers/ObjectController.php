@@ -120,13 +120,15 @@ class ObjectController extends RController {
         }
     }
 
-    public function actionGetStaffList($field) {
+    public function actionGetStaffList($field,$staff_type = 'incasator') {
         $model = new Staff('search');
         if (isset($_GET['Staff'])) // чтобы работали функции поиска нужно передать параметры в модель
             $model->attributes = $_GET['Staff'];
         $this->renderPartial('staffSelect', array(
             'model' => $model,
-            'field' => $field), false, true);
+            'field' => $field,
+            'staff_type' => $staff_type,
+            ), false, true);
     }
 
     /**

@@ -50,19 +50,19 @@ class ObjectStaff extends CActiveRecord {
     }
 
     public function getincasator1_val() {
-        return $this->getButton(incasator1, $this->incasator1_staff->FIO);
+        return $this->getButton('incasator1', $this->incasator1_staff->FIO);
     }
 
     public function getincasator2_val() {
-        return $this->getButton(incasator2, $this->incasator2_staff->FIO);
+        return $this->getButton('incasator2', $this->incasator2_staff->FIO);
     }
 
     public function gettehnik1_val() {
-        return $this->getButton(tehnik1, $this->tehnik1_staff->FIO);
+        return $this->getButton('tehnik1', $this->tehnik1_staff->FIO);
     }
 
     public function gettehnik2_val() {
-        return $this->getButton(tehnik2, $this->tehnik2_staff->FIO);
+        return $this->getButton('tehnik2', $this->tehnik2_staff->FIO);
     }
 
     private function getButton($name, $value) {
@@ -72,7 +72,13 @@ class ObjectStaff extends CActiveRecord {
         return '<span id="' . $name . '_value" >' . $value . '</span>'
                 . '<div style="float:right">'
                 . (($this->{$name}) ? '<button class="btn delete-btn btn-danger" id="' . $name . '" data-loading-text=" Загрузка ... " type="button" >Убрать <i class="icon-trash"></i></button>' : '')
-                . '<button class="btn select-btn btn-primary" id="' . $name . '" data-loading-text=" Загрузка ... " type="button" >Выбрать <i class="icon-list"></i></button>'
+                . '<button class="btn select-btn btn-primary" '
+                        . 'id="' . $name . '" '
+                        . 'data-loading-text=" Загрузка ... " '
+                        . 'type="button" '
+                        . 'staff_type="' . substr($name, 0, strlen($name)-1) . '" >'
+                        . 'Выбрать <i class="icon-list"></i>'
+                        . '</button>'
                 . '<div>';
     }
 

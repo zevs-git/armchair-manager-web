@@ -116,7 +116,10 @@ if (is_null($objectStaff)) {
             $.ajax({
                 url: "<?php echo $this->createAbsoluteUrl('object/GetStaffList') ?>",
                 cache: false,
-                data: "field=" + event.target.id,
+                data: {
+                    field : event.target.id,
+                    staff_type : $(buttn).attr('staff_type'),
+                },  
                 success: function(html) {
                     $(".modal-body").html(html);
                     $(buttn).button('reset');
