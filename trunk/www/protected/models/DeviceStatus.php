@@ -435,5 +435,11 @@ class DeviceStatus extends CActiveRecord {
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }
+    
+    public function getdevice_id_link() {
+        
+        return "$this->device_id<a style='float:right' class='btn btn-small btn-default' href='/device/$this->device_id' >Настройки устройства</a>";
+    }
+
 
 }
