@@ -78,7 +78,7 @@ class CommandLog extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
-                $criteria->condition = "device_id = $device_id and dt > CURRENT_DATE()";
+                $criteria->condition = "device_id = $device_id";
 		$criteria->compare('id',$this->id);
 		$criteria->compare('device_id',$this->device_id);
 		$criteria->compare('dt',$this->dt,true);
