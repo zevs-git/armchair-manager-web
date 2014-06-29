@@ -78,7 +78,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
             'value' => '$data->object->obj'),
         'comment',
         'soft_version',
-        'ICCID',
+        'phone',
         array(
             'class' => 'bootstrap.widgets.TbButtonColumn',
             'template' => $buttons_tmpl,
