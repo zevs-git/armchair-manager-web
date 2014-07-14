@@ -35,6 +35,7 @@ class Device extends CActiveRecord {
             array('soft_version', 'numerical'),
             array('IMEI', 'length', 'max' => 20),
             array('IMEI', 'required'),
+            //array('IMEI', 'unique'),
             array('type_id, object_id', 'length', 'max' => 11),
             array('comment', 'length', 'max' => 255),
             array('ICCID, phone, interval, zapros,', 'safe'),
