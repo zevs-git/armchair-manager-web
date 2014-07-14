@@ -46,7 +46,7 @@
 	<?php echo $form->errorSummary($model); ?>
 
         <div class="row">
-		<label class="span2 required" for="location">Мостоположение<span class="required">*</span></label>
+		<label class="span2 required" for="location">Местоположение<span class="required">*</span></label>
                 <input size="60" id="location" name="location" type="text">
 	</div>
         <div class="row">

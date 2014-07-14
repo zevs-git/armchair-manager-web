@@ -2,7 +2,7 @@
 $this->breadcrumbs=array(
 	'Устройства'=>array('index'),
 	$model->id=>array('view','id'=>$model->id),
-	'Реадактировать',
+	'Редактировать',
 );
 ?>
 <?php $this->beginWidget('zii.widgets.CPortlet', array(

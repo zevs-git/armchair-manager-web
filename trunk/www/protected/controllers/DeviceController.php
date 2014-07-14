@@ -13,8 +13,8 @@ class DeviceController extends RController {
      */
     public function filters() {
         return array(
-            'rights', 
-          );
+            'rights',
+        );
     }
 
     /**
@@ -29,7 +29,7 @@ class DeviceController extends RController {
                 'users' => array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'Cashbox','Coinbox'),
+                'actions' => array('create', 'update', 'Cashbox', 'Coinbox'),
                 'users' => array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -59,9 +59,8 @@ class DeviceController extends RController {
      */
     public function actionCreate() {
         $model = new Device;
-        
-        $model->object_id = 0; // объект по умолч. - склад
 
+        $model->object_id = 0; // объект по умолч. - склад
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
@@ -69,23 +68,23 @@ class DeviceController extends RController {
             $model->attributes = $_POST['Device'];
             $model->settings_tmpl_id = $_POST['Device']['settings_tmpl_id'];
             if ($model->saveFromTamplate()) {
-                    $serviceBase = TmplServiceSettings::model()->findByPk(0);
-                    $newService = new DeviceServiceSettings();
-                    $newService->attributes = $serviceBase->attributes;
-                    $newService->device_id = $model->id;
-                    $newService->save();
+                $serviceBase = TmplServiceSettings::model()->findByPk(0);
+                $newService = new DeviceServiceSettings();
+                $newService->attributes = $serviceBase->attributes;
+                $newService->device_id = $model->id;
+                $newService->save();
 
-                    $cashBase = TmplCashboxSettings::model()->findByPk(0);
-                    $newCash = new DeviceCashboxSettings();
-                    $newCash->attributes = $cashBase->attributes;
-                    $newCash->device_id = $model->id;
-                    $newCash->save();
+                $cashBase = TmplCashboxSettings::model()->findByPk(0);
+                $newCash = new DeviceCashboxSettings();
+                $newCash->attributes = $cashBase->attributes;
+                $newCash->device_id = $model->id;
+                $newCash->save();
 
-                    $coinBase = TmplCoinboxSettings::model()->findByPk(0);
-                    $newCoin = new DeviceCoinboxSettings();
-                    $newCoin->attributes = $coinBase->attributes;
-                    $newCoin->device_id = $model->id;
-                    $newCoin->save();
+                $coinBase = TmplCoinboxSettings::model()->findByPk(0);
+                $newCoin = new DeviceCoinboxSettings();
+                $newCoin->attributes = $coinBase->attributes;
+                $newCoin->device_id = $model->id;
+                $newCoin->save();
                 if (Yii::app()->request->isAjaxRequest) {
                     print 'success';
                     Yii::app()->end();
@@ -110,7 +109,7 @@ class DeviceController extends RController {
 
         if (isset($_POST['Device'])) {
             $model->attributes = $_POST['Device'];
-            if ($model->saveSettings()) {
+            if ($model->save()) {
                 if (Yii::app()->request->isAjaxRequest) {
                     echo 'success';
                     Yii::app()->end();
@@ -254,7 +253,7 @@ class DeviceController extends RController {
             'cashbox' => $cashbox,
         ));
     }
-    
+
     public function actionCoinbox($id) {
         $cashbox = DeviceCoinboxSettings::model()->findByPk($id);
         if (is_null($cashbox)) {
@@ -282,6 +281,26 @@ class DeviceController extends RController {
             'model' => $this->loadModel($id),
             'cashbox' => $cashbox,
         ));
+    }
+
+    public function actionToObject($id) {
+        $model = $this->loadModel($id);
+
+        if (isset($_POST['Device'])) {
+            $new_model = new Device();
+            $new_model->attributes = $model->attributes;
+            $new_model->attributes = $_POST['Device'];
+            if ($new_model->object_id != $model->object_id && $new_model->saveSettings()) {
+                $model->IMEI = 0;
+                $model->save();
+                $this->redirect(array('view', 'id' => $new_model->id));
+            } else {
+                
+                $model->addError('object_id', 'Устройство уже находиться на этом объекте');
+            }
+        }
+        
+        $this->render('to_object', array('model' => $model));
     }
 
 }

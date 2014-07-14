@@ -81,6 +81,7 @@
         $('#sub_btn').hide();
         $('#date_from').change(showBTN);
         $('#date_to').change(showBTN);
+       
 
     });
 
@@ -111,8 +112,9 @@
                 'id' => 'date_from',
                 'name' => 'date_from',
                 'options' => array(
-                    'showAnim' => 'fold',
+                    'showAnim' => false,
                     'dateFormat' => 'dd.mm.yy',
+                    'showButtonPanel'=>false
                 ),
                 'htmlOptions' => array(
                     'style' => 'height:20px;'
@@ -131,8 +133,9 @@
                 'id' => 'date_to',
                 'name' => 'date_to',
                 'options' => array(
-                    'showAnim' => 'fold',
+                    'showAnim' => false,
                     'dateFormat' => 'dd.mm.yy',
+                    'showButtonPanel'=>false
                 ),
                 'htmlOptions' => array(
                     'style' => 'height:20px;'

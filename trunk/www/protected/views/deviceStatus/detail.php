@@ -8,6 +8,7 @@ $this->widget('bootstrap.widgets.TbDetailView', array(
         array('name' => 'name_val', 'type' => 'raw', 'label' => 'Устройство'),
         'device.object.city',
         'device.object.obj',
+        'device.phone',
         array('name' => 'gprs_state_icon',
             'label' => 'Подключение к серверу',
             'type' => 'raw'),

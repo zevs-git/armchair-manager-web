@@ -3,7 +3,9 @@
 /* @var $model Object */
 ?>
 
-
+<?php if ($this->action->id != 'ToObject'):?>
+<a class="btn btn-primary" href="/device/ToObject/<?=$model->id?>" style="float:right">Поставить на объект</a>
+<?php endif;?>
 <?php
 $this->widget('bootstrap.widgets.TbMenu', array(
     'type'=>'tabs', // '', 'tabs', 'pills' (or 'list')
