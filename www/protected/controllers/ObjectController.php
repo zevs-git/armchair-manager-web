@@ -101,9 +101,36 @@ class ObjectController extends RController {
     }
 
     public function actionAddDevice($object_id, $device_id) {
-        $device = Device::model()->findByPk($device_id);
-        $device->object_id = $object_id;
-        if ($device->saveSettings()) {
+        $model = Device::model()->findByPk($device_id);
+        $new_model = new Device();
+        $new_model->attributes = $model->attributes;
+        $new_model->object_id = $object_id;
+
+        if ($new_model->object_id != $model->object_id) {
+                $new_model->saveFromTamplate();
+                
+                $serviceBase = DeviceServiceSettings::model()->findByPk($device_id);
+                $newService = new DeviceServiceSettings();
+                $newService->attributes = $serviceBase->attributes;
+                $newService->device_id = $new_model->id;
+                $newService->save();
+
+                $cashBase = DeviceCashboxSettings::model()->findByPk($device_id);
+                $newCash = new DeviceCashboxSettings();
+                $newCash->attributes = $cashBase->attributes;
+                $newCash->device_id = $new_model->id;
+                $newCash->save();
+
+                $coinBase = DeviceCoinboxSettings::model()->findByPk($id);
+                $newCoin = new DeviceCoinboxSettings();
+                $newCoin->attributes = $coinBase->attributes;
+                $newCoin->device_id = $new_model->id;
+                $newCoin->save();
+
+                $model->IMEI = 0;
+                $model->saveSettings();
+                
+                
             echo 'success';
         } else {
             echo 'error';

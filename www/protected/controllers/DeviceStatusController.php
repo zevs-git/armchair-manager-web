@@ -389,6 +389,18 @@ class DeviceStatusController extends RController {
         Yii::app()->db->createCommand("CALL p_comand_log($id,11,'$text');")->execute();
     }
     
+    public function actionUpdatePO($id) {
+        $command = new CommandExecuting();
+        $command->device_id = $id;
+        $command->command_id = CommandExecuting::UPDATE_PO;
+        $command->save();
+        
+        $text = "";
+        Yii::app()->db->createCommand("CALL p_comand_log($id,111,'$text');")->execute();
+    }
+    
+    
+    
     public function actionMessages() {
                 $model=new UserMessages('search');
 		$model->unsetAttributes();  // clear any default values

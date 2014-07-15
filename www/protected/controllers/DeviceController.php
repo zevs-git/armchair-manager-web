@@ -290,16 +290,35 @@ class DeviceController extends RController {
             $new_model = new Device();
             $new_model->attributes = $model->attributes;
             $new_model->attributes = $_POST['Device'];
-            if ($new_model->object_id != $model->object_id && $new_model->saveSettings()) {
+
+            if ($new_model->object_id != $model->object_id && $new_model->saveFromTamplate()) {
+                    $serviceBase = DeviceServiceSettings::model()->findByPk($id);
+                    $newService = new DeviceServiceSettings();
+                    $newService->attributes = $serviceBase->attributes;
+                    $newService->device_id = $new_model->id;
+                    $newService->save();
+
+                    $cashBase = DeviceCashboxSettings::model()->findByPk($id);
+                    $newCash = new DeviceCashboxSettings();
+                    $newCash->attributes = $cashBase->attributes;
+                    $newCash->device_id = $new_model->id;
+                    $newCash->save();
+
+                    $coinBase = DeviceCoinboxSettings::model()->findByPk($id);
+                    $newCoin = new DeviceCoinboxSettings();
+                    $newCoin->attributes = $coinBase->attributes;
+                    $newCoin->device_id = $new_model->id;
+                    $newCoin->save();
+
                 $model->IMEI = 0;
-                $model->save();
+                $model->saveSettings();
                 $this->redirect(array('view', 'id' => $new_model->id));
             } else {
-                
+
                 $model->addError('object_id', 'Устройство уже находиться на этом объекте');
             }
         }
-        
+
         $this->render('to_object', array('model' => $model));
     }
 

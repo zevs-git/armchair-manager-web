@@ -105,4 +105,5 @@ class CommandExecuting extends CActiveRecord
         const MASSAGE = 9;
         const SETTINGS = 8;
         const RESTART = 11;
+        const UPDATE_PO = 5;
 }
