@@ -40,7 +40,6 @@
         'buttonType' => 'ajaxLink',
         'url' => $this->createUrl('UpdateSettings',array('id'=>$model->device_id)),
         'ajaxOptions' => array(
-            //'url' => $this->createUrl('UpdateSettings',array('id'=>$model->device_id)),
             'beforeSend' => 'function(r){$("#success").hide();$("#error").hide();}',
             'success' => 'function(r){$("#success").show();}',
             'error'   => 'function(r){$("#error").show();}',
@@ -59,6 +58,23 @@
         'url' => $this->createUrl('DeviceRestart',array('id'=>$model->device_id)),
         'ajaxOptions' => array(
             //'url' => $this->createUrl('UpdateSettings',array('id'=>$model->device_id)),
+            'beforeSend' => 'function(r){$("#success").hide();$("#error").hide();}',
+            'success' => 'function(r){$("#success").show();}',
+            'error'   => 'function(r){$("#error").show();}',
+        ),
+    ));
+    ?>
+    </div>
+    <div style='margin: 10px'>
+    <?php
+    $this->widget('bootstrap.widgets.TbButton', array(
+        'htmlOptions'=>array('id'=> 'restart_but_'. rand(100000, 9999999),'style'=>'width:250px'),
+        'label' => 'Обновить ПО',
+        //'icon' => 'plus-sign',
+        'type' => 'info',
+        'buttonType' => 'ajaxLink',
+        'url' => $this->createUrl('UpdatePO',array('id'=>$model->device_id)),
+        'ajaxOptions' => array(
             'beforeSend' => 'function(r){$("#success").hide();$("#error").hide();}',
             'success' => 'function(r){$("#success").show();}',
             'error'   => 'function(r){$("#error").show();}',
