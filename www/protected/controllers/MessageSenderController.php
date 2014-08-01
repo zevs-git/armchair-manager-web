@@ -77,9 +77,6 @@ class MessageSenderController extends Controller {
                     $sender->SendEmail($user->id, $subject, $EmailText);
                 if ($prifile && $prifile->getAttribute('sendSMS'))
                     $sender->SendSms($user->id, $SMStext);
-                
-                $mes->read = 1;
-                $mes->save();
            }
        }
     }
