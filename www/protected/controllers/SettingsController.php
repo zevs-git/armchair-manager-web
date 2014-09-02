@@ -19,9 +19,7 @@ class SettingsController extends RController {
 
     public function actionDevice($device_imei) {
         $this->layout = 'NULL';
-        if ($this->setDevice($device_imei)) {
-            $this->SettingsFile();
-        } else {
+        if (!$this->setDevice($device_imei) || !$this->SettingsFile()) {
             header('HTTP/1.0 404 Not Found');
             header('HTTP/1.1 404 Not Found');
             header('Status: 404 Not Found');
@@ -46,7 +44,10 @@ class SettingsController extends RController {
 
     private function SettingsFile() {
         $this->data = '';
-        $this->getServiceSettings();
+        if (!$this->getServiceSettings()) {
+            return false;
+        }
+        
         $this->getObjectSettings();
         
         $crc16 = $this->calcCRC($this->data);
@@ -67,6 +68,8 @@ class SettingsController extends RController {
         
         $this->setHeaders();
         print $this->data;
+        
+        return true;
     }
 
     public function putValue32($id, $value, $dinamic = false) {
@@ -115,7 +118,21 @@ class SettingsController extends RController {
     }
     
     public function getServiceSettings() {
-        $servSettings = DeviceServiceSettings::model()->findByPk($this->device->id);        
+        $servSettings = DeviceServiceSettings::model()->findByPk($this->device->id);   
+        
+        /*Колстыль!!! если серверные настройки пустые не отдаем настройки!*/
+        if (        empty($servSettings->IP_monitoring) 
+                ||  empty($servSettings->port_monitoring) 
+                ||  empty($servSettings->IP_config) 
+                ||  empty($servSettings->port_config) 
+                ||  empty($servSettings->USSD)) {
+            $sql = "CALL p_comand_log({$this->device->id},112,NULL);";
+            /* Логируем ошибку*/
+            Yii::app()->db->createCommand($sql)->queryAll();
+            
+            return false;
+            
+        }
         if ($servSettings->IP_monitoring) {
             $this->putValue32(SetVarId::IP_MONITORING, $servSettings->IP_monitoring,true);
         }
@@ -200,6 +217,8 @@ class SettingsController extends RController {
             $a = unpack("i",pack('v', $deviceCoinboxSettings->coeficient) . pack('C', $secondBit) .  pack('C', $deviceCoinboxSettings->model_id));
             $this->putValue32(SetVarId::COIN_BOX, $a[1]);
         }
+        
+        return true;
     }
     
     public function calcCRC($buffer) {
