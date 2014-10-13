@@ -182,6 +182,7 @@ class ReportPageController extends RController {
                         FROM cash c, device d, object obj
                         WHERE c.device_id = d.id
                         AND d.object_id = obj.id
+						AND c.ignore = 0
                         AND c.dt >= '" . date("Y-m-d H:i:s", strtotime($_REQUEST['date_from'])) . "' AND c.dt <= '" . date("Y-m-d H:i:s", strtotime($_REQUEST['date_to'])) . "'" .
                     (is_numeric($_REQUEST['object_id']) ? " AND obj.id = " . $_REQUEST['object_id'] : "") .
                     //(!empty($_REQUEST['country']) ? " AND obj.country = '" . $_REQUEST['country'] . "'" : "") .
