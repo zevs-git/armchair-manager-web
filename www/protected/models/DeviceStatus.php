@@ -250,6 +250,8 @@ class DeviceStatus extends CActiveRecord {
         if (!Yii::app()->user->checkAccess('Superadmin')) {
             $criteria->addCondition("object.departament_id = " . Yii::app()->getModule('user')->user()->departament_id); 
         }
+		
+		$criteria->addCondition("object.id != 0");
         
         /*if (Yii::app()->user->getId() == "pulkovo") {
             $criteria->condition = 'device.object_id in (1,2)';    
