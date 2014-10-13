@@ -252,6 +252,10 @@ class DeviceStatus extends CActiveRecord {
         }
 		
 		$criteria->addCondition("object.id != 0");
+		
+		$criteria->order = 'TIME_TO_SEC(TIMEDIFF(NOW(),t.update_date) > 60*5)';
+		
+		//$criteria->group = 'TIME_TO_SEC(TIMEDIFF(NOW(),update_date) > 60*5)';
         
         /*if (Yii::app()->user->getId() == "pulkovo") {
             $criteria->condition = 'device.object_id in (1,2)';    
