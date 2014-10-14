@@ -1,13 +1,13 @@
 <?php
 
 /* @var $this ObjectController */
-/* @var $model Staff */
+/* @var $model Device */
 ?>
 
 <?php
 
-$this->widget('zii.widgets.grid.CGridView', array(
-    'id' => 'staff-grid',
+$this->widget('bootstrap.widgets.TbGridView', array(
+    'id' => 'device-grid-modal',
     'itemsCssClass' => 'table table-striped table-bordered',
     //'ajaxUpdate'=>true,
     'dataProvider' => $model->search(),
@@ -17,9 +17,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'columns' => array(
         'id',
         'IMEI',
-        //'staff_type_id',
-        //'key',
-        //'phone',
         'comment',
         'object.obj',
         array(
