@@ -106,24 +106,6 @@ $this->beginWidget('zii.widgets.CPortlet', array(
     </div>
 <?php $this->endWidget(); ?>
     
-<!-- Модальное окошко замнены устройтва-->      
-<?php $this->beginWidget('bootstrap.widgets.TbModal', array('id' => 'changeModal')); ?>
-    <div class="modal-header">
-        <a class="close" data-dismiss="modal">×</a>
-        <h4><?= Yii::t("menu", "Ввведите ид нового устройтва") ?></h4>
-    </div>
-    <div class="modal-body">
-    </div>
-    <div class="modal-footer">
-        <?php
-        $this->widget('bootstrap.widgets.TbButton', array(
-            'label' => Yii::t("menu", "Отмена"),
-            'url' => '#',
-            'htmlOptions' => array('data-dismiss' => 'modal'),
-        ));
-        ?>
-    </div>
-<?php $this->endWidget(); ?>
 
 
     <script>
