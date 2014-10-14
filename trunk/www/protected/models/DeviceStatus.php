@@ -244,7 +244,7 @@ class DeviceStatus extends CActiveRecord {
         $criteria->condition = 'device.id > 0';
         
         if (Yii::app()->getModule('user')->user()->role == 'Tehnik') {
-            $criteria->condition = '(`t`.error_number > 0 or `t`.alarm_state = 1 or u_settings > 0 or TIME_TO_SEC(TIMEDIFF(NOW(),update_date) > 60*5)) and device.id > 0'; 
+            $criteria->condition = '(`t`.error_number > 0 or `t`.alarm_state = 1 or u_settings > 0 or TIME_TO_SEC(TIMEDIFF(NOW(),update_date)) > 60*5) and device.id > 0'; 
         }
         
         if (!Yii::app()->user->checkAccess('Superadmin')) {
@@ -253,7 +253,7 @@ class DeviceStatus extends CActiveRecord {
 		
 		$criteria->addCondition("object.id != 0");
 		
-		$criteria->order = 'TIME_TO_SEC(TIMEDIFF(NOW(),t.update_date) > 60*5)';
+		$criteria->order = 'TIME_TO_SEC(TIMEDIFF(NOW(),t.update_date)) > 60*5';
 		
 		//$criteria->group = 'TIME_TO_SEC(TIMEDIFF(NOW(),update_date) > 60*5)';
         
