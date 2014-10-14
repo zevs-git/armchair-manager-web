@@ -102,7 +102,10 @@ class ObjectController extends RController {
 
     public function actionAddDevice($object_id, $device_id) {
         $model = Device::model()->findByPk($device_id);
-        $new_model = new Device();
+		$model->object_id = $object_id;
+		echo 'success';
+		
+        /*$new_model = new Device();
         $new_model->attributes = $model->attributes;
         $new_model->object_id = $object_id;
 
@@ -127,14 +130,14 @@ class ObjectController extends RController {
                 $newCoin->device_id = $new_model->id;
                 $newCoin->save();
 
-                $model->IMEI = 0;
+                Device::model()->$model->IMEI = 0;
                 $model->saveSettings();
                 
                 
             echo 'success';
         } else {
             echo 'error';
-        }
+        }*/
     }
 
     public function actionDeleteDevice($object_id, $device_id) {
