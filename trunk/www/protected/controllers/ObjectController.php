@@ -103,6 +103,7 @@ class ObjectController extends RController {
     public function actionAddDevice($object_id, $device_id) {
         $model = Device::model()->findByPk($device_id);
 		$model->object_id = $object_id;
+		$model->save();
 		echo 'success';
 		
         /*$new_model = new Device();
