@@ -224,7 +224,7 @@ class DeviceStatusController extends RController {
             
             $sql = "SELECT COUNT(*) AS res
             FROM `device_status` s, `device` d, `object` obj
-            WHERE d.`id` = s.`device_id` and unix_timestamp(now()) - unix_timestamp(s.dt) <= 60*5 
+            WHERE d.`id` = s.`device_id` and TIME_TO_SEC(TIMEDIFF(NOW(),update_date)) < 60*5 
             and d.id = s.device_id
             and d.object_id = obj.id";
             if (!Yii::app()->user->checkAccess('Superadmin')) {
