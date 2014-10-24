@@ -137,7 +137,7 @@ class Email extends CApplicationComponent {
 			case 'php':
 				$message = wordwrap($message, $this->lineLength);
 				mb_language($this->language);
-				return mb_send_mail($to, $subject, $message, implode("\r\n", $this->createHeaders()));
+				return mail($to, $subject, $message, implode("\r\n", $this->createHeaders()));
 			case 'debug':
 				$debug = Yii::app()->controller->renderPartial('email.debug',
 						array_merge(compact('to', 'subject', 'message'), array('headers'=>$this->createHeaders())),
