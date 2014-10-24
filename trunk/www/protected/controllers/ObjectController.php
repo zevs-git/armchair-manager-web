@@ -96,8 +96,20 @@ class ObjectController extends RController {
         $model = new Device('search');
         if (isset($_GET['Device'])) // чтобы работали функции поиска нужно передать параметры в модель
             $model->attributes = $_GET['Device'];
+			//print_r($_GET['Device']);
         $this->renderPartial('deviceSelect', array(
             'model' => $model), false, true);
+    }
+	
+	public function actionGetStaffList($field,$staff_type = 'incasator') {
+        $model = new Staff('search');
+        if (isset($_GET['Staff'])) // чтобы работали функции поиска нужно передать параметры в модель
+            $model->attributes = $_GET['Staff'];
+        $this->renderPartial('staffSelect', array(
+            'model' => $model,
+            'field' => $field,
+            'staff_type' => $staff_type,
+            ), false, true);
     }
 
     public function actionAddDevice($object_id, $device_id) {
@@ -150,18 +162,6 @@ class ObjectController extends RController {
             echo 'error';
         }
     }
-
-    public function actionGetStaffList($field,$staff_type = 'incasator') {
-        $model = new Staff('search');
-        if (isset($_GET['Staff'])) // чтобы работали функции поиска нужно передать параметры в модель
-            $model->attributes = $_GET['Staff'];
-        $this->renderPartial('staffSelect', array(
-            'model' => $model,
-            'field' => $field,
-            'staff_type' => $staff_type,
-            ), false, true);
-    }
-
     /**
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.

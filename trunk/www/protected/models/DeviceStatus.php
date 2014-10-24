@@ -361,11 +361,12 @@ class DeviceStatus extends CActiveRecord {
 
     public function getgsm_state_icon() {
 
+        //return $this->balance;
         if (!$this->is_conneted) {
             return $this->state_img("gsm_false.png", "Уровень сигнала GSM неопределен");
-        } elseif ($this->gsm_level >= 0 && $this->gsm_level < 10) {
+        } elseif ($this->balance >= 0 && $this->balance < 10) {
             return $this->state_img("gsm_low.png", "Низкий уровень сигнала GSM");
-        } elseif ($this->gsm_level < 18) {
+        } elseif ($this->balance < 20) {
             return $this->state_img("gsm_medium.png", "Средний уровень сигнала GSM");
         } else {
             return $this->state_img("gsm_high.png", "Высокий уровень сигнала GSM");
