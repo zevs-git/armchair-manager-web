@@ -57,6 +57,7 @@ class MessageSenderController extends Controller {
                
                $mess->device_id = $dev->id;
                $mess->msg_code = 113;
+               $mess->dt = date(DATE_ATOM);
                
                $mess->save();
            }
