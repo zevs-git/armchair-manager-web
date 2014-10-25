@@ -44,8 +44,8 @@ class MessageSenderController extends Controller {
         $sql = "SELECT ds.device_id FROM device_status ds WHERE
                 EXISTS (SELECT 1 FROM device_general_state dgs WHERE dgs.device_id = ds.device_id AND dgs.dt  BETWEEN DATE_SUB(CURRENT_DATE(),INTERVAL 1 DAY)  AND CURRENT_DATE() AND dgs.state = 'p' LIMIT 1 )
                 AND NOT EXISTS 
-                (SELECT 1 FROM device_cash_report dcr WHERE dcr.device_id = ds.device_id
-                AND (DATE(dcr.update_cash) = DATE_SUB(CURRENT_DATE(),INTERVAL 1 DAY) OR  DATE(dcr.update_coin) = DATE_SUB(CURRENT_DATE(),INTERVAL 1 DAY)))";
+                (SELECT 1 FROM cash c WHERE c.device_id = ds.device_id
+                AND (DATE(c.dt) = DATE_SUB(CURRENT_DATE(),INTERVAL 1 DAY)))";
         
        $res = Yii::app()->db->createCommand($sql)->queryAll();
        
