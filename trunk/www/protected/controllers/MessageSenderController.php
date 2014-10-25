@@ -41,11 +41,12 @@ class MessageSenderController extends Controller {
     }
     
     public function actionCheckCashBox() {
+        ini_set('max_execution_time', 60000);
         $sql = "SELECT ds.device_id FROM device_status ds WHERE
-                EXISTS (SELECT 1 FROM device_general_state dgs WHERE dgs.device_id = ds.device_id AND dgs.dt  BETWEEN DATE_SUB(CURRENT_DATE(),INTERVAL 1 DAY)  AND CURRENT_DATE() AND dgs.state = 'p' LIMIT 1 )
+                EXISTS (SELECT 1 FROM command_log cl USE INDEX (IDX_command_log) WHERE cl.device_id = ds.device_id AND cl.dt  BETWEEN DATE_SUB(CURRENT_DATE(),INTERVAL 1 DAY)  AND CURRENT_DATE() LIMIT 1)
                 AND NOT EXISTS 
                 (SELECT 1 FROM cash c WHERE c.device_id = ds.device_id
-                AND (DATE(c.dt) = DATE_SUB(CURRENT_DATE(),INTERVAL 1 DAY)))";
+                AND (DATE(c.dt) = DATE_SUB(CURRENT_DATE(),INTERVAL 1 DAY) ) LIMIT 1)";
         
        $res = Yii::app()->db->createCommand($sql)->queryAll();
        
