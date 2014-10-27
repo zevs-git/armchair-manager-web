@@ -289,7 +289,7 @@ class DeviceStatus extends CActiveRecord {
     }
 
     public function getis_conneted() {
-        date_default_timezone_set('Europe/Moscow');
+        date_default_timezone_set('Europe/Minsk');
         if ($this->is_conneted_r != null) {
             return $this->is_conneted_r;
         }
