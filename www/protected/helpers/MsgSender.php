@@ -37,6 +37,7 @@ class MsgSender {
     }
 
     public function SendEmail($user_id, $subject, $text) {
+        date_default_timezone_set('Europe/Minsk');
         $user = User::model()->findByPk($user_id);
         if ($user) {
             $mail = $user->email;
